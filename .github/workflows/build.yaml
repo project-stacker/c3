@@ -1,0 +1,27 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types:
+      - published
+name: build
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+      - name: Build container images
+        uses: project-stacker/stacker-build-push-action@main
+        with:
+          file: 'images/ubuntu/static.yaml'
