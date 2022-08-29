@@ -1,0 +1,27 @@
+# "static" is an image that can be used to
+# package statically built binaries (go, rust, etc)
+
+build-static:
+  from:
+    type: docker
+    url: docker://${{ARCH}}/${{DISTRO}}:${{DISTRO_REL}}
+  import:
+    - ${{DISTRO}}-pkgs.sh
+    - ../../pkgmgr/defs.sh
+  run: |
+    export DISTRO=${{DISTRO}}
+    export DISTRO_REL=${{DISTRO_REL}}
+    export ARCH=${{ARCH}}
+    export OS=${{OS}}
+    # source pkgs to install into rootfs
+    . /stacker/$DISTRO-pkgs.sh
+    # source pkgmgr func defs
+    . /stacker/defs.sh
+    # build the rootfs
+    build_rootfs
+  build_only: true
+
+static-${{DISTRO}}-${{ARCH}}:
+  from:
+    type: tar
+    url: stacker://build-static/rootfs.tar

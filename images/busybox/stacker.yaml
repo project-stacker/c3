@@ -1,11 +1,11 @@
-# Builds a "distroless" image based on ubuntu:jammy
+# Builds a "distroless" image
 #
-# "static" is a image that can be used to package statically built binaries (go, rust, etc)
+# "static" is an image that can be used to package statically built binaries (go, rust, etc)
 
-build:
+build-static:
   from:
     type: docker
-    url: docker://ubuntu:jammy
+    url: docker://${{ARCH}}/${{DISTRO}}:${{DISTRO_REL}}
   run: |
     apt-get update && apt-get dist-upgrade -y
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
@@ -29,9 +29,12 @@ build:
     tar cpvf /rootfs.tar .
     ls -altr /rootfs.tar
     sha256sum /rootfs.tar
+    # post-packaging cleanup
+    cd ..
+    rm -rf rootfs
   build_only: true
 
-static:
+static-${{DISTRO}}-${{ARCH}}:
   from:
     type: tar
-    url: stacker://build/rootfs.tar
+    url: stacker://build-static/rootfs.tar

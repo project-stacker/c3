@@ -1,0 +1,34 @@
+# "base" is an image that can be used to package binaries
+# that require libc runtime
+
+config:
+  prerequisites:
+    - ../static/stacker.yaml
+
+build-base:
+  from:
+    type: built
+    tag: build-static
+  import:
+    - ${{DISTRO}}-pkgs.sh
+    - ../../pkgmgr/defs.sh
+    - stacker://build-static/rootfs.tar
+  run: |
+    export DISTRO=${{DISTRO}}
+    export DISTRO_REL=${{DISTRO_REL}}
+    export ARCH=${{ARCH}}
+    export OS=${{OS}}
+    # build upon previously built rootfs
+    cp /stacker/rootfs.tar /
+    # source pkgs to install into rootfs
+    . /stacker/$DISTRO-pkgs.sh
+    # source pkgmgr func defs
+    . /stacker/defs.sh
+    # build the rootfs
+    build_rootfs
+  build_only: true
+
+base-${{DISTRO}}-${{ARCH}}:
+  from:
+    type: tar
+    url: stacker://build-base/rootfs.tar
