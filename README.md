@@ -1,4 +1,4 @@
-# c3: "containers, containers, containers" for everyone!
+# c3: "composing concise containers" for everyone!
 
 OCI-native distroless containers built using
 [stacker](https://github.com/project-stacker/stacker).

@@ -66,7 +66,10 @@ jobs:
           echo IMAGE_TAG=$IMAGE_TAG >> $GITHUB_ENV
       - name: Run zot container image with podman
         run: |
-          podman run -d -p 5000:5000 ghcr.io/project-zot/zot-linux-amd64:latest
+          wget -N https://raw.githubusercontent.com/project-zot/zot/main/examples/config-cve.json
+          sed -i s/127\.0\.0\.1/0.0.0.0/g config-cve.json
+          sed -i s/8080/5000/g config-cve.json
+          podman run -d -p 5000:5000 -v $PWD/config-cve.json:/etc/zot/config.json ghcr.io/project-zot/zot-linux-amd64:latest
       - name: Build container images
         uses: project-stacker/stacker-build-push-action@main
         with:
@@ -84,6 +87,15 @@ jobs:
           url: docker://localhost:5000/${{ github.repository_owner }}/c3
           tags: ${{ env.IMAGE_TAG }}
           skip-tls: true
+      - name: Scan container images
+        run: |
+          # download zli
+          wget -N https://github.com/project-zot/zot/releases/download/v1.4.2-rc5/zli-linux-amd64 -O zli
+          chmod +x ./zli
+          ./zli config add local http://localhost:5000
+          ./zli config local verify-tls false
+          ./zli config local showspinner false
+          ./zli cve local -I ${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
   release:
     name: Release
     if: github.event_name == 'release' && github.event.action == 'published'
@@ -164,6 +176,14 @@ jobs:
           tags: ${{ env.IMAGE_TAG }}
           username: ${{ secrets.ZOTHUB_USERNAME }}
           password: ${{ secrets.ZOTHUB_PASSWORD }}
+      - name: Scan container images
+        run: |
+          # download zli
+          wget -N https://github.com/project-zot/zot/releases/download/v1.4.2-rc5/zli-linux-amd64 -O zli
+          chmod +x ./zli
+          ./zli config add zothub https://zothub.io
+          ./zli config zothub showspinner false
+          ./zli cve zothub -I ${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
       - name: Login to zothub.io Registry
         uses: docker/login-action@v2
         with:
