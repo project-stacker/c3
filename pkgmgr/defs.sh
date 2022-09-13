@@ -39,11 +39,13 @@ unpack_deb() {
 
   dldir=$(mktemp -d "${TMPDIR:-/tmp}"/XXXXXX)
 
+  dpkg --add-architecture "$ARCH"
+
   DEBIAN_FRONTEND=noninteractive \
     apt-get -y --reinstall install \
     "--option=Dir::Cache::Archives=$dldir" \
     --download-only \
-    "$pkg"
+    "$pkg":"$ARCH"
 
   echo DLDIR="$dldir"
   ls "$dldir"
