@@ -44,13 +44,14 @@ unpack_deb() {
   DEBIAN_FRONTEND=noninteractive \
     apt-get -y --reinstall install \
     "--option=Dir::Cache::Archives=$dldir" \
+    --no-install-recommends \
     --download-only \
     "$pkg":"$ARCH"
 
   echo DLDIR="$dldir"
   ls "$dldir"
 
-  dpkg-deb -xv "$dldir"/"$pkg"*.deb "$rootfs"
+  dpkg-deb -xv "$dldir"/"$pkg"_*.deb "$rootfs"
 
   rm -rf "$dldir"
 }
