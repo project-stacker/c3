@@ -1,5 +1,5 @@
 
-SUBDIRS := static base go-devel
+SUBDIRS := static base go-devel openj9-devel
 
 .PHONY: all
 all: subdirs
