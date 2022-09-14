@@ -57,7 +57,7 @@ jobs:
             TAG=$DISTRO_REL
           elif [ "${{ matrix.image }}" == "go-devel" ]; then
             TAG=$GOLANG
-          elif [ "${{ matrix.image }}" == "openj9-devel" ]; then
+          elif [ "${{ matrix.image }}" == "openj9-devel" ] || [ "${{ matrix.image }}" == "openj9" ]; then
             TAG=$(echo $OPENJDK | awk -F "." '/1/ {print $1}')
           else
             exit 1
