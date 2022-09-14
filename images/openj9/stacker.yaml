@@ -64,7 +64,7 @@ openj9-${{DISTRO}}-${{ARCH}}:
 run-openj9:
   from:
     type: built
-    tag: openj9-devel-${{DISTRO}}-${{ARCH}}
+    tag: openj9-${{DISTRO}}-${{ARCH}}
   import:
     - stacker://test-openj9-devel/jdk/src/test.jar
   run: |
