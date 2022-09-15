@@ -208,8 +208,8 @@ jobs:
           rm -rf oras_0.14.1_*.tar.gz oras-install/
           oras version
           # add annotations
-          DESC=$(cat images/$IMAGE/README.md)
-          LICENSE=$(cat images/$IMAGE/LICENSE.md)
+          DESC=$(cat images/${{ matrix.image }}/README.md)
+          LICENSE=$(cat images/${{ matrix.image }}/LICENSE.md)
           echo "{\"\$manifest\": {
               \"org.opencontainers.image.title\":\"${{ github.repository_owner }}/c3/${{ env.IMAGE }}\",
               \"org.opencontainers.image.description\":\"$DESC\",
