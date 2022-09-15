@@ -206,7 +206,7 @@ jobs:
             }
           }" > annotations.json
           cat annotations.json
-          oras push --annotation-file annotations.json zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
+          oras push zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }} --artifact-type "application/vnd.oci.image.config.v1+json" --annotation-file annotations.json
       - name: Install go
         uses: actions/setup-go@v3
         with:
