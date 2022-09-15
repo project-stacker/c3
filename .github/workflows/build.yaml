@@ -154,6 +154,26 @@ jobs:
           echo IMAGE=${{ matrix.image }}-$DISTRO-${{ matrix.arch }} >> $GITHUB_ENV
           IMAGE_TAG=$TAG
           echo IMAGE_TAG=$IMAGE_TAG >> $GITHUB_ENV
+      - name: Publish container images to zothub.io
+        uses: project-stacker/stacker-build-push-action@main
+        with:
+          file: images/${{ matrix.image }}/stacker.yaml
+          build-args: |
+            COMMIT=${{ github.sha }}
+            OS=${{ matrix.os }}
+            ARCH=${{ matrix.arch }}
+            DISTRO=${{ env.DISTRO }}
+            DISTRO_REL=${{ env.DISTRO_REL }}
+            BUSYBOX=${{ env.BUSYBOX }}
+            GOLANG=${{ env.GOLANG }}
+            GOLANG_DLV=${{ env.GOLANG_DLV }}
+            GOLANG_LINTER=${{ env.GOLANG_LINTER }}
+            OPENJDK=${{ env.OPENJDK }}
+            OPENJ9=${{ env.OPENJ9 }}
+          url: docker://zothub.io/${{ github.repository_owner }}/c3
+          tags: ${{ env.IMAGE_TAG }}
+          username: ${{ secrets.ZOTHUB_USERNAME }}
+          password: ${{ secrets.ZOTHUB_PASSWORD }}
       - name: Scan container images
         run: |
           # download zli
@@ -198,26 +218,6 @@ jobs:
           cosign-release: main
       - name: Check cosign install!
         run: cosign version
-      - name: Publish container images to zothub.io
-        uses: project-stacker/stacker-build-push-action@main
-        with:
-          file: images/${{ matrix.image }}/stacker.yaml
-          build-args: |
-            COMMIT=${{ github.sha }}
-            OS=${{ matrix.os }}
-            ARCH=${{ matrix.arch }}
-            DISTRO=${{ env.DISTRO }}
-            DISTRO_REL=${{ env.DISTRO_REL }}
-            BUSYBOX=${{ env.BUSYBOX }}
-            GOLANG=${{ env.GOLANG }}
-            GOLANG_DLV=${{ env.GOLANG_DLV }}
-            GOLANG_LINTER=${{ env.GOLANG_LINTER }}
-            OPENJDK=${{ env.OPENJDK }}
-            OPENJ9=${{ env.OPENJ9 }}
-          url: docker://zothub.io/${{ github.repository_owner }}/c3
-          tags: ${{ env.IMAGE_TAG }}
-          username: ${{ secrets.ZOTHUB_USERNAME }}
-          password: ${{ secrets.ZOTHUB_PASSWORD }}
       - name: Sign image with a key
         run: |
           cosign sign --key env://COSIGN_PRIVATE_KEY zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${TAGS}
