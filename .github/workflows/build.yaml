@@ -217,7 +217,7 @@ jobs:
             }
           }" > annotations.json
           cat annotations.json
-          oras push --registry-config ~/.docker/config.json --manifest-annotations annotations.json zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
+          oras push --registry-config ~/.docker/config.json --annotation-file annotations.json zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
       - name: Sign image with a key
         run: |
           cosign sign --key env://COSIGN_PRIVATE_KEY zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${TAGS}
