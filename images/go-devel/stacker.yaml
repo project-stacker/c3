@@ -4,14 +4,15 @@ config:
   prerequisites:
     - ../static/stacker.yaml
     - ../base/stacker.yaml
+    - ../devel/stacker.yaml
 
 build-go-devel:
   from:
     type: built
-    tag: build-base
+    tag: build-devel
   import:
     - ../../pkgmgr/defs.sh
-    - stacker://build-base/rootfs.tar
+    - stacker://build-devel/rootfs.tar
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -33,8 +34,10 @@ build-go-devel:
     # prepare the rootfs
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install go
-    wget -N https://go.dev/dl/go${GOLANG}.${OS}-${ARCH}.tar.gz -P $dldir
-    tar xvzf $dldir/go${GOLANG}.${OS}-${ARCH}.tar.gz -C /opt/
+    wget -N https://go.dev/dl/go${GOLANG}.${OS}-${ARCH}.tar.gz -O $dldir/golang.tar.gz
+    echo "acc512fbab4f716a8f97a8b3fbaa9ddd39606a28be6c2515ef7c6c6311acffde  $dldir/golang.tar.gz" > SHA256SUMS
+    sha256sum -c SHA256SUMS
+    tar xvzf $dldir/golang.tar.gz -C /opt/
     export GOROOT=/opt/go
     export PATH=$GOROOT/bin:$PATH
     mkdir -p /go
@@ -47,7 +50,7 @@ build-go-devel:
     go install github.com/go-delve/delve/cmd/dlv@${GOLANG_DLV}
     # copy binaries under /opt/bin
     mkdir -p rootfs/opt/bin
-    tar xvzf $dldir/go${GOLANG}.${OS}-${ARCH}.tar.gz -C rootfs/opt/
+    tar xvzf $dldir/golang.tar.gz -C rootfs/opt/
     cp $GOPATH/bin/golangci-lint rootfs/opt/go/bin/
     cp $GOPATH/bin/dlv rootfs/opt/go/bin/
     # install busybox

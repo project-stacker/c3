@@ -5,9 +5,6 @@ on:
   pull_request:
     branches:
       - main
-  pull_request_target:
-    branches:
-      - main
   release:
     types:
       - published
@@ -74,7 +71,7 @@ jobs:
           sed -i s/127\.0\.0\.1/0.0.0.0/g config-cve.json
           sed -i s/8080/5000/g config-cve.json
           podman run -d -p 5000:5000 -v $PWD/config-cve.json:/etc/zot/config.json ghcr.io/project-zot/zot-linux-amd64:latest
-      - name: Build container images
+      - name: Build and push container images
         uses: project-stacker/stacker-build-push-action@main
         with:
           file: images/${{ matrix.image }}/stacker.yaml
@@ -202,6 +199,25 @@ jobs:
           registry: zothub.io
           username: ${{ secrets.ZOTHUB_USERNAME }}
           password: ${{ secrets.ZOTHUB_PASSWORD }}
+      - name: Push image annotations
+        run: |
+          curl -LO https://github.com/oras-project/oras/releases/download/v0.14.1/oras_0.14.1_linux_amd64.tar.gz
+          mkdir -p oras-install/
+          tar -zxf oras_0.14.1_*.tar.gz -C oras-install/
+          sudo mv oras-install/oras /usr/bin/
+          rm -rf oras_0.14.1_*.tar.gz oras-install/
+          oras version
+          # add annotations
+          DESC=$(cat images/$IMAGE/README.md)
+          LICENSE=$(cat images/$IMAGE/LICENSE.md)
+          echo "{\"\$manifest\": {
+              \"org.opencontainers.image.title\":\"${{ github.repository_owner }}/c3/${{ env.IMAGE }}\",
+              \"org.opencontainers.image.description\":\"$DESC\",
+              \"org.opencontainers.image.licenses\":\"$LICENSE\"
+            }
+          }" > annotations.json
+          cat annotations.json
+          oras push --registry-config ~/.docker/config.json --manifest-annotations annotations.json zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
       - name: Sign image with a key
         run: |
           cosign sign --key env://COSIGN_PRIVATE_KEY zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${TAGS}

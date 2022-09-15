@@ -34,11 +34,13 @@ build-openj9:
     # prepare the rootfs
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install openjdk/j9
-    wget -N 'https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-$OPENJDK%2B1_openj9-$OPENJ9/ibm-semeru-open-jre_x64_linux_$OPENJDK_1_openj9-$OPENJ9.tar.gz' -P $dldir -O openj9.tar.gz
+    wget -N 'https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-$OPENJDK%2B1_openj9-$OPENJ9/ibm-semeru-open-jre_x64_linux_$OPENJDK_1_openj9-$OPENJ9.tar.gz' -O $dldir/openj9.tar.gz
+    echo "038a44d5c81f14bce6458040f7b4eec48535dcbbdc59e3c536d6adc3326b64c7  $dldir/openj9.tar.gz" > SHA256SUMS
+    sha256sum -c SHA256SUMS
     # copy binaries under /opt/bin
     mkdir -p rootfs/opt/bin
     mkdir -p rootfs/opt/jre/
-    tar xvzf openj9.tar.gz -C rootfs/opt/jre/ --strip-components=1
+    tar xvzf $dldir/openj9.tar.gz -C rootfs/opt/jre/ --strip-components=1
     # source pkgs to install into rootfs
     . /stacker/$DISTRO-pkgs.sh
     # install pkgs
@@ -77,4 +79,3 @@ run-openj9:
     cp /stacker/test.jar .
     java -cp test.jar test
   build_only: true
-
