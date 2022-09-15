@@ -202,7 +202,9 @@ jobs:
           echo "{\"\$manifest\": {
               \"org.opencontainers.image.title\":\"${{ github.repository_owner }}/c3/${{ env.IMAGE }}\",
               \"org.opencontainers.image.description\":\"$DESC\",
-              \"org.opencontainers.image.licenses\":\"$LICENSE\"
+              \"org.opencontainers.image.licenses\":\"$LICENSE\",
+              \"org.opencontainers.image.os\":\"${{ matrix.os }}\",
+              \"org.opencontainers.image.architecture\":\"${{ matrix.arch }}\"
             }
           }" > annotations.json
           cat annotations.json
