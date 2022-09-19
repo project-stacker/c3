@@ -188,27 +188,6 @@ jobs:
           registry: zothub.io
           username: ${{ secrets.ZOTHUB_USERNAME }}
           password: ${{ secrets.ZOTHUB_PASSWORD }}
-      - name: Push image annotations
-        run: |
-          curl -LO https://github.com/oras-project/oras/releases/download/v0.14.1/oras_0.14.1_linux_amd64.tar.gz
-          mkdir -p oras-install/
-          tar -zxf oras_0.14.1_*.tar.gz -C oras-install/
-          sudo mv oras-install/oras /usr/bin/
-          rm -rf oras_0.14.1_*.tar.gz oras-install/
-          oras version
-          # add annotations
-          DESC=$(cat images/${{ matrix.image }}/README.md)
-          LICENSE=$(cat images/${{ matrix.image }}/LICENSE.md)
-          echo "{\"\$manifest\": {
-              \"org.opencontainers.image.title\":\"${{ github.repository_owner }}/c3/${{ env.IMAGE }}\",
-              \"org.opencontainers.image.description\":\"$DESC\",
-              \"org.opencontainers.image.licenses\":\"$LICENSE\",
-              \"org.opencontainers.image.os\":\"${{ matrix.os }}\",
-              \"org.opencontainers.image.architecture\":\"${{ matrix.arch }}\"
-            }
-          }" > annotations.json
-          cat annotations.json
-          oras push zothub.io/${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }} --artifact-type "application/vnd.oci.image.config.v1+json" --annotation-file annotations.json
       - name: Install go
         uses: actions/setup-go@v3
         with:
