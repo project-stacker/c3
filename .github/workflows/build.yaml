@@ -46,7 +46,6 @@ jobs:
           echo DISTRO=$DISTRO >> $GITHUB_ENV
           DISTRO_REL=$(echo $x| awk '{print $2}')
           echo DISTRO_REL=$DISTRO_REL >> $GITHUB_ENV
-          # build image tag
           cat config.mk | sed /^#.*$/d | sed s/\?=/=/g | sed s/#.*$//g | egrep -v "COMMIT|MAKE|DISTRO" > config.vars
           cat ./config.vars
           source ./config.vars
@@ -60,11 +59,14 @@ jobs:
             exit 1
           fi
           SHA=${{ github.sha }}
+          SHA=${SHA::7}
           echo SHA=$SHA >> $GITHUB_ENV
           echo IMAGE=${{ matrix.image }}-$DISTRO-${{ matrix.arch }} >> $GITHUB_ENV
-          IMAGE_TAG=$TAG-${SHA::7}
+          IMAGE_TAG=$TAG-${SHA}
           echo IMAGE_TAG=$IMAGE_TAG
           echo IMAGE_TAG=$IMAGE_TAG >> $GITHUB_ENV
+          echo DESCRIPTION="$(cat images/${{ matrix.image }}/README.md)" >> $GITHUB_ENV
+          echo LICENSES="$(cat images/${{ matrix.image }}/LICENSE.md)" >> $GITHUB_ENV
       - name: Run zot container image with podman
         run: |
           wget -N https://raw.githubusercontent.com/project-zot/zot/main/examples/config-cve.json
@@ -76,7 +78,9 @@ jobs:
         with:
           file: images/${{ matrix.image }}/stacker.yaml
           build-args: |
-            COMMIT=${{ github.sha }}
+            REVISION=${{ env.SHA }}
+            DESCRIPTION="${{ env.DESCRIPTION }}"
+            LICENSES="${{ env.LICENSES }}"
             OS=${{ matrix.os }}
             ARCH=${{ matrix.arch }}
             DISTRO=${{ env.DISTRO }}
@@ -136,7 +140,6 @@ jobs:
           echo DISTRO=$DISTRO >> $GITHUB_ENV
           DISTRO_REL=$(echo $x| awk '{print $2}')
           echo DISTRO_REL=$DISTRO_REL >> $GITHUB_ENV
-          # build image tag
           cat config.mk | sed /^#.*$/d | sed s/\?=/=/g | sed s/#.*$//g | egrep -v "COMMIT|MAKE|DISTRO" > config.vars
           cat ./config.vars
           source ./config.vars
@@ -150,16 +153,21 @@ jobs:
             exit 1
           fi
           SHA=${{ github.sha }}
+          SHA=${SHA::7}
           echo SHA=$SHA >> $GITHUB_ENV
           echo IMAGE=${{ matrix.image }}-$DISTRO-${{ matrix.arch }} >> $GITHUB_ENV
           IMAGE_TAG=$TAG
           echo IMAGE_TAG=$IMAGE_TAG >> $GITHUB_ENV
+          echo DESCRIPTION="$(cat images/${{ matrix.image }}/README.md)" >> $GITHUB_ENV
+          echo LICENSES="$(cat images/${{ matrix.image }}/LICENSE.md)" >> $GITHUB_ENV
       - name: Publish container images to zothub.io
         uses: project-stacker/stacker-build-push-action@main
         with:
           file: images/${{ matrix.image }}/stacker.yaml
           build-args: |
-            COMMIT=${{ github.sha }}
+            REVISION=${{ env.SHA }}
+            DESCRIPTION="${{ env.DESCRIPTION }}"
+            LICENSES="${{ env.LICENSES }}"
             OS=${{ matrix.os }}
             ARCH=${{ matrix.arch }}
             DISTRO=${{ env.DISTRO }}

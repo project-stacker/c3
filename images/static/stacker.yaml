@@ -1,6 +1,3 @@
-# "static" is an image that can be used to
-# package statically built binaries (go, rust, etc)
-
 build-static:
   from:
     type: docker
@@ -25,3 +22,12 @@ static-${{DISTRO}}-${{ARCH}}:
   from:
     type: tar
     url: stacker://build-static/rootfs.tar
+  annotations:
+    org.opencontainers.image.title: static-${{DISTRO}}-${{ARCH}}
+    org.opencontainers.image.description: ${{DESCRIPTION}}
+    org.opencontainers.image.url: https://github.com/project-stacker/c3
+    org.opencontainers.image.source: https://github.com/project-stacker/c3
+    org.opencontainers.image.version: ${{DISTRO_REL}}
+    org.opencontainers.image.revision: ${{REVISION}}
+    org.opencontainers.image.licenses: ${{LICENSES}}
+    org.opencontainers.image.vendor: Cisco Systems, Inc.
