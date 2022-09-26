@@ -1,5 +1,3 @@
-# "openj9-devel" is an image that can be used to do Java development
-
 config:
   prerequisites:
     - ../static/stacker.yaml
@@ -59,9 +57,18 @@ openj9-${{DISTRO}}-${{ARCH}}:
     url: stacker://build-openj9/rootfs.tar
   run: |
     echo 'export HOME=/jre' > /etc/profile
-    echo 'export JAVA_HOME=/opt/jre' > /etc/profile
+    echo 'export JAVA_HOME=/opt/jre' >> /etc/profile
     echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
   full_command: "/bin/sh -l"
+  annotations:
+    org.opencontainers.image.title: openj9-${{DISTRO}}-${{ARCH}}
+    org.opencontainers.image.description: ${{DESCRIPTION}}
+    org.opencontainers.image.url: https://github.com/project-stacker/c3
+    org.opencontainers.image.source: https://github.com/project-stacker/c3
+    org.opencontainers.image.version: ${{OPENJDK}}
+    org.opencontainers.image.revision: ${{REVISION}}
+    org.opencontainers.image.licenses: ${{LICENSES}}
+    org.opencontainers.image.vendor: Cisco Systems, Inc.
 
 run-openj9:
   from:

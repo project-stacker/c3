@@ -1,6 +1,3 @@
-# "base" is an image that can be used to package binaries
-# that require libc runtime
-
 config:
   prerequisites:
     - ../static/stacker.yaml
@@ -32,3 +29,12 @@ base-${{DISTRO}}-${{ARCH}}:
   from:
     type: tar
     url: stacker://build-base/rootfs.tar
+  annotations:
+    org.opencontainers.image.title: base-${{DISTRO}}-${{ARCH}}
+    org.opencontainers.image.description: ${{DESCRIPTION}}
+    org.opencontainers.image.url: https://github.com/project-stacker/c3
+    org.opencontainers.image.source: https://github.com/project-stacker/c3
+    org.opencontainers.image.version: ${{DISTRO_REL}}
+    org.opencontainers.image.revision: ${{REVISION}}
+    org.opencontainers.image.licenses: ${{LICENSES}}
+    org.opencontainers.image.vendor: Cisco Systems, Inc.

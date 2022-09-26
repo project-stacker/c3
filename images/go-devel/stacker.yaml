@@ -1,5 +1,3 @@
-# "go-devel" is an image that can be used to do golang development
-
 config:
   prerequisites:
     - ../static/stacker.yaml
@@ -72,6 +70,15 @@ go-devel-${{DISTRO}}-${{ARCH}}:
     echo 'mkdir -p /tmp/go/cache'  >> /etc/profile
     echo 'export GOCACHE=/tmp/go/cache' >> /etc/profile
   full_command: "/bin/sh -l"
+  annotations:
+    org.opencontainers.image.title: go-devel-${{DISTRO}}-${{ARCH}}
+    org.opencontainers.image.description: ${{DESCRIPTION}}
+    org.opencontainers.image.url: https://github.com/project-stacker/c3
+    org.opencontainers.image.source: https://github.com/project-stacker/c3
+    org.opencontainers.image.version: ${{GOLANG}}
+    org.opencontainers.image.revision: ${{REVISION}}
+    org.opencontainers.image.licenses: ${{LICENSES}}
+    org.opencontainers.image.vendor: Cisco Systems, Inc.
 
 test-go-devel:
   from:

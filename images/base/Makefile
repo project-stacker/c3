@@ -9,7 +9,9 @@ all: $(IMAGES) test
 .PHONY: %
 %:
 	stacker build -f $*.yaml \
-		--substitute BUILD_ID=$(COMMIT) \
+		--substitute REVISION=$(COMMIT) \
+		--substitute LICENSES="$(shell cat LICENSE.md)" \
+		--substitute DESCRIPTION="$(shell cat README.md)" \
 		--substitute OS=$(OS) \
 		--substitute ARCH=$(ARCH) \
 		--substitute DISTRO=$(DISTRO) \
