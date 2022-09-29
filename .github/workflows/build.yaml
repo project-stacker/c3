@@ -37,6 +37,17 @@ jobs:
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
+      - name: Cache stacker builds
+        id: cache-stacker-builds
+        uses: actions/cache@v3
+        with:
+          path: |
+            .stacker/
+            roots/
+            oci/
+          key: ${{ runner.os }}-stacker-builds-${{ matrix.image }}${{ hashFiles('images/**/stacker.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-stacker-builds-
       - name: Setup env vars
         run: |
           cat config.mk | sed /^#.*$/d | sed s/\?=/=/g | sed s/#.*$//g | egrep -v "COMMIT|MAKE|DISTRO" > $GITHUB_ENV
@@ -103,6 +114,11 @@ jobs:
           ./zli config local verify-tls false
           ./zli config local showspinner false
           ./zli cve local -I ${{ github.repository_owner }}/c3/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
+      - name: Post Build - modify permission rights on stacker cache dirs
+        run: |
+          sudo chmod -R a+r .stacker/
+          sudo chmod -R a+r roots/
+          sudo chmod -R a+r oci/
   release:
     name: Release
     if: github.event_name == 'release' && github.event.action == 'published'
@@ -131,6 +147,17 @@ jobs:
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
+      - name: Cache stacker builds
+        id: cache-stacker-builds
+        uses: actions/cache@v3
+        with:
+          path: |
+            .stacker/
+            roots/
+            oci/
+          key: ${{ runner.os }}-stacker-builds-${{ matrix.image }}${{ hashFiles('images/**/stacker.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-stacker-builds-
       - name: Setup env vars
         run: |
           cat config.mk | sed /^#.*$/d | sed s/\?=/=/g | sed s/#.*$//g | egrep -v "COMMIT|MAKE|DISTRO" > $GITHUB_ENV
@@ -214,3 +241,9 @@ jobs:
           TAGS: ${{ env.IMAGE_TAG }}
           COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
           COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
+        # needed for actions/cache
+      - name: Post Build - modify permission rights on stacker cache dirs
+        run: |
+          sudo chmod -R a+r .stacker/
+          sudo chmod -R a+r roots/
+          sudo chmod -R a+r oci/
