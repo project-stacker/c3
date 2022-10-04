@@ -12,9 +12,15 @@ Images from this repo are built, signed using
 **DISCLAIMER**: These images are experimental. We assume no responsibility for
 these. Use these images at your own risk.
 
+## Build Images Locally
+
+```
+$ make
+```
+
 ## List of Images
 
-The following [images](./images) built and published. All `*-devel` have the [`busybox`](https://busybox.net/) shell packaged.
+The following [images](./images) are built and published. All `*-devel` images have [`busybox`](https://busybox.net/) shell packaged.
 
 ```
 zothub.io/project-stacker/c3/base-debian-amd64                              bullseye                  e8ea3b49      7.5MB
