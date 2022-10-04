@@ -34,6 +34,26 @@ zothub.io/project-stacker/c3/static-rockylinux-amd64                        9   
 zothub.io/project-stacker/c3/static-ubuntu-amd64                            jammy                     d2e150be      880kB
 ```
 
+## Verify Image Signatures
+
+```
+$ cat << EOF > cosign.pub
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE3zTfLns0khZYaHjq2a3eMOYQMPYb
+GCDqRLgXRNVN6qcKoGhvM2yvNnl8g3MpbuvusJGZF1c6TdedluirqS4Y/w==
+-----END PUBLIC KEY-----
+EOF
+
+$ cosign verify --key cosign.pub zothub.io/project-stacker/c3/go-devel-ubuntu-amd64:1.19.1
+
+Verification for zothub.io/project-stacker/c3/go-devel-ubuntu-amd64:1.19.1 --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - The signatures were verified against the specified public key
+
+[{"critical":{"identity":{"docker-reference":"zothub.io/project-stacker/c3/go-devel-ubuntu-amd64"},"image":{"docker-manifest-digest":"sha256:e426048cc64ca2c8d4b73cdf4b466e0cbb902e6ae35381c05eea63265c225b1b"},"type":"cosign container image signature"},"optional":null}]
+```
+
 ## Testing `*-devel` Images
 
 ### With `podman`
