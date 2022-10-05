@@ -12,6 +12,17 @@ Images from this repo are built, signed using
 **DISCLAIMER**: These images are experimental. We assume no responsibility for
 these. Use these images at your own risk.
 
+## Prerequisites
+
+* Requires a Linux environment with recent 5.x kernel.
+
+* Download `stacker` binary and add it to your `PATH`.
+
+```
+wget -N https://github.com/project-stacker/stacker/releases/latest/download/stacker
+chmod +x ./stacker
+```
+
 ## Build Images Locally
 
 ```
