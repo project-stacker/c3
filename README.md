@@ -81,3 +81,10 @@ $ podman run -it zothub.io/project-stacker/c3/go-devel-ubuntu-amd64:1.19.1
 go version go1.19.1 linux/amd64
 / #
 ```
+
+# Contributing
+
+We encourage and support an active, healthy community of contributors.
+
+* Details are in the [code of conduct](./CODE_OF_CONDUCT.md)
+* Details to get started on code development are in [contributing](./CONTRIBUTING.md) document.
