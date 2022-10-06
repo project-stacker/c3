@@ -33,7 +33,7 @@ build-go-devel:
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install go
     wget -N https://go.dev/dl/go${GOLANG}.${OS}-${ARCH}.tar.gz -O $dldir/golang.tar.gz
-    echo "acc512fbab4f716a8f97a8b3fbaa9ddd39606a28be6c2515ef7c6c6311acffde  $dldir/golang.tar.gz" > SHA256SUMS
+    echo "${{GOLANG_HASH}}  $dldir/golang.tar.gz" > SHA256SUMS
     sha256sum -c SHA256SUMS
     tar xvzf $dldir/golang.tar.gz -C /opt/
     export GOROOT=/opt/go

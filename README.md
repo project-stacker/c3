@@ -26,13 +26,6 @@ The container images are built based on use cases. It is possible that some of t
 
 * Requires a Linux environment with recent 5.x kernel.
 
-* Download `stacker` binary and add it to your `PATH`.
-
-```
-wget -N https://github.com/project-stacker/stacker/releases/latest/download/stacker
-chmod +x ./stacker
-```
-
 ## Build Images Locally
 
 ```

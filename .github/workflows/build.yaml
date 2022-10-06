@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - images/**
+      - config.mk
     branches:
       - main
   release:
@@ -91,6 +92,7 @@ jobs:
             DISTRO_REL=${{ env.DISTRO_REL }}
             BUSYBOX=${{ env.BUSYBOX }}
             GOLANG=${{ env.GOLANG }}
+            GOLANG_HASH=${{ env.GOLANG_HASH }}
             GOLANG_DLV=${{ env.GOLANG_DLV }}
             GOLANG_LINTER=${{ env.GOLANG_LINTER }}
             OPENJDK=${{ env.OPENJDK }}
@@ -178,6 +180,7 @@ jobs:
             DISTRO_REL=${{ env.DISTRO_REL }}
             BUSYBOX=${{ env.BUSYBOX }}
             GOLANG=${{ env.GOLANG }}
+            GOLANG_HASH=${{ env.GOLANG_HASH }}
             GOLANG_DLV=${{ env.GOLANG_DLV }}
             GOLANG_LINTER=${{ env.GOLANG_LINTER }}
             OPENJDK=${{ env.OPENJDK }}
