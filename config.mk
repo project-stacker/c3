@@ -8,7 +8,8 @@ DISTRO_REL?=jammy	# other options: bullseye, 9
 # busybox
 BUSYBOX?=1.35.0
 # go
-GOLANG?=1.19.1
+GOLANG?=1.19.2
+GOLANG_HASH?=5e8c5a74fe6470dd7e055a461acda8bb4050ead8c2df70f227e3ff7d8eb7eeb6
 GOLANG_DLV?=v1.9.1
 GOLANG_LINTER?=v1.49.0
 # openj9
