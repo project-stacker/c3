@@ -41,7 +41,7 @@ jobs:
           - openj9-devel
     steps:
       - name: Check out source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.1.0
       - name: Setup env vars
         run: |
           cat config.mk | sed /^#.*$/d | sed s/\?=/=/g | sed s/#.*$//g | egrep -v "COMMIT|MAKE|DISTRO" > $GITHUB_ENV
@@ -136,7 +136,7 @@ jobs:
           - openj9-devel
     steps:
       - name: Check out source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.1.0
       - name: Setup env vars
         run: |
           cat config.mk | sed /^#.*$/d | sed s/\?=/=/g | sed s/#.*$//g | egrep -v "COMMIT|MAKE|DISTRO" > $GITHUB_ENV
