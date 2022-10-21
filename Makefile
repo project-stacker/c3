@@ -4,6 +4,8 @@ TOOLS_DIR := hack/tools
 TOOLS_BIN_DIR := $(TOOLS_DIR)/bin
 export STACKER := $(TOOLS_BIN_DIR)/stacker
 
+export BUILD_DIR := build/
+
 SUBDIRS := images
 
 .PHONY: all
@@ -16,6 +18,7 @@ $(STACKER):
 
 .PHONY: subdirs
 subdirs:
+	mkdir -p $(BUILD_DIR)
 	for dir in $(SUBDIRS); do \
 		$(MAKE) -C $$dir; \
 	done

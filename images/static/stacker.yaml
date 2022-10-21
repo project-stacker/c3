@@ -18,12 +18,12 @@ build-static:
     build_rootfs
   build_only: true
 
-static-${{DISTRO}}-${{ARCH}}:
+static-${{ARCH}}:
   from:
     type: tar
     url: stacker://build-static/rootfs.tar
   annotations:
-    org.opencontainers.image.title: static-${{DISTRO}}-${{ARCH}}
+    org.opencontainers.image.title: static-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}
     org.opencontainers.image.url: https://github.com/project-stacker/c3
     org.opencontainers.image.source: https://github.com/project-stacker/c3

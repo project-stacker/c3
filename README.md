@@ -14,13 +14,19 @@ these. Use these images at your own risk.
 
 ## Guiding Principles
 
-* This is **not** a new distribution!
+* This is **NOT** a new distribution!
 
-_Maintained distributions_ are hard because it is a continuous process of updating dependencies and fixing functional and security bugs. Instead the approach we have taken is to use existing distributions (they are good at what they do) and produce images that developers can then use to build their own, while keeping the entire build process transparent.
+_Maintained distributions_ are hard because it is a continuous process of
+updating dependencies and fixing functional and security bugs. Instead, the
+approach we have taken is to use existing distributions (they are good at what
+they do) and produce images that developers can then use to build their own,
+while keeping the entire build process transparent.
 
 * Package only what is needed and nothing more!
 
-The container images are built based on use cases. It is possible that some of the images may not have your favorite tools or binaries. You are welcome to submit a PR or build your own private images based on these.
+The container images are built based on use cases. It is possible that some of
+the images may not have your favorite tools or binaries. You are welcome to
+submit a PR or build your own private images based on these.
 
 ## Prerequisites
 
