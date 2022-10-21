@@ -32,7 +32,7 @@ build-openj9-devel:
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install openjdk/j9
     wget -N 'https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-$OPENJDK%2B1_openj9-$OPENJ9/ibm-semeru-open-jdk_x64_linux_$OPENJDK_1_openj9-$OPENJ9.tar.gz' -O $dldir/openj9.tar.gz
-    echo "4eb9dc86bf92e144d7a2c8d6c2a6beac28c17b7348f2f0524e715548f52fd8f1  $dldir/openj9.tar.gz" > SHA256SUMS
+    echo "${{OPENJ9_JDK_HASH}}  $dldir/openj9.tar.gz" > SHA256SUMS
     sha256sum -c SHA256SUMS
     # copy binaries under /opt/bin
     mkdir -p rootfs/opt/bin
@@ -50,7 +50,7 @@ build-openj9-devel:
     rm -rf rootfs
   build_only: true
 
-openj9-devel-${{DISTRO}}-${{ARCH}}:
+openj9-devel-${{ARCH}}:
   from:
     type: tar
     url: stacker://build-openj9-devel/rootfs.tar
@@ -60,7 +60,7 @@ openj9-devel-${{DISTRO}}-${{ARCH}}:
     echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
   full_command: "/bin/sh -l"
   annotations:
-    org.opencontainers.image.title: openj9-devel-${{DISTRO}}-${{ARCH}}
+    org.opencontainers.image.title: openj9-devel-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}
     org.opencontainers.image.url: https://github.com/project-stacker/c3
     org.opencontainers.image.source: https://github.com/project-stacker/c3
@@ -72,7 +72,7 @@ openj9-devel-${{DISTRO}}-${{ARCH}}:
 test-openj9-devel:
   from:
     type: built
-    tag: openj9-devel-${{DISTRO}}-${{ARCH}}
+    tag: openj9-devel-${{ARCH}}
   import:
     - ../test/test.java
   run: |
@@ -96,7 +96,7 @@ test-openj9-devel:
 run-openj9-devel:
   from:
     type: built
-    tag: openj9-devel-${{DISTRO}}-${{ARCH}}
+    tag: openj9-devel-${{ARCH}}
   import:
     - stacker://test-openj9-devel/jdk/src/test.jar
   run: |

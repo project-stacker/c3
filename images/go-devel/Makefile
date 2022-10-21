@@ -2,7 +2,8 @@ include ../../config.mk
 
 TOOLS_DIR := ../../hack/tools
 TOOLS_BIN_DIR := $(TOOLS_DIR)/bin
-export STACKER := $(TOOLS_BIN_DIR)/stacker
+STACKER := $(TOOLS_BIN_DIR)/stacker
+BUILD_DIR := ../../build
 
 SRC := $(wildcard *.yaml)
 IMAGES := $(patsubst %.yaml,%,$(SRC))
@@ -12,7 +13,11 @@ all: $(IMAGES) test
 
 .PHONY: %
 %:
-	$(STACKER) --debug build -f $*.yaml \
+	$(STACKER) \
+		--stacker-dir $(BUILD_DIR)/.stacker \
+		--oci-dir $(BUILD_DIR)/oci \
+		--roots-dir $(BUILD_DIR)/roots \
+		build -f $*.yaml \
 		--substitute REVISION=$(COMMIT) \
 		--substitute LICENSES="$(shell cat LICENSE.md)" \
 		--substitute DESCRIPTION="$(shell cat README.md)" \
@@ -31,4 +36,8 @@ test:
 
 .PHONY: clean
 clean:
-	$(STACKER) clean
+	$(STACKER) \
+		--stacker-dir $(BUILD_DIR)/.stacker \
+		--oci-dir $(BUILD_DIR)/oci \
+		--roots-dir $(BUILD_DIR)/roots \
+		clean

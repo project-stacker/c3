@@ -59,7 +59,7 @@ build-go-devel:
     rm -rf rootfs
   build_only: true
 
-go-devel-${{DISTRO}}-${{ARCH}}:
+go-devel-${{ARCH}}:
   from:
     type: tar
     url: stacker://build-go-devel/rootfs.tar
@@ -71,7 +71,7 @@ go-devel-${{DISTRO}}-${{ARCH}}:
     echo 'export GOCACHE=/tmp/go/cache' >> /etc/profile
   full_command: "/bin/sh -l"
   annotations:
-    org.opencontainers.image.title: go-devel-${{DISTRO}}-${{ARCH}}
+    org.opencontainers.image.title: go-devel-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}
     org.opencontainers.image.url: https://github.com/project-stacker/c3
     org.opencontainers.image.source: https://github.com/project-stacker/c3
@@ -83,7 +83,7 @@ go-devel-${{DISTRO}}-${{ARCH}}:
 test-go-devel:
   from:
     type: built
-    tag: go-devel-${{DISTRO}}-${{ARCH}}
+    tag: go-devel-${{ARCH}}
   import:
     - ../test/test.go
   run: |

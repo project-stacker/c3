@@ -25,12 +25,12 @@ build-base:
     build_rootfs
   build_only: true
 
-base-${{DISTRO}}-${{ARCH}}:
+base-${{ARCH}}:
   from:
     type: tar
     url: stacker://build-base/rootfs.tar
   annotations:
-    org.opencontainers.image.title: base-${{DISTRO}}-${{ARCH}}
+    org.opencontainers.image.title: base-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}
     org.opencontainers.image.url: https://github.com/project-stacker/c3
     org.opencontainers.image.source: https://github.com/project-stacker/c3
