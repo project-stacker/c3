@@ -40,6 +40,7 @@ jobs:
           - openj9
           - go-devel
           - openj9-devel
+          - multitool
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
@@ -55,7 +56,7 @@ jobs:
           cat config.mk | sed /^#.*$/d | sed s/\?=/=/g | sed s/#.*$//g | egrep -v "COMMIT|MAKE|DISTRO" > config.vars
           cat ./config.vars
           source ./config.vars
-          if [ "${{ matrix.image }}" = "static" ] || [ "${{ matrix.image }}" = "base" ]; then
+          if [ "${{ matrix.image }}" = "static" ] || [ "${{ matrix.image }}" = "base" ] || [ "${{ matrix.image }}" = "multitool" ]; then
             TAG=$DISTRO_REL
           elif [ "${{ matrix.image }}" == "go-devel" ]; then
             TAG=$GOLANG
@@ -100,6 +101,11 @@ jobs:
             OPENJ9=${{ env.OPENJ9 }}
             OPENJ9_JDK_HASH=${{ env.OPENJ9_JDK_HASH }}
             OPENJ9_JRE_HASH=${{ env.OPENJ9_JRE_HASH }}
+            SOCAT=${{ env.SOCAT }}
+            LIBNET=${{ env.LIBNET }}
+            ARPING=${{ env.ARPING }}
+            TCPDUMP=${{ env.TCPDUMP }}
+            TRACEROUTE=${{ env.TRACEROUTE }}
           url: docker://localhost:5000/c3/${{ env.DISTRO }}
           tags: ${{ env.IMAGE_TAG }}
           skip-tls: true
@@ -152,7 +158,7 @@ jobs:
           cat config.mk | sed /^#.*$/d | sed s/\?=/=/g | sed s/#.*$//g | egrep -v "COMMIT|MAKE|DISTRO" > config.vars
           cat ./config.vars
           source ./config.vars
-          if [ "${{ matrix.image }}" = "static" ] || [ "${{ matrix.image }}" = "base" ]; then
+          if [ "${{ matrix.image }}" = "static" ] || [ "${{ matrix.image }}" = "base" ] || [ "${{ matrix.image }}" = "multitool" ]; then
             TAG=$DISTRO_REL
           elif [ "${{ matrix.image }}" == "go-devel" ]; then
             TAG=$GOLANG
@@ -190,6 +196,11 @@ jobs:
             OPENJ9=${{ env.OPENJ9 }}
             OPENJ9_JDK_HASH=${{ env.OPENJ9_JDK_HASH }}
             OPENJ9_JRE_HASH=${{ env.OPENJ9_JRE_HASH }}
+            SOCAT=${{ env.SOCAT }}
+            LIBNET=${{ env.LIBNET }}
+            ARPING=${{ env.ARPING }}
+            TCPDUMP=${{ env.TCPDUMP }}
+            TRACEROUTE=${{ env.TRACEROUTE }}
           url: docker://zothub.io/c3/${{ env.DISTRO }}
           tags: ${{ env.IMAGE_TAG }}
           username: ${{ secrets.ZOTHUB_USERNAME }}

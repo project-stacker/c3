@@ -1,0 +1,170 @@
+lxc 20221007005727.747 TRACE    lxccontainer - lxccontainer.c:do_lxcapi_save_config:2672 - Saved config file "/tmp/stacker_build-socat_run1809006046"
+lxc build-socat 20221007005727.769 TRACE    commands - commands.c:lxc_server_init:2078 - Created abstract unix socket "/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/command"
+lxc build-socat 20221007005727.769 TRACE    start - start.c:lxc_init_handler:757 - Unix domain socket 3 for command server is ready
+lxc build-socat 20221007005727.769 TRACE    execute - execute.c:lxc_execute:49 - Doing lxc_execute
+lxc build-socat 20221007005727.769 WARN     apparmor - lsm/apparmor.c:lsm_apparmor_ops_init:1277 - Per-container AppArmor profiles are disabled because LXC is running in an unprivileged container without stacking
+lxc build-socat 20221007005727.769 INFO     lsm - lsm/lsm.c:lsm_init_static:38 - Initialized LSM security driver AppArmor
+lxc build-socat 20221007005727.769 TRACE    start - start.c:lxc_init:781 - Initialized LSM
+lxc build-socat 20221007005727.769 TRACE    start - start.c:lxc_serve_state_clients:486 - Set container state to STARTING
+lxc build-socat 20221007005727.769 TRACE    start - start.c:lxc_serve_state_clients:489 - No state clients registered
+lxc build-socat 20221007005727.769 TRACE    start - start.c:lxc_init:787 - Set container state to "STARTING"
+lxc build-socat 20221007005727.770 TRACE    start - start.c:lxc_init:843 - Set environment variables
+lxc build-socat 20221007005727.770 TRACE    start - start.c:lxc_init:848 - Ran pre-start hooks
+lxc build-socat 20221007005727.770 TRACE    start - start.c:setup_signal_fd:373 - Created signal file descriptor 6
+lxc build-socat 20221007005727.770 TRACE    start - start.c:lxc_init:861 - Set up signal fd
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.770 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.771 INFO     cgfsng - cgroups/cgfsng.c:unified_hierarchy_delegated:3079 - Permission denied - The cgroup.threads file is not writable, skipping unified hierarchy
+lxc build-socat 20221007005727.771 TRACE    cgroup - cgroups/cgroup.c:cgroup_init:40 - Initialized cgroup driver cgfsng
+lxc build-socat 20221007005727.771 TRACE    cgroup - cgroups/cgroup.c:cgroup_init:47 - Unified cgroup layout
+lxc build-socat 20221007005727.771 TRACE    start - start.c:lxc_init:868 - Initialized cgroup driver
+lxc build-socat 20221007005727.771 TRACE    start - start.c:lxc_init:875 - Read seccomp policy
+lxc build-socat 20221007005727.771 TRACE    start - start.c:lxc_init:882 - Initialized LSM
+lxc build-socat 20221007005727.771 INFO     start - start.c:lxc_init:884 - Container "build-socat" is initialized
+lxc build-socat 20221007005727.771 DEBUG    storage - storage/storage.c:get_storage_by_name:209 - Detected rootfs type "overlay"
+lxc build-socat 20221007005727.771 TRACE    conf - conf.c:lxc_rootfs_init:560 - Invalid argument - Not pinning on stacking filesystem
+lxc build-socat 20221007005727.771 TRACE    sync - sync.c:lxc_sync_init:139 - Initialized synchronization infrastructure
+lxc build-socat 20221007005727.772 TRACE    start - start.c:lxc_spawn:1745 - Cloned child process 2702553
+lxc build-socat 20221007005727.772 TRACE    start - start.c:core_scheduling:1563 - No new core scheduling domain requested
+lxc build-socat 20221007005727.772 TRACE    utils - utils.c:lxc_can_use_pidfd:1819 - Kernel supports pidfds
+lxc build-socat 20221007005727.772 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWNS
+lxc build-socat 20221007005727.772 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWPID
+lxc build-socat 20221007005727.772 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWUTS
+lxc build-socat 20221007005727.772 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWIPC
+lxc build-socat 20221007005727.773 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWCGROUP
+lxc build-socat 20221007005727.773 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved mnt namespace via fd 13 and stashed path as mnt:/proc/2702552/fd/13
+lxc build-socat 20221007005727.773 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved pid namespace via fd 14 and stashed path as pid:/proc/2702552/fd/14
+lxc build-socat 20221007005727.773 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved uts namespace via fd 15 and stashed path as uts:/proc/2702552/fd/15
+lxc build-socat 20221007005727.773 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved ipc namespace via fd 16 and stashed path as ipc:/proc/2702552/fd/16
+lxc build-socat 20221007005727.773 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved cgroup namespace via fd 17 and stashed path as cgroup:/proc/2702552/fd/17
+lxc build-socat 20221007005727.773 TRACE    sync - sync.c:lxc_sync_barrier_child:97 - Parent waking child with sequence startup and waiting with sequence configure
+lxc build-socat 20221007005727.773 TRACE    sync - sync.c:lxc_sync_wait_parent:110 - Child waiting for parent with sequence startup
+lxc build-socat 20221007005727.773 TRACE    sync - sync.c:lxc_sync_wake_parent:104 - Child waking parent with sequence configure
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: https_proxy=http://proxy.esl.cisco.com:8080/
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: STACKER_LAYER_NAME=build-socat
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: HTTPS_PROXY=http://proxy.esl.cisco.com:8080/
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: HTTP_PROXY=http://proxy.esl.cisco.com:8080/
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: no_proxy=.cisco.com,.insieme.local,localhost,127.0.0.1,172.0.0.0/8,192.168.49.2,aci-ubuntu-repo.insieme.local,10.81.73.67,172.31.132.64,10.195.219.181
+lxc build-socat 20221007005727.773 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved net namespace via fd 4 and stashed path as net:/proc/2702552/fd/4
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: TERM=screen
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: NO_PROXY=.cisco.com,.insieme.local,localhost,127.0.0.1,172.0.0.0/8,192.168.49.2,aci-ubuntu-repo.insieme.local,10.81.73.67,172.31.132.64,10.195.219.181
+lxc build-socat 20221007005727.773 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: http_proxy=http://proxy.esl.cisco.com:8080/
+lxc build-socat 20221007005727.773 TRACE    sync - sync.c:lxc_sync_wait_parent:110 - Child waiting for parent with sequence post-configure
+lxc build-socat 20221007005727.773 WARN     start - start.c:lxc_spawn:1835 - Operation not permitted - Failed to allocate new network namespace id
+lxc build-socat 20221007005727.773 TRACE    sync - sync.c:lxc_sync_wake_child:122 - Parent waking child with sequence post-configure
+lxc build-socat 20221007005727.773 TRACE    sync - sync.c:lxc_sync_wait_child:116 - Parent waiting for child with sequence idmapped-mounts
+lxc build-socat 20221007005727.774 TRACE    conf - conf.c:turn_into_dependent_mounts:3923 - Turned all mount table entries into dependent mount
+lxc build-socat 20221007005727.775 INFO     overlay - storage/overlay.c:ovl_mount:496 - Mounted "/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/workaround0:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/sha256_88ecf269dec31566a8e6b05147732fe34d32bc608de0d636dffaba659230a515/overlay" on "/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/stacker/rootfsPivot" with options "upperdir=/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/overlay,lowerdir=/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/workaround0:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/sha256_88ecf269dec31566a8e6b05147732fe34d32bc608de0d636dffaba659230a515/overlay,workdir=/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/work"
+lxc build-socat 20221007005727.775 DEBUG    conf - conf.c:lxc_mount_rootfs:1436 - Mounted rootfs "overlayfs:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/workaround0:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/sha256_88ecf269dec31566a8e6b05147732fe34d32bc608de0d636dffaba659230a515/overlay:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/overlay" onto "/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/stacker/rootfsPivot" with options "(null)"
+lxc build-socat 20221007005727.775 ERROR    conf - conf.c:lxc_setup_rootfs_prepare_root:3964 - Failed to setup rootfs for
+lxc build-socat 20221007005727.775 ERROR    conf - conf.c:lxc_setup:4331 - Failed to setup rootfs
+lxc build-socat 20221007005727.775 ERROR    start - start.c:do_start:1275 - Failed to setup container "build-socat"
+lxc build-socat 20221007005727.775 TRACE    sync - sync.c:lxc_sync_wake_parent:104 - Child waking parent with sequence error
+lxc build-socat 20221007005727.775 ERROR    sync - sync.c:sync_wait:34 - An error occurred in another process (expected sequence number 3)
+lxc build-socat 20221007005727.775 TRACE    start - start.c:lxc_serve_state_clients:486 - Set container state to ABORTING
+lxc build-socat 20221007005727.775 TRACE    start - start.c:lxc_serve_state_clients:489 - No state clients registered
+lxc build-socat 20221007005727.775 ERROR    start - start.c:__lxc_start:2074 - Failed to spawn container "build-socat"
+lxc build-socat 20221007005727.775 TRACE    start - start.c:lxc_serve_state_clients:486 - Set container state to ABORTING
+lxc build-socat 20221007005727.775 TRACE    start - start.c:lxc_serve_state_clients:489 - No state clients registered
+lxc build-socat 20221007005727.775 WARN     start - start.c:lxc_abort:1039 - No such process - Failed to send SIGKILL via pidfd 12 for process 2702553
+lxc build-socat 20221007005727.775 TRACE    start - start.c:lxc_serve_state_clients:486 - Set container state to STOPPING
+lxc build-socat 20221007005727.775 TRACE    start - start.c:lxc_serve_state_clients:489 - No state clients registered
+lxc build-socat 20221007005727.775 TRACE    start - start.c:lxc_end:966 - Closed command socket
+lxc build-socat 20221007005727.775 TRACE    start - start.c:lxc_end:977 - Set container state to "STOPPED"
+lxc 20221007005727.788 TRACE    lxccontainer - lxccontainer.c:do_lxcapi_save_config:2672 - Saved config file "/tmp/stacker_build-socat_run1390582322"
+lxc build-socat 20221007005727.799 TRACE    commands - commands.c:lxc_server_init:2078 - Created abstract unix socket "/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/command"
+lxc build-socat 20221007005727.799 TRACE    start - start.c:lxc_init_handler:757 - Unix domain socket 3 for command server is ready
+lxc build-socat 20221007005727.799 TRACE    execute - execute.c:lxc_execute:49 - Doing lxc_execute
+lxc build-socat 20221007005727.799 WARN     apparmor - lsm/apparmor.c:lsm_apparmor_ops_init:1277 - Per-container AppArmor profiles are disabled because LXC is running in an unprivileged container without stacking
+lxc build-socat 20221007005727.799 INFO     lsm - lsm/lsm.c:lsm_init_static:38 - Initialized LSM security driver AppArmor
+lxc build-socat 20221007005727.800 TRACE    start - start.c:lxc_init:781 - Initialized LSM
+lxc build-socat 20221007005727.800 TRACE    start - start.c:lxc_serve_state_clients:486 - Set container state to STARTING
+lxc build-socat 20221007005727.800 TRACE    start - start.c:lxc_serve_state_clients:489 - No state clients registered
+lxc build-socat 20221007005727.800 TRACE    start - start.c:lxc_init:787 - Set container state to "STARTING"
+lxc build-socat 20221007005727.800 TRACE    start - start.c:lxc_init:843 - Set environment variables
+lxc build-socat 20221007005727.800 TRACE    start - start.c:lxc_init:848 - Ran pre-start hooks
+lxc build-socat 20221007005727.800 TRACE    start - start.c:setup_signal_fd:373 - Created signal file descriptor 6
+lxc build-socat 20221007005727.800 TRACE    start - start.c:lxc_init:861 - Set up signal fd
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.800 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.801 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.801 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.801 INFO     cgfsng - cgroups/cgfsng.c:legacy_hierarchy_delegated:3092 - Permission denied - Legacy hierarchy not writable, skipping
+lxc build-socat 20221007005727.801 INFO     cgfsng - cgroups/cgfsng.c:unified_hierarchy_delegated:3079 - Permission denied - The cgroup.threads file is not writable, skipping unified hierarchy
+lxc build-socat 20221007005727.801 TRACE    cgroup - cgroups/cgroup.c:cgroup_init:40 - Initialized cgroup driver cgfsng
+lxc build-socat 20221007005727.801 TRACE    cgroup - cgroups/cgroup.c:cgroup_init:47 - Unified cgroup layout
+lxc build-socat 20221007005727.801 TRACE    start - start.c:lxc_init:868 - Initialized cgroup driver
+lxc build-socat 20221007005727.801 TRACE    start - start.c:lxc_init:875 - Read seccomp policy
+lxc build-socat 20221007005727.801 TRACE    start - start.c:lxc_init:882 - Initialized LSM
+lxc build-socat 20221007005727.801 INFO     start - start.c:lxc_init:884 - Container "build-socat" is initialized
+lxc build-socat 20221007005727.801 DEBUG    storage - storage/storage.c:get_storage_by_name:209 - Detected rootfs type "overlay"
+lxc build-socat 20221007005727.801 TRACE    conf - conf.c:lxc_rootfs_init:560 - Invalid argument - Not pinning on stacking filesystem
+lxc build-socat 20221007005727.801 TRACE    sync - sync.c:lxc_sync_init:139 - Initialized synchronization infrastructure
+lxc build-socat 20221007005727.802 TRACE    start - start.c:lxc_spawn:1745 - Cloned child process 2702555
+lxc build-socat 20221007005727.803 TRACE    start - start.c:core_scheduling:1563 - No new core scheduling domain requested
+lxc build-socat 20221007005727.803 TRACE    utils - utils.c:lxc_can_use_pidfd:1819 - Kernel supports pidfds
+lxc build-socat 20221007005727.803 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWNS
+lxc build-socat 20221007005727.803 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWPID
+lxc build-socat 20221007005727.803 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWUTS
+lxc build-socat 20221007005727.803 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWIPC
+lxc build-socat 20221007005727.803 INFO     start - start.c:lxc_spawn:1765 - Cloned CLONE_NEWCGROUP
+lxc build-socat 20221007005727.803 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved mnt namespace via fd 13 and stashed path as mnt:/proc/2702554/fd/13
+lxc build-socat 20221007005727.803 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved pid namespace via fd 14 and stashed path as pid:/proc/2702554/fd/14
+lxc build-socat 20221007005727.803 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved uts namespace via fd 15 and stashed path as uts:/proc/2702554/fd/15
+lxc build-socat 20221007005727.803 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved ipc namespace via fd 16 and stashed path as ipc:/proc/2702554/fd/16
+lxc build-socat 20221007005727.803 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved cgroup namespace via fd 17 and stashed path as cgroup:/proc/2702554/fd/17
+lxc build-socat 20221007005727.803 TRACE    sync - sync.c:lxc_sync_barrier_child:97 - Parent waking child with sequence startup and waiting with sequence configure
+lxc build-socat 20221007005727.803 TRACE    sync - sync.c:lxc_sync_wait_parent:110 - Child waiting for parent with sequence startup
+lxc build-socat 20221007005727.803 TRACE    sync - sync.c:lxc_sync_wake_parent:104 - Child waking parent with sequence configure
+lxc build-socat 20221007005727.803 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+lxc build-socat 20221007005727.804 DEBUG    start - start.c:lxc_try_preserve_namespace:139 - Preserved net namespace via fd 4 and stashed path as net:/proc/2702554/fd/4
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: https_proxy=http://proxy.esl.cisco.com:8080/
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: STACKER_LAYER_NAME=build-socat
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: HTTPS_PROXY=http://proxy.esl.cisco.com:8080/
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: HTTP_PROXY=http://proxy.esl.cisco.com:8080/
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: no_proxy=.cisco.com,.insieme.local,localhost,127.0.0.1,172.0.0.0/8,192.168.49.2,aci-ubuntu-repo.insieme.local,10.81.73.67,172.31.132.64,10.195.219.181
+lxc build-socat 20221007005727.804 WARN     start - start.c:lxc_spawn:1835 - Operation not permitted - Failed to allocate new network namespace id
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: TERM=screen
+lxc build-socat 20221007005727.804 TRACE    sync - sync.c:lxc_sync_wake_child:122 - Parent waking child with sequence post-configure
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: NO_PROXY=.cisco.com,.insieme.local,localhost,127.0.0.1,172.0.0.0/8,192.168.49.2,aci-ubuntu-repo.insieme.local,10.81.73.67,172.31.132.64,10.195.219.181
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:lxc_set_environment:5753 - Set environment variable: http_proxy=http://proxy.esl.cisco.com:8080/
+lxc build-socat 20221007005727.804 TRACE    sync - sync.c:lxc_sync_wait_child:116 - Parent waiting for child with sequence idmapped-mounts
+lxc build-socat 20221007005727.804 TRACE    sync - sync.c:lxc_sync_wait_parent:110 - Child waiting for parent with sequence post-configure
+lxc build-socat 20221007005727.804 TRACE    conf - conf.c:turn_into_dependent_mounts:3923 - Turned all mount table entries into dependent mount
+lxc build-socat 20221007005727.806 INFO     overlay - storage/overlay.c:ovl_mount:496 - Mounted "/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/workaround0:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/sha256_88ecf269dec31566a8e6b05147732fe34d32bc608de0d636dffaba659230a515/overlay" on "/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/stacker/rootfsPivot" with options "upperdir=/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/overlay,lowerdir=/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/workaround0:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/sha256_88ecf269dec31566a8e6b05147732fe34d32bc608de0d636dffaba659230a515/overlay,workdir=/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/work"
+lxc build-socat 20221007005727.806 DEBUG    conf - conf.c:lxc_mount_rootfs:1436 - Mounted rootfs "overlayfs:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/workaround0:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/sha256_88ecf269dec31566a8e6b05147732fe34d32bc608de0d636dffaba659230a515/overlay:/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/roots/build-socat/overlay" onto "/local/rchincha/go/src/github.com/project-stacker/c3/images/s-a-k/.build/stacker/rootfsPivot" with options "(null)"
+lxc build-socat 20221007005727.806 ERROR    conf - conf.c:lxc_setup_rootfs_prepare_root:3964 - Failed to setup rootfs for
+lxc build-socat 20221007005727.806 ERROR    conf - conf.c:lxc_setup:4331 - Failed to setup rootfs
+lxc build-socat 20221007005727.806 ERROR    start - start.c:do_start:1275 - Failed to setup container "build-socat"
+lxc build-socat 20221007005727.806 TRACE    sync - sync.c:lxc_sync_wake_parent:104 - Child waking parent with sequence error
+lxc build-socat 20221007005727.806 ERROR    sync - sync.c:sync_wait:34 - An error occurred in another process (expected sequence number 3)
+lxc build-socat 20221007005727.807 TRACE    start - start.c:lxc_serve_state_clients:486 - Set container state to ABORTING
+lxc build-socat 20221007005727.807 TRACE    start - start.c:lxc_serve_state_clients:489 - No state clients registered
+lxc build-socat 20221007005727.807 ERROR    start - start.c:__lxc_start:2074 - Failed to spawn container "build-socat"
+lxc build-socat 20221007005727.807 TRACE    start - start.c:lxc_serve_state_clients:486 - Set container state to ABORTING
+lxc build-socat 20221007005727.807 TRACE    start - start.c:lxc_serve_state_clients:489 - No state clients registered
+lxc build-socat 20221007005727.807 WARN     start - start.c:lxc_abort:1039 - No such process - Failed to send SIGKILL via pidfd 12 for process 2702555
+lxc build-socat 20221007005727.807 TRACE    start - start.c:lxc_serve_state_clients:486 - Set container state to STOPPING
+lxc build-socat 20221007005727.807 TRACE    start - start.c:lxc_serve_state_clients:489 - No state clients registered
+lxc build-socat 20221007005727.807 TRACE    start - start.c:lxc_end:966 - Closed command socket
+lxc build-socat 20221007005727.807 TRACE    start - start.c:lxc_end:977 - Set container state to "STOPPED"

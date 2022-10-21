@@ -25,10 +25,11 @@ all: $(IMAGES) test
 		--substitute ARCH=$(ARCH) \
 		--substitute DISTRO=$(DISTRO) \
 		--substitute DISTRO_REL=$(DISTRO_REL) \
-		--substitute OPENJDK=$(OPENJDK) \
-		--substitute OPENJ9=$(OPENJ9) \
-		--substitute OPENJ9_JDK_HASH=$(OPENJ9_JDK_HASH) \
-		--substitute OPENJ9_JRE_HASH=$(OPENJ9_JRE_HASH) \
+		--substitute LIBNET=$(LIBNET) \
+		--substitute ARPING=$(ARPING) \
+		--substitute SOCAT=$(SOCAT) \
+		--substitute TCPDUMP=$(TCPDUMP) \
+		--substitute TRACEROUTE=$(TRACEROUTE) \
 		--substitute BUSYBOX=$(BUSYBOX)
 
 .PHONY: test

@@ -1,0 +1,64 @@
+build-arping:
+  from:
+    type: docker
+    url: docker://${{ARCH}}/alpine:edge
+  run: |
+    apk update
+    apk --no-cache add libc-dev curl g++ make file patch libpcap libpcap-dev
+    mkdir /src
+    cd /src
+    curl -L https://github.com/libnet/libnet/releases/download/v${{LIBNET}}/libnet-${{LIBNET}}.tar.gz -o libnet.tar.gz
+    mkdir libnet
+    tar xvzf libnet.tar.gz --strip-components 1 -C libnet
+    cd libnet
+    CFLAGS='-D__GLIBC__' CPPFLAGS='-D__GLIBC__' ./configure --prefix=/usr --enable-static
+    make
+    make install
+    curl -L https://www.habets.pp.se/synscan/files/arping-${{ARPING}}.tar.gz -o arping.tar.gz
+    mkdir arping
+    tar xvzf arping.tar.gz --strip-components 1 -C arping
+    cd arping
+    CPPFLAGS='-static -fPIC' CFLAGS='-static -fPIC' LDFLAGS='-static -s' ./configure
+    cat<<EOF | patch -p0
+    --- src/mock_libnet.c
+    +++ src/mock_libnet.c
+    @@ -5,6 +5,7 @@
+     int mock_libnet_null_ok = 1;
+     int mock_libnet_lo_ok = 1;
+
+    +#ifndef HAVE_LIBNET
+     void
+     libnet_destroy(libnet_t* l)
+     {
+    @@ -39,6 +40,7 @@
+             }
+             return NULL;
+     }
+    +#endif
+
+     /* ---- Emacs Variables ----
+      * Local Variables:
+    --- src/mock_libpcap.c
+    +++ src/mock_libpcap.c
+    @@ -1,7 +1,9 @@
+     #include<pcap.h>
+    +#include"config.h"
+
+     #define UNUSED(x) (void)(x)
+
+    +#ifndef HAVE_LIBPCAP
+     int
+     pcap_setfilter(pcap_t *pcap, struct bpf_program *prog)
+     {
+    @@ -65,6 +67,7 @@
+             UNUSED(ifname);
+             return 0;
+     }
+    +#endif
+     /* ---- Emacs Variables ----
+      * Local Variables:
+      * c-basic-offset: 8
+    EOF
+    make
+    cp src/arping /
+  build_only: true
