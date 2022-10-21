@@ -8,6 +8,7 @@ on:
     paths:
       - images/**
       - config.mk
+      - .github/workflows/build.yaml
     branches:
       - main
   release:
@@ -83,6 +84,7 @@ jobs:
         uses: project-stacker/stacker-build-push-action@main
         with:
           file: images/${{ matrix.image }}/stacker.yaml
+          layer-type: tar squashfs
           build-args: |
             REVISION=${{ env.SHA }}
             DESCRIPTION="${{ env.DESCRIPTION }}"
@@ -173,6 +175,7 @@ jobs:
         uses: project-stacker/stacker-build-push-action@main
         with:
           file: images/${{ matrix.image }}/stacker.yaml
+          layer-type: tar squashfs
           build-args: |
             REVISION=${{ env.SHA }}
             DESCRIPTION="${{ env.DESCRIPTION }}"
