@@ -228,3 +228,10 @@ jobs:
           TAGS: ${{ env.IMAGE_TAG }}
           COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
           COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
+      - name: Sign image with a key (squashfs)
+        run: |
+          cosign sign --key env://COSIGN_PRIVATE_KEY zothub.io/c3/${{ env.DISTRO }}/${{ env.IMAGE }}:${TAGS}
+        env:
+          TAGS: ${{ env.IMAGE_TAG }}-squashfs
+          COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
+          COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
