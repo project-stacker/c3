@@ -86,14 +86,14 @@ GCDqRLgXRNVN6qcKoGhvM2yvNnl8g3MpbuvusJGZF1c6TdedluirqS4Y/w==
 -----END PUBLIC KEY-----
 EOF
 
-$ cosign verify --key cosign.pub zothub.io/project-stacker/c3/go-devel-ubuntu-amd64:1.19.1
+$ cosign verify --key cosign.pub zothub.io/c3/debian/go-devel-amd64:1.19.2
 
-Verification for zothub.io/project-stacker/c3/go-devel-ubuntu-amd64:1.19.1 --
+Verification for zothub.io/c3/debian/go-devel-amd64:1.19.2 --
 The following checks were performed on each of these signatures:
   - The cosign claims were validated
   - The signatures were verified against the specified public key
 
-[{"critical":{"identity":{"docker-reference":"zothub.io/project-stacker/c3/go-devel-ubuntu-amd64"},"image":{"docker-manifest-digest":"sha256:e426048cc64ca2c8d4b73cdf4b466e0cbb902e6ae35381c05eea63265c225b1b"},"type":"cosign container image signature"},"optional":null}]
+[{"critical":{"identity":{"docker-reference":"zothub.io/c3/debian/go-devel-amd64"},"image":{"docker-manifest-digest":"sha256:e426048cc64ca2c8d4b73cdf4b466e0cbb902e6ae35381c05eea63265c225b1b"},"type":"cosign container image signature"},"optional":null}]
 ```
 
 ## Testing `*-devel` Images
@@ -101,9 +101,9 @@ The following checks were performed on each of these signatures:
 ### With `podman`
 
 ```
-$ podman run -it zothub.io/project-stacker/c3/go-devel-ubuntu-amd64:1.19.1
+$ podman run -it zothub.io/c3/debian/go-devel-amd64:1.19.2
 / # go version
-go version go1.19.1 linux/amd64
+go version go1.19.2 linux/amd64
 / #
 ```
 
