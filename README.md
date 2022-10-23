@@ -43,21 +43,37 @@ $ make
 The following [images](./images) are built and published. All `*-devel` images have [`busybox`](https://busybox.net/) shell packaged.
 
 ```
-zothub.io/project-stacker/c3/base-debian-amd64                              bullseye                  e8ea3b49      7.5MB
-zothub.io/project-stacker/c3/base-rockylinux-amd64                          9                         d1433c16      4.5MB
-zothub.io/project-stacker/c3/base-ubuntu-amd64                              jammy                     18f24db2      8.6MB
-zothub.io/project-stacker/c3/go-devel-debian-amd64                          1.19.1                    8d1fe900      197MB
-zothub.io/project-stacker/c3/go-devel-rockylinux-amd64                      1.19.1                    699b0f68      181MB
-zothub.io/project-stacker/c3/go-devel-ubuntu-amd64                          1.19.1                    e426048c      189MB
-zothub.io/project-stacker/c3/openj9-debian-amd64                            11                        2a3976c5      59MB
-zothub.io/project-stacker/c3/openj9-devel-debian-amd64                      11                        2d1af0d0      220MB
-zothub.io/project-stacker/c3/openj9-devel-rockylinux-amd64                  11                        6e47bf68      217MB
-zothub.io/project-stacker/c3/openj9-devel-ubuntu-amd64                      11                        cc67cc9f      221MB
-zothub.io/project-stacker/c3/openj9-rockylinux-amd64                        11                        4c2d336c      56MB
-zothub.io/project-stacker/c3/openj9-ubuntu-amd64                            11                        c0ca37b3      60MB
-zothub.io/project-stacker/c3/static-debian-amd64                            bullseye                  041ce0bd      726kB
-zothub.io/project-stacker/c3/static-rockylinux-amd64                        9                         e0410020      1.6MB
-zothub.io/project-stacker/c3/static-ubuntu-amd64                            jammy                     d2e150be      880kB
+IMAGE NAME                        TAG                       DIGEST      SIGNED      SIZE
+c3/debian/base-amd64              bullseye           bb12c3a2    true        7.5MB
+c3/debian/base-amd64              bullseye-squashfs  5244ad07    true        6.5MB
+c3/debian/go-devel-amd64          1.19.2             093793a6    true        197MB
+c3/debian/go-devel-amd64          1.19.2-squashfs    dc9e3859    true        175MB
+c3/debian/openj9-amd64            11                 88f56c3d    true        59MB
+c3/debian/openj9-amd64            11-squashfs        73a60848    true        51MB
+c3/debian/openj9-devel-amd64      11                 77c76e2a    true        220MB
+c3/debian/openj9-devel-amd64      11-squashfs        eed380d8    true        206MB
+c3/debian/static-amd64            bullseye           9fe28bc9    true        724kB
+c3/debian/static-amd64            bullseye-squashfs  44e9d704    true        471kB
+c3/rockylinux/base-amd64          9                  33459f96    true        4.5MB
+c3/rockylinux/base-amd64          9-squashfs         d0da8f36    true        3.8MB
+c3/rockylinux/go-devel-amd64      1.19.2             17d8a0d3    true        181MB
+c3/rockylinux/go-devel-amd64      1.19.2-squashfs    9e2da7a5    true        161MB
+c3/rockylinux/openj9-amd64        11                 5c799cbb    true        56MB
+c3/rockylinux/openj9-amd64        11-squashfs        f8b776fb    true        48MB
+c3/rockylinux/openj9-devel-amd64  11                 97772632    true        217MB
+c3/rockylinux/openj9-devel-amd64  11-squashfs        77a8ffc4    true        203MB
+c3/rockylinux/static-amd64        9                  045fe728    true        1.6MB
+c3/rockylinux/static-amd64        9-squashfs         0053a0a4    true        1.3MB
+c3/ubuntu/base-amd64              jammy              a1075430    true        8.6MB
+c3/ubuntu/base-amd64              jammy-squashfs     45e3b064    true        7.5MB
+c3/ubuntu/go-devel-amd64          1.19.2             1217eff3    true        189MB
+c3/ubuntu/go-devel-amd64          1.19.2-squashfs    f248eba2    true        167MB
+c3/ubuntu/openj9-amd64            11                 15fde901    true        60MB
+c3/ubuntu/openj9-amd64            11-squashfs        fac84fa6    true        52MB
+c3/ubuntu/openj9-devel-amd64      11                 7e8d8d51    true        221MB
+c3/ubuntu/openj9-devel-amd64      11-squashfs        033f1f94    true        207MB
+c3/ubuntu/static-amd64            jammy              2e569eb6    true        880kB
+c3/ubuntu/static-amd64            jammy-squashfs     1293c5fd    true        623kB
 ```
 
 ## Verify Image Signatures
