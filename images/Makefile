@@ -1,4 +1,9 @@
-SUBDIRS := static base openj9 go-devel openj9-devel
+SUBDIRS := static \
+					 base \
+					 openj9 \
+					 go-devel \
+					 openj9-devel \
+					 multitool
 
 .PHONY: all
 all: subdirs

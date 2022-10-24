@@ -1,0 +1,16 @@
+build-traceroute:
+  from:
+    type: docker
+    url: docker://${{ARCH}}/alpine:edge
+  run: |
+    apk update
+    apk --no-cache add curl g++ make linux-headers
+    mkdir /src
+    cd /src
+    curl -L https://cytranet.dl.sourceforge.net/project/traceroute/traceroute/traceroute-${{TRACEROUTE}}/traceroute-${{TRACEROUTE}}.tar.gz -o traceroute.tar.gz
+    mkdir traceroute
+    tar xvzf traceroute.tar.gz --strip-components 1 -C traceroute
+    cd traceroute
+    make LDFLAGS='-static -s'
+    cp traceroute/traceroute /
+  build_only: true

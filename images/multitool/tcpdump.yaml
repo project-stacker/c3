@@ -1,0 +1,19 @@
+build-tcpdump:
+  from:
+    type: docker
+    url: docker://${{ARCH}}/alpine:edge
+  run: |
+    apk update
+    apk --no-cache add libc-dev openssl-libs-static curl g++ make libpcap-dev bison flex linux-headers
+    mkdir /src
+    cd /src
+    curl -L https://www.tcpdump.org/release/tcpdump-${{TCPDUMP}}.tar.gz -o tcpdump.tar.gz
+    mkdir tcpdump
+    tar xvzf tcpdump.tar.gz --strip-components 1 -C tcpdump
+    cd tcpdump
+    CC='/usr/bin/gcc -static -s' \
+    CFLAGS='-fPIC -Werror=implicit-function-declaration' \
+    ./configure
+    make
+    cp tcpdump /
+  build_only: true

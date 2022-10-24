@@ -1,0 +1,15 @@
+build-iperf:
+  from:
+    type: docker
+    url: docker://${{ARCH}}/alpine:edge
+  run: |
+    apk update
+    apk --no-cache add build-base pkgconf autoconf automake curl libtool git perl openssl-libs-static openssl-dev linux-headers
+    mkdir /src
+    cd /src
+    git clone https://github.com/esnet/iperf.git iperf3
+    cd iperf3
+    ./configure --disable-shared --enable-static-bin
+    make
+    cp src/iperf3 /
+  build_only: true

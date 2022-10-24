@@ -1,0 +1,80 @@
+config:
+  prerequisites:
+    - arping.yaml
+    - socat.yaml
+    - tcpdump.yaml
+    - traceroute.yaml
+    - iperf.yaml
+    - ../static/stacker.yaml
+
+build-multitool:
+  from:
+    type: built
+    tag: build-static
+  import:
+    - ../../pkgmgr/defs.sh
+    - stacker://build-static/rootfs.tar
+    - stacker://build-arping/arping
+    - stacker://build-socat/socat
+    - stacker://build-tcpdump/tcpdump
+    - stacker://build-traceroute/traceroute
+    - stacker://build-iperf/iperf3
+  run: |
+    export DISTRO=${{DISTRO}}
+    export DISTRO_REL=${{DISTRO_REL}}
+    export ARCH=${{ARCH}}
+    export OS=${{OS}}
+    # busybox
+    export BUSYBOX=${{BUSYBOX}}
+    # build upon previously built rootfs
+    cp /stacker/rootfs.tar /
+    # source pkgmgr func defs
+    . /stacker/defs.sh
+    # install helper pkgs in base container
+    HOST_PKGS="wget"
+    install_host_pkgs $HOST_PKGS
+    # install busybox
+    install_busybox rootfs
+    # prepare the rootfs
+    mkdir -p rootfs/bin
+    # copy binaries under /usr/bin
+    cp -f /stacker/arping rootfs/bin/
+    cp -f /stacker/socat rootfs/bin/
+    cp -f /stacker/tcpdump rootfs/bin/
+    cp -f /stacker/traceroute rootfs/bin/
+    cp -f /stacker/iperf3 rootfs/bin
+    # post-build packaging
+    pkg_rootfs rootfs
+    # post-packaging cleanup
+    rm -rf rootfs
+  build_only: true
+
+multitool-${{ARCH}}:
+  from:
+    type: tar
+    url: stacker://build-multitool/rootfs.tar
+  full_command: "/bin/sh -l"
+  annotations:
+    org.opencontainers.image.title: multitool-${{ARCH}}
+    org.opencontainers.image.description: ${{DESCRIPTION}}
+    org.opencontainers.image.url: https://github.com/project-stacker/c3
+    org.opencontainers.image.source: https://github.com/project-stacker/c3
+    org.opencontainers.image.version: ${{REVISION}}
+    org.opencontainers.image.revision: ${{REVISION}}
+    org.opencontainers.image.licenses: ${{LICENSES}}
+    org.opencontainers.image.vendor: Cisco Systems, Inc.
+
+test-multitool:
+  from:
+    type: built
+    tag: multitool-${{ARCH}}
+  run: |
+    arp
+    ping || true
+    traceroute
+    ip || true
+    arping || true
+    tcpdump -h
+    socat -h
+    iperf3 -h
+  build_only: true

@@ -1,0 +1,8 @@
+alpine:
+  from:
+    type: docker
+    url: docker://alpine:latest
+  import:
+    - helloworld.txt
+  run: |
+    cp /stacker/helloworld.txt /
