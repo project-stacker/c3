@@ -33,10 +33,10 @@ build-multitool:
     # install helper pkgs in base container
     HOST_PKGS="wget"
     install_host_pkgs $HOST_PKGS
-    # install busybox
-    install_busybox rootfs
     # prepare the rootfs
     mkdir -p rootfs/bin
+    # install busybox
+    install_busybox rootfs
     # copy binaries under /usr/bin
     cp -f /stacker/arping rootfs/bin/
     cp -f /stacker/socat rootfs/bin/
