@@ -144,6 +144,7 @@ jobs:
           - openj9
           - go-devel
           - openj9-devel
+          - multitool
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
