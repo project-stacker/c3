@@ -29,3 +29,4 @@ clean:
 		$(MAKE) -C $$dir clean; \
 	done
 	rm -rf $(BUILD_DIR)
+	rm -rf $(TOOLS_DIR)

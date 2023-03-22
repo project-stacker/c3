@@ -3,6 +3,7 @@ SUBDIRS := static \
 					 openj9 \
 					 go-devel \
 					 openj9-devel \
+					 rust-devel \
 					 multitool
 
 .PHONY: all

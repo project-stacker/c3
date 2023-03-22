@@ -1,0 +1,1 @@
+PKGS="libgcc-s1"

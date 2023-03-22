@@ -1,0 +1,99 @@
+config:
+  prerequisites:
+    - ../static/stacker.yaml
+    - ../base/stacker.yaml
+    - ../devel/stacker.yaml
+
+build-rust-devel:
+  from:
+    type: built
+    tag: build-devel
+  import:
+    - ${{DISTRO}}-pkgs.sh
+    - ../../pkgmgr/defs.sh
+    - stacker://build-devel/rootfs.tar
+  run: |
+    export DISTRO=${{DISTRO}}
+    export DISTRO_REL=${{DISTRO_REL}}
+    export ARCH=${{ARCH}}
+    export OS=${{OS}}
+    # rust
+    export RUST=${{RUST}}
+    # busybox
+    export BUSYBOX=${{BUSYBOX}}
+    # build upon previously built rootfs
+    cp /stacker/rootfs.tar /
+    # source pkgmgr func defs
+    . /stacker/defs.sh
+    # install helper pkgs in base container
+    HOST_PKGS="curl wget git"
+    install_host_pkgs $HOST_PKGS
+    # prepare the rootfs
+    dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
+    # install rust
+    export RUSTUP=/opt/rustup
+    mkdir -p ${RUSTUP}
+    export CARGO_HOME=/opt/cargo
+    mkdir -p ${CARGO_HOME}
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | SSL_CERT_DIR=/etc/ssl/certs sh -s -- --default-toolchain ${{RUST}} -y
+    . "/opt/cargo/env"
+    rustc -V
+    # copy binaries under /opt/bin
+    mkdir -p rootfs/opt/
+    cp -R ${RUSTUP} rootfs/opt/
+    cp -R ${CARGO_HOME} rootfs/opt/
+    # source pkgs to install into rootfs
+    . /stacker/$DISTRO-pkgs.sh
+    # install pkgs
+    install_pkgs rootfs $PKGS
+    # install busybox
+    install_busybox rootfs
+    # post-build packaging
+    pkg_rootfs rootfs
+    # post-packaging cleanup
+    rm -rf rootfs
+  build_only: true
+
+rust-devel-${{ARCH}}:
+  from:
+    type: tar
+    url: stacker://build-rust-devel/rootfs.tar
+  run: |
+    echo 'export HOME=/rust' > /etc/profile
+    echo 'export RUSTUP=/opt/rustup' >> /etc/profile
+    echo 'export CARGO_HOME=/opt/cargo' >> /etc/profile
+    echo 'source "/opt/cargo/env"' >> /etc/profile
+    echo 'export RUSTUP_TOOLCHAIN=${{RUST}}' >> /etc/profile
+    echo 'export SSL_CERT_DIR=/etc/ssl/certs' >> /etc/profile
+    ls -alR ${SSL_CERT_DIR}
+  full_command: "/bin/sh -l"
+  annotations:
+    org.opencontainers.image.title: rust-devel-${{ARCH}}
+    org.opencontainers.image.description: ${{DESCRIPTION}}
+    org.opencontainers.image.url: https://github.com/project-stacker/c3
+    org.opencontainers.image.source: https://github.com/project-stacker/c3
+    org.opencontainers.image.version: ${{RUST}}
+    org.opencontainers.image.revision: ${{REVISION}}
+    org.opencontainers.image.licenses: ${{LICENSES}}
+    org.opencontainers.image.vendor: Cisco Systems, Inc.
+
+test-rust-devel:
+  from:
+    type: built
+    tag: rust-devel-${{ARCH}}
+  import:
+    - ../test/test.rs
+  run: |
+    # rust toolchain env
+    . /etc/profile
+    # rust src env
+    mkdir -p /rust
+    # DEBUG
+    ls -alR ${SSL_CERT_DIR}
+    rustc -V
+    cp /stacker/test.go .
+    # test compiler
+    rustc test.rs
+    # test output binary
+    ./test
+  build_only: true
