@@ -2,21 +2,19 @@ name: build
 
 on:
   push:
-    tags:  # Use tags trigger instead of releases, tags are supported by tj-actions/changed-files
-      - 'v*'
     branches:
       - main
     paths:
       - images/**
       - '**.mk'
-      - .github/workflows/ci-cd.yaml
+      - .github/workflows/build.yaml
   pull_request:
     branches:
       - main
     paths:
       - images/**
       - '**.mk'
-      - .github/workflows/ci-cd.yaml
+      - .github/workflows/build.yaml
   workflow_dispatch:
     inputs:
       folders:
@@ -91,7 +89,7 @@ jobs:
     name: Build only
     needs: [generate_build_input]
     if: |
-      (!startsWith(github.ref, 'refs/tags/v')) &&
+      (github.ref != 'refs/heads/main') &&
       (needs.generate_build_input.outputs.folders_to_build != '')
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -162,7 +160,7 @@ jobs:
     name: Build and publish
     needs: [generate_build_input]
     if: |
-      (startsWith(github.ref, 'refs/tags/v')) &&
+      (github.ref == 'refs/heads/main') &&
       (needs.generate_build_input.outputs.folders_to_build != '')
     runs-on: ubuntu-latest
     timeout-minutes: 15
