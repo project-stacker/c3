@@ -193,17 +193,20 @@ jobs:
           echo SUBDIRS="${{needs.generate_build_input.outputs.folders_to_build}}" >> $GITHUB_ENV
           echo ZOT_VERSION="v1.4.3" >> $GITHUB_ENV
       - name: Build and push container images
+        env:
+          ZOTHUB_USERNAME: ${{ secrets.ZOTHUB_USERNAME }}
+          ZOTHUB_PASSWORD: ${{ secrets.ZOTHUB_PASSWORD }}
         run: |
           cd ${GITHUB_WORKSPACE}
           echo "Building ${SUBDIRS}"
           make build \
             SUBDIRS="${SUBDIRS}" \
             PUBLISH_URL=docker://zothub.io/c3 \
-            PUBLISH_EXTRA_ARGS="--username ${{ secrets.ZOTHUB_USERNAME }} --password ${{ secrets.ZOTHUB_PASSWORD }}"
+            PUBLISH_EXTRA_ARGS="--username ${ZOTHUB_USERNAME} --password ${ZOTHUB_PASSWORD}"
           make publish \
             SUBDIRS="${SUBDIRS}" \
             PUBLISH_URL=docker://zothub.io/c3 \
-            PUBLISH_EXTRA_ARGS="--username ${{ secrets.ZOTHUB_USERNAME }} --password ${{ secrets.ZOTHUB_PASSWORD }}"
+            PUBLISH_EXTRA_ARGS="--username ${ZOTHUB_USERNAME} --password ${ZOTHUB_PASSWORD}"
       - name: Scan container images
         run: |
           set -x
