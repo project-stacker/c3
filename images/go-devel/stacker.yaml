@@ -1,16 +1,13 @@
 config:
   prerequisites:
-    - ../static/stacker.yaml
-    - ../base/stacker.yaml
-    - ../devel/stacker.yaml
+    - ../build-env/stacker.yaml
 
 build-go-devel:
   from:
     type: built
-    tag: build-devel
+    tag: build-env
   import:
     - ../../pkgmgr/defs.sh
-    - stacker://build-devel/rootfs.tar
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -20,15 +17,8 @@ build-go-devel:
     export GOLANG=${{GOLANG}}
     export GOLANG_DLV=${{GOLANG_DLV}}
     export GOLANG_LINTER=${{GOLANG_LINTER}}
-    # busybox
-    export BUSYBOX=${{BUSYBOX}}
-    # build upon previously built rootfs
-    cp /stacker/rootfs.tar /
     # source pkgmgr func defs
     . /stacker/defs.sh
-    # install helper pkgs in base container
-    HOST_PKGS="curl wget git"
-    install_host_pkgs $HOST_PKGS
     # prepare the rootfs
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install go
@@ -47,22 +37,22 @@ build-go-devel:
     # build dlv debugger
     go install github.com/go-delve/delve/cmd/dlv@${GOLANG_DLV}
     # copy binaries under /opt/bin
-    mkdir -p rootfs/opt/bin
-    tar xvzf $dldir/golang.tar.gz -C rootfs/opt/
-    cp $GOPATH/bin/golangci-lint rootfs/opt/go/bin/
-    cp $GOPATH/bin/dlv rootfs/opt/go/bin/
-    # install busybox
-    install_busybox rootfs
-    # post-build packaging
-    pkg_rootfs rootfs
-    # post-packaging cleanup
-    rm -rf rootfs
+    mkdir -p /rootfs_diff/opt/bin
+    tar xvzf $dldir/golang.tar.gz -C /rootfs_diff/opt/
+    cp $GOPATH/bin/golangci-lint /rootfs_diff/opt/go/bin/
+    cp $GOPATH/bin/dlv /rootfs_diff/opt/go/bin/
+    # cleanup unnecessary files
+    cleanup_rootfs /rootfs_diff
   build_only: true
 
 go-devel-${{ARCH}}:
   from:
-    type: tar
-    url: stacker://build-go-devel/rootfs.tar
+    type: oci
+    url: ${{BUILD_OCI_DIR}}:devel-${{ARCH}}${{LAYER_SUFFIX}}
+  import:
+    - path: stacker://build-go-devel/rootfs_diff/
+      dest: /
+    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
   run: |
     echo 'export HOME=/go' > /etc/profile
     echo 'export GOROOT=/opt/go' >> /etc/profile
@@ -114,22 +104,10 @@ test-go-devel:
     dlv --allow-non-terminal-interactive exec ./test.dynamic
   build_only: true
 
-run-static-go-devel:
+run-go-devel:
   from:
     type: built
-    tag: build-static
-  import:
-    - stacker://test-go-devel/go/src/test.static
-    - stacker://test-go-devel/go/src/test.dynamic
-  run: |
-    /stacker/test.static
-    /stacker/test.dynamic
-  build_only: true
-
-run-dynamic-go-devel:
-  from:
-    type: built
-    tag: build-base
+    tag: build-env
   import:
     - stacker://test-go-devel/go/src/test.static
     - stacker://test-go-devel/go/src/test.dynamic

@@ -1,0 +1,23 @@
+# Layer which provides the tooling for building other layers/images.
+# It MUST not include steps to build the RFS for another layer
+# It MUST not published or used as a base in any published images.
+
+build-env:
+  from:
+    type: docker
+    url: docker://${{ARCH}}/${{DISTRO}}:${{DISTRO_REL}}
+  import:
+    - ${{DISTRO}}-pkgs.sh
+    - ../../pkgmgr/defs.sh
+  run: |
+    export DISTRO=${{DISTRO}}
+    export DISTRO_REL=${{DISTRO_REL}}
+    export ARCH=${{ARCH}}
+    export OS=${{OS}}
+    # source pkgs to install into rootfs
+    . /stacker/$DISTRO-pkgs.sh
+    # source pkgmgr func defs
+    . /stacker/defs.sh
+    # install build related tooling
+    install_host_pkgs $HOST_PKGS
+  build_only: true

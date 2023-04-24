@@ -1,23 +1,29 @@
 include ../../config.mk
+include ../../tools.mk
 
-TOOLS_DIR := ../../hack/tools
-TOOLS_BIN_DIR := $(TOOLS_DIR)/bin
-STACKER := $(TOOLS_BIN_DIR)/stacker
-BUILD_DIR := ../../build
+ifeq ($(strip $(PUBLISH_TAG)),)
+override PUBLISH_TAG := $(DISTRO_REL)
+endif
 
-SRC := $(wildcard *.yaml)
-IMAGES := $(patsubst %.yaml,%,$(SRC))
+LAYER_SUFFIX :=
+ifeq ($(LAYER_TYPE),squashfs)
+LAYER_SUFFIX := "-squashfs"
+endif
+
+PUBLISH_IMAGE_NAME := $(shell basename $$(pwd))-$(ARCH)
+
+.DEFAULT_GOAL := all
 
 .PHONY: all
-all: $(IMAGES) test
+all: build test
 
-.PHONY: %
-%:
-	$(STACKER) \
-		--stacker-dir $(BUILD_DIR)/.stacker \
-		--oci-dir $(BUILD_DIR)/oci \
-		--roots-dir $(BUILD_DIR)/roots \
-		build -f $*.yaml \
+.PHONY: build
+build: $(STACKER)
+	$(STACKER_WITH_BUILD_DIR) --debug \
+		build -f stacker.yaml \
+		--layer-type $(LAYER_TYPE) \
+		--substitute LAYER_SUFFIX=$(LAYER_SUFFIX) \
+		--substitute BUILD_OCI_DIR=$(BUILD_OCI_DIR) \
 		--substitute REVISION=$(COMMIT) \
 		--substitute LICENSES="$(shell cat LICENSE.md)" \
 		--substitute DESCRIPTION="$(shell cat README.md)" \
@@ -29,10 +35,24 @@ all: $(IMAGES) test
 .PHONY: test
 test:
 
-.PHONY: clean
-clean:
-	$(STACKER) \
-		--stacker-dir $(BUILD_DIR)/.stacker \
-		--oci-dir $(BUILD_DIR)/oci \
-		--roots-dir $(BUILD_DIR)/roots \
-		clean
+.PHONY: publish
+publish: $(STACKER)
+	$(STACKER_WITH_BUILD_DIR) \
+		publish -f stacker.yaml \
+		--layer-type $(LAYER_TYPE) \
+		--substitute LAYER_SUFFIX=$(LAYER_SUFFIX) \
+		--substitute BUILD_OCI_DIR=$(BUILD_OCI_DIR) \
+		--substitute REVISION=$(COMMIT) \
+		--substitute LICENSES="$(shell cat LICENSE.md)" \
+		--substitute DESCRIPTION="$(shell cat README.md)" \
+		--substitute OS=$(OS) \
+		--substitute ARCH=$(ARCH) \
+		--substitute DISTRO=$(DISTRO) \
+		--substitute DISTRO_REL=$(DISTRO_REL) \
+		--url $(PUBLISH_URL)/$(DISTRO) \
+		--tag $(PUBLISH_TAG) \
+		$(PUBLISH_EXTRA_ARGS)
+
+.PHONY: pull
+pull:
+	skopeo copy $(PULL_EXTRA_ARGS) $(PUBLISH_URL)/$(strip $(DISTRO))/$(strip $(PUBLISH_IMAGE_NAME)):$(PUBLISH_TAG)$(LAYER_SUFFIX) oci:$(BUILD_OCI_DIR):$(PUBLISH_IMAGE_NAME)$(LAYER_SUFFIX)

@@ -1,31 +1,54 @@
 include config.mk
+include tools.mk
 
-TOOLS_DIR := hack/tools
-TOOLS_BIN_DIR := $(TOOLS_DIR)/bin
-export STACKER := $(TOOLS_BIN_DIR)/stacker
+SUBDIRS := static base devel go-devel openj9-devel openj9 multitool
+BUILD_ORDER_FILE := $(BUILD_DIR)/build_order.json
+PREREQUISITES_FILE := $(BUILD_DIR)/prerequisites.json
 
-export BUILD_DIR := build/
-
-SUBDIRS := images
+.DEFAULT_GOAL := all
 
 .PHONY: all
-all: $(STACKER) subdirs
+all: $(STACKER) build
 
-$(STACKER):
-	mkdir -p $(TOOLS_BIN_DIR)
-	curl -fsSL https://github.com/project-stacker/stacker/releases/latest/download/stacker -o $@
-	chmod +x $@
+.PHONY: build
+build: build-order download-skippable-images
+	mkdir -p $(BUILD_DIR); \
+	jq -c -r '.[][]' $(BUILD_ORDER_FILE) | while read dir; do \
+		echo "building $$dir"; \
+		$(MAKE) -C images/$$dir || exit $$?; \
+	done
 
-.PHONY: subdirs
-subdirs:
-	mkdir -p $(BUILD_DIR)
+.PHONY: build-order
+build-order:
+	mkdir -p $(BUILD_DIR); \
+	rm -f $(BUILD_ORDER_FILE); \
+	$(DEPS_SCRIPT) --deps-file $(DEPS_FILE) --images $(subst $(space),$(comma),$(SUBDIRS)) --build-order --out-file $(BUILD_ORDER_FILE)
+
+.PHONY: identify-skippable-images
+identify-skippable-images:
+	mkdir -p $(BUILD_DIR); \
+	rm -f $(PREREQUISITES_FILE); \
+	$(DEPS_SCRIPT) --deps-file $(DEPS_FILE) --images $(subst $(space),$(comma),$(SUBDIRS)) --prerequisites --out-file  $(PREREQUISITES_FILE)
+
+.PHONY: download-skippable-images
+download-skippable-images: identify-skippable-images check-skopeo
+	if [ -z $(PUBLISH_URL) ]; then \
+		echo "publish URL is empty - skip downloading prerequisites"; exit 0; \
+	fi; \
+	jq -c -r '.[]' $(PREREQUISITES_FILE) | while read dir; do \
+		echo "downloading pre-exiting image for $$dir"; \
+		$(MAKE) -C images/$$dir pull || exit $$?; \
+	done
+
+.PHONY: publish
+publish:
 	for dir in $(SUBDIRS); do \
-		$(MAKE) -C $$dir; \
+		$(MAKE) -C images/$$dir publish || exit $$?; \
 	done
 
 .PHONY: clean
 clean: 
 	for dir in $(SUBDIRS); do \
-		$(MAKE) -C $$dir clean; \
-	done
+		$(MAKE) -C images/$$dir clean; \
+	done; \
 	rm -rf $(BUILD_DIR)

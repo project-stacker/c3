@@ -1,7 +1,11 @@
+config:
+  prerequisites:
+    - ../build-env/stacker.yaml
+
 build-static:
   from:
-    type: docker
-    url: docker://${{ARCH}}/${{DISTRO}}:${{DISTRO_REL}}
+    type: built
+    tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
     - ../../pkgmgr/defs.sh
@@ -22,6 +26,9 @@ static-${{ARCH}}:
   from:
     type: tar
     url: stacker://build-static/rootfs.tar
+  import:
+    - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
   annotations:
     org.opencontainers.image.title: static-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}

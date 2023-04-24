@@ -3,27 +3,70 @@
 
 config:
   prerequisites:
-    - ../base/stacker.yaml
+    - ../build-env/stacker.yaml
 
 build-devel:
   from:
     type: built
-    tag: build-base
+    tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
     - ../../pkgmgr/defs.sh
-    - stacker://build-base/rootfs.tar
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
     export ARCH=${{ARCH}}
     export OS=${{OS}}
-    # build upon previously built rootfs
-    cp /stacker/rootfs.tar /
+    # busybox
+    export BUSYBOX=${{BUSYBOX}}
     # source pkgs to install into rootfs
     . /stacker/$DISTRO-pkgs.sh
     # source pkgmgr func defs
     . /stacker/defs.sh
-    # build the rootfs
-    build_rootfs
+    # install the extra packages in an isolated environment
+    mkdir /rootfs_diff
+    # install pkgs
+    install_pkgs /rootfs_diff $PKGS
+    # install busybox
+    install_busybox /rootfs_diff
+    # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes
+    # binaries we intentionally installed under /rootfs_diff/usr/bin/ and /rootfs_diff/usr/sbin/
+    rm -rf /rootfs_diff/tmp/*
+    rm -rf /rootfs_diff/var/*
+    # remove all docs
+    rm -rf /rootfs_diff/usr/share/doc/*
+    rm -rf /rootfs_diff/usr/share/man/*
+    ls /rootfs_diff/usr/bin/
+    ls /rootfs_diff/usr/sbin/
+  build_only: true
+
+devel-${{ARCH}}:
+  from:
+    type: oci
+    url: ${{BUILD_OCI_DIR}}:base-${{ARCH}}${{LAYER_SUFFIX}}
+  import:
+    - path: stacker://build-devel/rootfs_diff/
+      dest: /
+    - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
+  annotations:
+    org.opencontainers.image.title: devel-${{ARCH}}
+    org.opencontainers.image.description: ${{DESCRIPTION}}
+    org.opencontainers.image.url: https://github.com/project-stacker/c3
+    org.opencontainers.image.source: https://github.com/project-stacker/c3
+    org.opencontainers.image.version: ${{DISTRO_REL}}
+    org.opencontainers.image.revision: ${{REVISION}}
+    org.opencontainers.image.licenses: ${{LICENSES}}
+    org.opencontainers.image.vendor: Cisco Systems, Inc.
+
+test-devel:
+  from:
+    type: built
+    tag: devel-${{ARCH}}
+  run: |
+    ls -l /
+    make --version
+    cmake --version
+    wget --help
+    curl --version
   build_only: true

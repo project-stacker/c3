@@ -1,17 +1,14 @@
 config:
   prerequisites:
-    - ../static/stacker.yaml
-    - ../base/stacker.yaml
-    - ../openj9-devel/stacker.yaml
+    - ../build-env/stacker.yaml
 
 build-openj9:
   from:
     type: built
-    tag: build-base
+    tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
     - ../../pkgmgr/defs.sh
-    - stacker://build-base/rootfs.tar
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -22,39 +19,37 @@ build-openj9:
     export OPENJ9=${{OPENJ9}}
     # busybox
     export BUSYBOX=${{BUSYBOX}}
-    # build upon previously built rootfs
-    cp /stacker/rootfs.tar /
     # source pkgmgr func defs
     . /stacker/defs.sh
-    # install helper pkgs in base container
-    HOST_PKGS="curl wget git"
-    install_host_pkgs $HOST_PKGS
-    # prepare the rootfs
+    # prepare the isolated environment
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install openjdk/j9
     wget -N 'https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-$OPENJDK%2B1_openj9-$OPENJ9/ibm-semeru-open-jre_x64_linux_$OPENJDK_1_openj9-$OPENJ9.tar.gz' -O $dldir/openj9.tar.gz
     echo "${{OPENJ9_JRE_HASH}}  $dldir/openj9.tar.gz" > SHA256SUMS
     sha256sum -c SHA256SUMS
-    # copy binaries under /opt/bin
-    mkdir -p rootfs/opt/bin
-    mkdir -p rootfs/opt/jre/
-    tar xvzf $dldir/openj9.tar.gz -C rootfs/opt/jre/ --strip-components=1
-    # source pkgs to install into rootfs
+    # copy binaries in an isolated environment under /opt/bin
+    mkdir -p /rootfs_diff/opt/bin
+    mkdir -p /rootfs_diff/opt/jre/
+    tar xvzf $dldir/openj9.tar.gz -C /rootfs_diff/opt/jre/ --strip-components=1
+    # source pkgs to install into /rootfs_diff
     . /stacker/$DISTRO-pkgs.sh
     # install pkgs
-    install_pkgs rootfs $PKGS
+    install_pkgs /rootfs_diff $PKGS
     # install busybox
-    install_busybox rootfs
-    # post-build packaging
-    pkg_rootfs rootfs
-    # post-packaging cleanup
-    rm -rf rootfs
+    install_busybox /rootfs_diff
+    # cleanup unnecessary files
+    cleanup_rootfs /rootfs_diff
   build_only: true
 
 openj9-${{ARCH}}:
   from:
-    type: tar
-    url: stacker://build-openj9/rootfs.tar
+    type: oci
+    url: ${{BUILD_OCI_DIR}}:base-${{ARCH}}${{LAYER_SUFFIX}}
+  import:
+    - path: stacker://build-openj9/rootfs_diff/
+      dest: /
+    - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
   run: |
     echo 'export HOME=/jre' > /etc/profile
     echo 'export JAVA_HOME=/opt/jre' >> /etc/profile
@@ -70,12 +65,36 @@ openj9-${{ARCH}}:
     org.opencontainers.image.licenses: ${{LICENSES}}
     org.opencontainers.image.vendor: Cisco Systems, Inc.
 
+test-openj9:
+  from:
+    type: oci
+    url: ${{BUILD_OCI_DIR}}:openj9-devel-${{ARCH}}${{LAYER_SUFFIX}}
+  import:
+    - ../test/test.java
+  run: |
+    # jdk toolchain env
+    . /etc/profile
+    # jdk environment
+    javac -version
+    java -version
+    # jdk src env
+    mkdir -p /jdk/src
+    cd /jdk/src
+    cp /stacker/test.java .
+    # test compiler
+    javac test.java
+    # test output binary
+    java test
+    # jar
+    jar -cf test.jar test.class
+  build_only: true
+
 run-openj9:
   from:
     type: built
     tag: openj9-${{ARCH}}
   import:
-    - stacker://test-openj9-devel/jdk/src/test.jar
+    - stacker://test-openj9/jdk/src/test.jar
   run: |
     # jre env
     . /etc/profile
