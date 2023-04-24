@@ -146,7 +146,10 @@ pkg_rootfs() {
   cd "$rootfs" || exit 1
 
   if [ -f /rootfs.tar ]; then
-    tar rpvf /rootfs.tar .
+    # Legacy layers would 'tar rpvf /rootfs.tar .'
+    # make sure the repackaging rootfs.tar pattern is not allowed
+    # and we rely on base images instead
+    exit 1
   else
     tar cpvf /rootfs.tar .
   fi

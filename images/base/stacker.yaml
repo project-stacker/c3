@@ -1,34 +1,40 @@
 config:
   prerequisites:
-    - ../static/stacker.yaml
+    - ../build-env/stacker.yaml
 
 build-base:
   from:
     type: built
-    tag: build-static
+    tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
     - ../../pkgmgr/defs.sh
-    - stacker://build-static/rootfs.tar
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
     export ARCH=${{ARCH}}
     export OS=${{OS}}
-    # build upon previously built rootfs
-    cp /stacker/rootfs.tar /
     # source pkgs to install into rootfs
     . /stacker/$DISTRO-pkgs.sh
     # source pkgmgr func defs
     . /stacker/defs.sh
-    # build the rootfs
-    build_rootfs
+    # install the extra packages in a chroot
+    mkdir /rootfs_diff
+    # install pkgs
+    install_pkgs /rootfs_diff $PKGS
+    # cleanup unnecessary files
+    cleanup_rootfs /rootfs_diff
   build_only: true
 
 base-${{ARCH}}:
   from:
-    type: tar
-    url: stacker://build-base/rootfs.tar
+    type: oci
+    url: ${{BUILD_OCI_DIR}}:static-${{ARCH}}${{LAYER_SUFFIX}}
+  import:
+    - path: stacker://build-base/rootfs_diff/
+      dest: /
+    - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
   annotations:
     org.opencontainers.image.title: base-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}

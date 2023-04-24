@@ -1,0 +1,11 @@
+{
+    "images": {
+        "static": [],
+        "base": ["static"],
+        "devel": ["base"],
+        "go-devel": ["devel"],
+        "openj9-devel": ["base"],
+        "openj9": ["base", "openj9-devel"],
+        "multitool": ["static"]
+    }
+}

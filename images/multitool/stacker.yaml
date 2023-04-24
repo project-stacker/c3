@@ -5,15 +5,14 @@ config:
     - tcpdump.yaml
     - traceroute.yaml
     - iperf.yaml
-    - ../static/stacker.yaml
+    - ../build-env/stacker.yaml
 
 build-multitool:
   from:
     type: built
-    tag: build-static
+    tag: build-env
   import:
     - ../../pkgmgr/defs.sh
-    - stacker://build-static/rootfs.tar
     - stacker://build-arping/arping
     - stacker://build-socat/socat
     - stacker://build-tcpdump/tcpdump
@@ -26,33 +25,33 @@ build-multitool:
     export OS=${{OS}}
     # busybox
     export BUSYBOX=${{BUSYBOX}}
-    # build upon previously built rootfs
-    cp /stacker/rootfs.tar /
     # source pkgmgr func defs
     . /stacker/defs.sh
     # install helper pkgs in base container
     HOST_PKGS="wget"
     install_host_pkgs $HOST_PKGS
-    # prepare the rootfs
-    mkdir -p rootfs/bin
+    # prepare the rootfs diff
+    mkdir -p /rootfs_diff/bin
     # install busybox
-    install_busybox rootfs
+    install_busybox /rootfs_diff
     # copy binaries under /usr/bin
-    cp -f /stacker/arping rootfs/bin/
-    cp -f /stacker/socat rootfs/bin/
-    cp -f /stacker/tcpdump rootfs/bin/
-    cp -f /stacker/traceroute rootfs/bin/
-    cp -f /stacker/iperf3 rootfs/bin
-    # post-build packaging
-    pkg_rootfs rootfs
-    # post-packaging cleanup
-    rm -rf rootfs
+    cp -f /stacker/arping /rootfs_diff/bin/
+    cp -f /stacker/socat /rootfs_diff/bin/
+    cp -f /stacker/tcpdump /rootfs_diff/bin/
+    cp -f /stacker/traceroute /rootfs_diff/bin/
+    cp -f /stacker/iperf3 /rootfs_diff/bin/
+    # cleanup unnecessary files
+    cleanup_rootfs /rootfs_diff
   build_only: true
 
 multitool-${{ARCH}}:
   from:
-    type: tar
-    url: stacker://build-multitool/rootfs.tar
+    type: oci
+    url: ${{BUILD_OCI_DIR}}:static-${{ARCH}}${{LAYER_SUFFIX}}
+  import:
+    - path: stacker://build-multitool/rootfs_diff/
+      dest: /
+    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
   full_command: "/bin/sh -l"
   annotations:
     org.opencontainers.image.title: multitool-${{ARCH}}

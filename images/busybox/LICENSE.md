@@ -1,1 +1,0 @@
-GPL-2.0-only GPL-2.0-or-later

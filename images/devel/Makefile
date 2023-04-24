@@ -1,9 +1,9 @@
 include ../../config.mk
-include ../../config_golang.mk
+include ../../config_busybox.mk
 include ../../tools.mk
 
 ifeq ($(strip $(PUBLISH_TAG)),)
-override PUBLISH_TAG := $(GOLANG)
+override PUBLISH_TAG := $(DISTRO_REL)
 endif
 
 LAYER_SUFFIX :=
@@ -32,10 +32,10 @@ build: $(STACKER)
 		--substitute ARCH=$(ARCH) \
 		--substitute DISTRO=$(DISTRO) \
 		--substitute DISTRO_REL=$(DISTRO_REL) \
-		--substitute GOLANG=$(GOLANG) \
-		--substitute GOLANG_HASH=$(GOLANG_HASH) \
-		--substitute GOLANG_DLV=$(GOLANG_DLV) \
-		--substitute GOLANG_LINTER=$(GOLANG_LINTER)
+		--substitute BUSYBOX=$(BUSYBOX)
+
+.PHONY: test
+test:
 
 .PHONY: publish
 publish: $(STACKER)
@@ -51,16 +51,10 @@ publish: $(STACKER)
 		--substitute ARCH=$(ARCH) \
 		--substitute DISTRO=$(DISTRO) \
 		--substitute DISTRO_REL=$(DISTRO_REL) \
-		--substitute GOLANG=$(GOLANG) \
-		--substitute GOLANG_HASH=$(GOLANG_HASH) \
-		--substitute GOLANG_DLV=$(GOLANG_DLV) \
-		--substitute GOLANG_LINTER=$(GOLANG_LINTER) \
+		--substitute BUSYBOX=$(BUSYBOX) \
 		--url $(PUBLISH_URL)/$(DISTRO) \
 		--tag $(PUBLISH_TAG) \
 		$(PUBLISH_EXTRA_ARGS)
-
-.PHONY: test
-test:
 
 .PHONY: pull
 pull:

@@ -1,0 +1,6 @@
+# multitool
+SOCAT?=1.7.4.3
+LIBNET?=1.1.6
+ARPING?=2.23
+TCPDUMP?=4.99.1
+TRACEROUTE?=2.1.0
