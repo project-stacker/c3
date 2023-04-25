@@ -81,8 +81,12 @@ jobs:
               exit 1
             else
               echo "Build will not fail as it is triggered automatically"
+              echo "FOLDERS=" >> $GITHUB_ENV
+              exit 0
             fi
           fi
+          # Obtain images modified indirectly
+          folders=$(make build-candidates SUBDIRS=${folders} | tail -n 1)
           echo "FOLDERS=${folders}" >> $GITHUB_ENV
 
   build:
@@ -129,11 +133,12 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}
           echo "Building ${SUBDIRS}"
+          # for building PRs PUBLISH_URL points to the public server, so we can download unchanged images
           make build \
             SUBDIRS="${SUBDIRS}" \
-            PUBLISH_URL=docker://localhost:5000/c3 \
-            PUBLISH_EXTRA_ARGS="--skip-tls" \
-            PULL_EXTRA_ARGS="--src-tls-verify=false"
+            PUBLISH_URL=docker://zothub.io/c3
+          # for publishing PRs PUBLISH_URL points to the local server so we can later run the CVE scanner
+          # without having to push images to the public server
           make publish \
             SUBDIRS="${SUBDIRS}" \
             PUBLISH_URL=docker://localhost:5000/c3 \
