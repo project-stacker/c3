@@ -48,6 +48,7 @@ publish: $(STACKER)
 		--substitute DISTRO_REL=$(DISTRO_REL) \
 		--url $(PUBLISH_URL)/$(DISTRO) \
 		--tag $(PUBLISH_TAG) \
+		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 
 .PHONY: test

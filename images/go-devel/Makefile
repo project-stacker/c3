@@ -57,6 +57,7 @@ publish: $(STACKER)
 		--substitute GOLANG_LINTER=$(GOLANG_LINTER) \
 		--url $(PUBLISH_URL)/$(DISTRO) \
 		--tag $(PUBLISH_TAG) \
+		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 
 .PHONY: test
