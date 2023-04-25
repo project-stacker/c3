@@ -24,6 +24,10 @@ build-order:
 	rm -f $(BUILD_ORDER_FILE); \
 	$(DEPS_SCRIPT) --deps-file $(DEPS_FILE) --images $(subst $(space),$(comma),$(SUBDIRS)) --build-order --out-file $(BUILD_ORDER_FILE)
 
+.PHONY: build-candidates
+build-candidates: build-order
+	jq -c -j '.[][] + " "' $(BUILD_ORDER_FILE) | xargs echo -n
+
 .PHONY: identify-skippable-images
 identify-skippable-images:
 	mkdir -p $(BUILD_DIR); \
