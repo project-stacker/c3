@@ -156,7 +156,7 @@ jobs:
             hack/tools/bin/zli cve local -I c3/${DISTRO}/${folder}-${ARCH}:${tag}
           done
 
-  tag:
+  build_publish:
     name: Build and publish
     needs: [generate_build_input]
     if: |
@@ -194,19 +194,17 @@ jobs:
           echo ZOT_VERSION="v1.4.3" >> $GITHUB_ENV
       - name: Build and push container images
         env:
-          ZOTHUB_USERNAME: ${{ secrets.ZOTHUB_USERNAME }}
-          ZOTHUB_PASSWORD: ${{ secrets.ZOTHUB_PASSWORD }}
+          PUBLISH_USERNAME: ${{ secrets.ZOTHUB_USERNAME }}
+          PUBLISH_PASSWORD: ${{ secrets.ZOTHUB_PASSWORD }}
         run: |
           cd ${GITHUB_WORKSPACE}
           echo "Building ${SUBDIRS}"
           make build \
             SUBDIRS="${SUBDIRS}" \
-            PUBLISH_URL=docker://zothub.io/c3 \
-            PUBLISH_EXTRA_ARGS="--username ${ZOTHUB_USERNAME} --password ${ZOTHUB_PASSWORD}"
+            PUBLISH_URL=docker://zothub.io/c3
           make publish \
             SUBDIRS="${SUBDIRS}" \
-            PUBLISH_URL=docker://zothub.io/c3 \
-            PUBLISH_EXTRA_ARGS="--username ${ZOTHUB_USERNAME} --password ${ZOTHUB_PASSWORD}"
+            PUBLISH_URL=docker://zothub.io/c3
       - name: Scan container images
         run: |
           set -x

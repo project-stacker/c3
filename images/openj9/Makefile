@@ -60,6 +60,7 @@ publish: $(STACKER)
 		--substitute BUSYBOX=$(BUSYBOX) \
 		--url $(PUBLISH_URL)/$(DISTRO) \
 		--tag $(PUBLISH_TAG) \
+		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 
 .PHONY: test
