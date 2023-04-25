@@ -15,5 +15,5 @@ PULL_EXTRA_ARGS?=	# string containing credentials and/or other situational argum
 
 PUBLISH_CREDS :=
 ifneq ($(PUBLISH_USERNAME),)
-PUBLISH_CREDS := --username $(PUBLISH_USERNAME) --password $(PUBLISH_PASSWORD)
+PUBLISH_CREDS := --username '$(PUBLISH_USERNAME)' --password '$(PUBLISH_PASSWORD)'
 endif
