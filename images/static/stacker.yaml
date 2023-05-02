@@ -19,7 +19,17 @@ build-static:
     # source pkgmgr func defs
     . /stacker/defs.sh
     # build the rootfs
-    build_rootfs
+    mkdir /rootfs
+    # install pkgs
+    install_pkgs /rootfs $PKGS
+    # copy certificates
+    install_certs /rootfs
+    # cleanup unnecessary files
+    cleanup_rootfs /rootfs
+    # post-build packaging
+    pkg_rootfs /rootfs
+    # post-packaging cleanup
+    rm -rf /rootfs
   build_only: true
 
 static-${{ARCH}}:
