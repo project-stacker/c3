@@ -86,7 +86,7 @@ jobs:
             fi
           fi
           # Obtain images modified indirectly
-          folders=$(make build-candidates SUBDIRS=${folders} | tail -n 1)
+          folders=$(make build-candidates SUBDIRS="${folders}" | tail -n 1)
           echo "FOLDERS=${folders}" >> $GITHUB_ENV
 
   build:
