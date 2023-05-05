@@ -6,6 +6,7 @@
         "go-devel": ["devel"],
         "openj9-devel": ["base"],
         "openj9": ["base", "openj9-devel"],
+        "rust-devel": ["devel"],
         "multitool": ["static"]
     }
 }

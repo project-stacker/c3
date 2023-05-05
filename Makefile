@@ -1,7 +1,7 @@
 include config.mk
 include tools.mk
 
-SUBDIRS := static base devel go-devel openj9-devel openj9 multitool
+SUBDIRS := static base devel go-devel rust-devel openj9-devel openj9 multitool
 BUILD_ORDER_FILE := $(BUILD_DIR)/build_order.json
 PREREQUISITES_FILE := $(BUILD_DIR)/prerequisites.json
 

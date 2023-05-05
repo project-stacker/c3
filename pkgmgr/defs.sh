@@ -82,6 +82,25 @@ unpack_rpm() {
   rm -rf "$dldir"
 }
 
+install_certs() {
+  rootfs="$1"; shift
+
+  # The certs are normally unpacked by a separate script when the pkg is installed
+  echo "copy certs -> [$rootfs/]"
+  case $DISTRO in
+    debian | ubuntu)
+      cp -r /etc/ssl/certs "$rootfs"/etc/ssl/
+      ;;
+    rockylinux)
+      cp -r /etc/ssl/ "$rootfs"/etc/
+      cp -r /etc/pki/ "$rootfs"/etc/
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
+}
+
 install_pkgs() {
   rootfs="$1"; shift
 
@@ -138,9 +157,7 @@ cleanup_rootfs() {
 }
 
 pkg_rootfs() {
-   rootfs="$1"
-
-  cleanup_rootfs "$rootfs"
+  rootfs="$1"
 
   cwd=$(pwd)
   cd "$rootfs" || exit 1

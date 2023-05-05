@@ -1,0 +1,4 @@
+# rust
+RUST?=1.67.1
+RUST_INIT?=1.26.0
+RUST_INIT_HASH?=0b2f6c8f85a3d02fde2efc0ced4657869d73fccfce59defb4e8d29233116e6db
