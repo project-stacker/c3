@@ -1,11 +1,11 @@
-# "devel" is an image that can be used to package binaries
+# "base-devel" is an image that can be used to package binaries
 # that require libc runtime
 
 config:
   prerequisites:
     - ../build-env/stacker.yaml
 
-build-devel:
+build-base-devel:
   from:
     type: built
     tag: build-env
@@ -40,17 +40,17 @@ build-devel:
     ls /rootfs_diff/usr/sbin/
   build_only: true
 
-devel-${{ARCH}}:
+base-devel-${{ARCH}}:
   from:
     type: oci
     url: ${{BUILD_OCI_DIR}}:base-${{ARCH}}${{LAYER_SUFFIX}}
   import:
-    - path: stacker://build-devel/rootfs_diff/
+    - path: stacker://build-base-devel/rootfs_diff/
       dest: /
     - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
     - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
   annotations:
-    org.opencontainers.image.title: devel-${{ARCH}}
+    org.opencontainers.image.title: base-devel-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}
     org.opencontainers.image.url: https://github.com/project-stacker/c3
     org.opencontainers.image.source: https://github.com/project-stacker/c3
@@ -59,10 +59,10 @@ devel-${{ARCH}}:
     org.opencontainers.image.licenses: ${{LICENSES}}
     org.opencontainers.image.vendor: Cisco Systems, Inc.
 
-test-devel:
+test-base-devel:
   from:
     type: built
-    tag: devel-${{ARCH}}
+    tag: base-devel-${{ARCH}}
   run: |
     ls -l /
     make --version
