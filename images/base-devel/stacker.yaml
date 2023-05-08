@@ -29,8 +29,10 @@ build-base-devel:
     install_pkgs /rootfs_diff $PKGS
     # install busybox
     install_busybox /rootfs_diff
-    # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes
     # binaries we intentionally installed under /rootfs_diff/usr/bin/ and /rootfs_diff/usr/sbin/
+    [ ! -f "/rootfs_diff/usr/bin/ld" ] && ln -sf /usr/bin/ld.bfd /rootfs_diff/usr/bin/ld
+    [ ! -f "/rootfs_diff/usr/bin/cc" ] && ln -sf /usr/bin/gcc /rootfs_diff/usr/bin/cc
+    # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes
     rm -rf /rootfs_diff/tmp/*
     rm -rf /rootfs_diff/var/*
     # remove all docs
@@ -63,10 +65,25 @@ test-base-devel:
   from:
     type: built
     tag: base-devel-${{ARCH}}
+  import:
+    - ../test/test.c
   run: |
     ls -l /
     make --version
     cmake --version
     wget --help
     curl --version
+    gcc --version
+    clang --version
+    cc --version
+    # looks like rustc errors if this folder is not created
+    # on Rockylinux it is not
+    mkdir -p /tmp
+    # test compiling
+    cp /stacker/test.c .
+    gcc test.c -o test_gcc
+    clang test.c -o test_clang
+    # test output binaries
+    ./test_gcc
+    ./test_clang
   build_only: true
