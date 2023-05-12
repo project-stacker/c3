@@ -35,8 +35,6 @@ unpack_deb() {
   pkg="$2"
   arch="$(canonical_arch $ARCH)"
 
-  apt-get update
-
   dldir=$(mktemp -d "${TMPDIR:-/tmp}"/XXXXXX)
 
   dpkg --add-architecture "$ARCH"
@@ -56,14 +54,35 @@ unpack_deb() {
   rm -rf "$dldir"
 }
 
+unpack_debs() {
+  rootfs="$1"
+  pkgs_file="$2"
+
+  dldir=$(mktemp -d "${TMPDIR:-/tmp}"/XXXXXX)
+
+  dpkg --add-architecture "$ARCH"
+
+  DEBIAN_FRONTEND=noninteractive \
+    xargs apt-get -y --reinstall install \
+    "--option=Dir::Cache::Archives=$dldir" \
+    --no-install-recommends \
+    --download-only <$pkgs_file
+
+  echo DLDIR="$dldir"
+  ls "$dldir"/
+
+  for file in "$dldir"/*.deb
+  do
+    dpkg-deb -xv "$file" "$rootfs"
+  done
+
+  rm -rf "$dldir"
+}
+
 unpack_rpm() {
   rootfs="$1"
   pkg="$2"
   arch="$(canonical_arch $ARCH)"
-
-  yum makecache
-  yum -y install cpio
-  dnf -y install dnf-plugins-core
 
   dldir=$(mktemp -d "${TMPDIR:-/tmp}"/XXXXXX)
 
@@ -76,6 +95,31 @@ unpack_rpm() {
   cd "$rootfs" || exit 1
 
   rpm2cpio "$dldir"/"$(ls $dldir)" | cpio -idmv
+
+  cd "$cwd" || exit 1
+
+  rm -rf "$dldir"
+}
+
+unpack_rpms() {
+  rootfs="$1"
+  pkg="$2"
+
+  dldir=$(mktemp -d "${TMPDIR:-/tmp}"/XXXXXX)
+
+  xargs dnf download --nodocs --downloaddir="$dldir" <$pkgs_file
+
+  echo DLDIR="$dldir"
+  ls "$dldir"/
+
+  cwd=$(pwd)
+
+  cd "$rootfs" || exit 1
+
+  for file in "$dldir"/*.rpm
+  do
+    rpm2cpio "$file" | cpio -idmv
+  done
 
   cd "$cwd" || exit 1
 
@@ -103,6 +147,20 @@ install_certs() {
 
 install_pkgs() {
   rootfs="$1"; shift
+  echo "install packages"
+
+  echo "setup tools"
+  case $DISTRO in
+    debian | ubuntu)
+      apt-get update
+      ;;
+    rockylinux)
+      dnf makecache --refresh
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
 
   for pkg in "$@"; do
     echo "install: $pkg -> [$rootfs/]"
@@ -118,6 +176,33 @@ install_pkgs() {
         ;;
     esac
   done
+}
+
+install_pkgs_from_file() {
+  rootfs="$1"
+  pkgs_file="$2"
+
+  if [ -s $pkgs_file ]; then
+    echo "install packages: $pkgs_file -> [$rootfs/]"
+  else
+    echo "empty packages file: $pkgs_file - assuming no pkgs should be installed"
+    return 0
+  fi
+
+  echo "setup tools"
+  case $DISTRO in
+    debian | ubuntu)
+      apt-get update
+      unpack_debs "$rootfs" "$pkgs_file"
+      ;;
+    rockylinux)
+      dnf makecache --refresh
+      unpack_rpms "$rootfs" "$pkgs_file"
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
 }
 
 install_busybox () {
@@ -190,21 +275,34 @@ build_rootfs() {
   rm -rf rootfs
 }
 
+update_host_pkgs() {
+  echo "host_update"
+  case $DISTRO in
+    ubuntu | debian)
+      apt-get update && apt-get dist-upgrade -y
+      ;;
+    rockylinux)
+      dnf -y update --refresh
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
+}
+
 install_host_pkgs() {
-  for pkg in "$@"; do
-    echo "host_install: $pkg"
-    case $DISTRO in
-      ubuntu | debian)
-        apt-get update && apt-get dist-upgrade -y
-        apt-get install -y "$pkg"
-        ;;
-      rockylinux)
-        yum makecache
-        yum -y install "$pkg"
-        ;;
-      *)
-        exit 1
-        ;;
-    esac
-  done
+  update_host_pkgs
+
+  echo "host_install: $@"
+  case $DISTRO in
+    ubuntu | debian)
+      apt-get install --no-install-recommends -y "$@"
+      ;;
+    rockylinux)
+      dnf -y install "$@"
+      ;;
+    *)
+      exit 1
+      ;;
+  esac
 }

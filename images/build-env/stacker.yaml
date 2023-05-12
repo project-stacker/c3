@@ -8,7 +8,7 @@ build-env:
     url: docker://${{ARCH}}/${{DISTRO}}:${{DISTRO_REL}}
   import:
     - ${{DISTRO}}-pkgs.sh
-    - ../../pkgmgr/defs.sh
+    - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -17,7 +17,7 @@ build-env:
     # source pkgs to install into rootfs
     . /stacker/$DISTRO-pkgs.sh
     # source pkgmgr func defs
-    . /stacker/defs.sh
+    . /stacker/pkgmgr/defs.sh
     # install build related tooling
     install_host_pkgs $HOST_PKGS
   build_only: true

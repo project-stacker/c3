@@ -8,7 +8,8 @@ build-openj9:
     tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
-    - ../../pkgmgr/defs.sh
+    - ${{DISTRO}}-pkgs
+    - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -20,7 +21,7 @@ build-openj9:
     # busybox
     export BUSYBOX=${{BUSYBOX}}
     # source pkgmgr func defs
-    . /stacker/defs.sh
+    . /stacker/pkgmgr/defs.sh
     # prepare the isolated environment
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install openjdk/j9
@@ -34,11 +35,15 @@ build-openj9:
     # source pkgs to install into /rootfs_diff
     . /stacker/$DISTRO-pkgs.sh
     # install pkgs
-    install_pkgs /rootfs_diff $PKGS
+    install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs
     # install busybox
     install_busybox /rootfs_diff
-    # cleanup unnecessary files
-    cleanup_rootfs /rootfs_diff
+    # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes necessary files
+    rm -rf /rootfs_diff/tmp/*
+    rm -rf /rootfs_diff/var/*
+    # remove all docs
+    rm -rf /rootfs_diff/usr/share/doc/*
+    rm -rf /rootfs_diff/usr/share/man/*
   build_only: true
 
 openj9-${{ARCH}}:
@@ -49,7 +54,8 @@ openj9-${{ARCH}}:
     - path: stacker://build-openj9/rootfs_diff/
       dest: /
     - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
-    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
+    - ${{DISTRO}}-pkgs     # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr         # The import purpose is to force a rebuild if file changed
   run: |
     echo 'export HOME=/jre' > /etc/profile
     echo 'export JAVA_HOME=/opt/jre' >> /etc/profile

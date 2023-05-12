@@ -7,7 +7,7 @@ build-go-devel:
     type: built
     tag: build-env
   import:
-    - ../../pkgmgr/defs.sh
+    - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -18,7 +18,7 @@ build-go-devel:
     export GOLANG_DLV=${{GOLANG_DLV}}
     export GOLANG_LINTER=${{GOLANG_LINTER}}
     # source pkgmgr func defs
-    . /stacker/defs.sh
+    . /stacker/pkgmgr/defs.sh
     # prepare the rootfs
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install go
@@ -52,7 +52,7 @@ go-devel-${{ARCH}}:
   import:
     - path: stacker://build-go-devel/rootfs_diff/
       dest: /
-    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr # The import purpose is to force a rebuild if file changed
   run: |
     echo 'export HOME=/go' > /etc/profile
     echo 'export GOROOT=/opt/go' >> /etc/profile

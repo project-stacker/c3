@@ -12,7 +12,7 @@ build-multitool:
     type: built
     tag: build-env
   import:
-    - ../../pkgmgr/defs.sh
+    - ../../pkgmgr
     - stacker://build-arping/arping
     - stacker://build-socat/socat
     - stacker://build-tcpdump/tcpdump
@@ -26,7 +26,7 @@ build-multitool:
     # busybox
     export BUSYBOX=${{BUSYBOX}}
     # source pkgmgr func defs
-    . /stacker/defs.sh
+    . /stacker/pkgmgr/defs.sh
     # install helper pkgs in base container
     HOST_PKGS="wget"
     install_host_pkgs $HOST_PKGS
@@ -51,7 +51,7 @@ multitool-${{ARCH}}:
   import:
     - path: stacker://build-multitool/rootfs_diff/
       dest: /
-    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr # The import purpose is to force a rebuild if file changed
   full_command: "/bin/sh -l"
   annotations:
     org.opencontainers.image.title: multitool-${{ARCH}}

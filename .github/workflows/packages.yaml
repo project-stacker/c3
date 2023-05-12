@@ -1,0 +1,59 @@
+name: Update 3rd party package versions
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  generate_packages:
+    name: "Update 3rd party package versions"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.COMMIT_KEY }}
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v5
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          trust_level: 5
+      - name: Update ubuntu packages
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          make clean
+          make pkgs DISTRO=ubuntu DISTRO_REL=jammy OS=linux ARCH=amd64
+      - name: Update debian packages
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          make clean
+          make pkgs DISTRO=debian DISTRO_REL=bullseye OS=linux ARCH=amd64
+      - name: Update rockylinux packages
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          make clean
+          make pkgs DISTRO=rockylinux DISTRO_REL=9 OS=linux ARCH=amd64
+      - name: Commit and push changed files
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          set -x
+          git status
+          git diff
+          files=$(git diff --name-only | grep -E "images/.+/ubuntu|debian|rockylinux-pkgs" || true)
+          echo "Found files:"
+          echo ${files}
+          if [ -z "${files}" ]; then
+            echo "No files changed"
+            exit 0
+          fi
+          for file in ${files}; do
+            git add ${file}
+          done
+          git commit -s -S -m "chore(pkgs): automatic update of 3rd party packages"
+          git push

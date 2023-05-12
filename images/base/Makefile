@@ -54,6 +54,17 @@ publish: $(STACKER)
 		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 
+.PHONY: pkgs
+pkgs: $(STACKER)
+	$(STACKER_WITH_BUILD_DIR) \
+		build -f stacker-pkgs.yaml \
+		--layer-type $(LAYER_TYPE) \
+		--substitute IMG_DIR=$$(pwd) \
+		--substitute OS=$(OS) \
+		--substitute ARCH=$(ARCH) \
+		--substitute DISTRO=$(DISTRO) \
+		--substitute DISTRO_REL=$(DISTRO_REL)
+
 .PHONY: pull
 pull:
 	skopeo copy $(PULL_EXTRA_ARGS) $(PUBLISH_URL)/$(strip $(DISTRO))/$(strip $(PUBLISH_IMAGE_NAME)):$(PUBLISH_TAG)$(LAYER_SUFFIX) oci:$(BUILD_OCI_DIR):$(PUBLISH_IMAGE_NAME)$(LAYER_SUFFIX)

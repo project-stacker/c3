@@ -61,6 +61,17 @@ publish: $(STACKER)
 		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 
+.PHONY: pkgs
+pkgs: $(STACKER)
+	$(STACKER_WITH_BUILD_DIR) \
+		build -f stacker-pkgs.yaml \
+		--layer-type $(LAYER_TYPE) \
+		--substitute IMG_DIR=$$(pwd) \
+		--substitute OS=$(OS) \
+		--substitute ARCH=$(ARCH) \
+		--substitute DISTRO=$(DISTRO) \
+		--substitute DISTRO_REL=$(DISTRO_REL)
+
 .PHONY: test
 test:
 

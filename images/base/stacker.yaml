@@ -8,7 +8,8 @@ build-base:
     tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
-    - ../../pkgmgr/defs.sh
+    - ${{DISTRO}}-pkgs
+    - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -17,11 +18,11 @@ build-base:
     # source pkgs to install into rootfs
     . /stacker/$DISTRO-pkgs.sh
     # source pkgmgr func defs
-    . /stacker/defs.sh
+    . /stacker/pkgmgr/defs.sh
     # install the extra packages in a chroot
     mkdir /rootfs_diff
     # install pkgs
-    install_pkgs /rootfs_diff $PKGS
+    install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs
     # cleanup unnecessary files
     cleanup_rootfs /rootfs_diff
   build_only: true
@@ -34,7 +35,8 @@ base-${{ARCH}}:
     - path: stacker://build-base/rootfs_diff/
       dest: /
     - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
-    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
+    - ${{DISTRO}}-pkgs     # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr         # The import purpose is to force a rebuild if file changed
   annotations:
     org.opencontainers.image.title: base-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}

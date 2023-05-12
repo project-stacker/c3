@@ -44,6 +44,12 @@ download-skippable-images: identify-skippable-images check-skopeo
 		$(MAKE) -C images/$$dir pull || exit $$?; \
 	done
 
+.PHONY: pkgs
+pkgs:
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C images/$$dir pkgs || exit $$?; \
+	done
+
 .PHONY: publish
 publish:
 	for dir in $(SUBDIRS); do \
