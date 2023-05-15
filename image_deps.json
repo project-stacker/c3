@@ -2,11 +2,11 @@
     "images": {
         "static": [],
         "base": ["static"],
-        "devel": ["base"],
-        "go-devel": ["devel"],
+        "base-devel": ["base"],
+        "go-devel": ["base-devel"],
         "openj9-devel": ["base"],
         "openj9": ["base", "openj9-devel"],
-        "rust-devel": ["devel"],
+        "rust-devel": ["base-devel"],
         "multitool": ["static"]
     }
 }

@@ -7,7 +7,6 @@ build-rust-devel:
     type: built
     tag: build-env
   import:
-    - ${{DISTRO}}-pkgs.sh
     - ../../pkgmgr/defs.sh
   run: |
     export DISTRO=${{DISTRO}}
@@ -16,8 +15,6 @@ build-rust-devel:
     export OS=${{OS}}
     # rust
     export RUST=${{RUST}}
-    # source pkgs to install into rootfs
-    . /stacker/$DISTRO-pkgs.sh
     # source pkgmgr func defs
     . /stacker/defs.sh
     # prepare the rootfs
@@ -37,16 +34,12 @@ build-rust-devel:
     rustc -V
     # copy binaries under /opt/bin
     mkdir -p /rootfs_diff/opt/bin
-    # install pkgs
-    install_pkgs /rootfs_diff $PKGS
     cp -R ${RUSTUP} /rootfs_diff/opt/
     cp -R ${CARGO_HOME} /rootfs_diff/opt/
     # HOME folder
     mkdir -p /rootfs_diff/rust/
     # cleanup unnecessary files
     # binaries were intentionally installed under /rootfs_diff/usr/bin/
-    [ ! -f "/rootfs_diff/usr/bin/cc" ] && ln -sf /usr/bin/gcc /rootfs_diff/usr/bin/cc
-    [ ! -f "/rootfs_diff/usr/bin/ld" ] && ln -sf /usr/bin/ld.bfd /rootfs_diff/usr/bin/ld
     # remove all docs
     rm -rf /rootfs_diff/usr/share/doc/*
     rm -rf /rootfs_diff/usr/share/man/*
@@ -55,11 +48,10 @@ build-rust-devel:
 rust-devel-${{ARCH}}:
   from:
     type: oci
-    url: ${{BUILD_OCI_DIR}}:devel-${{ARCH}}${{LAYER_SUFFIX}}
+    url: ${{BUILD_OCI_DIR}}:base-devel-${{ARCH}}${{LAYER_SUFFIX}}
   import:
     - path: stacker://build-rust-devel/rootfs_diff/
       dest: /
-    - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
     - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
   run: |
     echo 'export HOME=/rust' > /etc/profile
@@ -95,7 +87,6 @@ test-rust-devel:
     ls -lrL ${SSL_CERT_DIR}/
     rustc --version
     cargo --version
-    cc --version
     rustup show
     # looks like rustc errors if this folder is not created
     # on Rockylinux it is not

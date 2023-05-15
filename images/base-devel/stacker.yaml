@@ -1,11 +1,11 @@
-# "devel" is an image that can be used to package binaries
+# "base-devel" is an image that can be used to package binaries
 # that require libc runtime
 
 config:
   prerequisites:
     - ../build-env/stacker.yaml
 
-build-devel:
+build-base-devel:
   from:
     type: built
     tag: build-env
@@ -29,8 +29,10 @@ build-devel:
     install_pkgs /rootfs_diff $PKGS
     # install busybox
     install_busybox /rootfs_diff
-    # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes
     # binaries we intentionally installed under /rootfs_diff/usr/bin/ and /rootfs_diff/usr/sbin/
+    [ ! -f "/rootfs_diff/usr/bin/ld" ] && ln -sf /usr/bin/ld.bfd /rootfs_diff/usr/bin/ld
+    [ ! -f "/rootfs_diff/usr/bin/cc" ] && ln -sf /usr/bin/gcc /rootfs_diff/usr/bin/cc
+    # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes
     rm -rf /rootfs_diff/tmp/*
     rm -rf /rootfs_diff/var/*
     # remove all docs
@@ -40,17 +42,17 @@ build-devel:
     ls /rootfs_diff/usr/sbin/
   build_only: true
 
-devel-${{ARCH}}:
+base-devel-${{ARCH}}:
   from:
     type: oci
     url: ${{BUILD_OCI_DIR}}:base-${{ARCH}}${{LAYER_SUFFIX}}
   import:
-    - path: stacker://build-devel/rootfs_diff/
+    - path: stacker://build-base-devel/rootfs_diff/
       dest: /
     - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
     - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
   annotations:
-    org.opencontainers.image.title: devel-${{ARCH}}
+    org.opencontainers.image.title: base-devel-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}
     org.opencontainers.image.url: https://github.com/project-stacker/c3
     org.opencontainers.image.source: https://github.com/project-stacker/c3
@@ -59,14 +61,29 @@ devel-${{ARCH}}:
     org.opencontainers.image.licenses: ${{LICENSES}}
     org.opencontainers.image.vendor: Cisco Systems, Inc.
 
-test-devel:
+test-base-devel:
   from:
     type: built
-    tag: devel-${{ARCH}}
+    tag: base-devel-${{ARCH}}
+  import:
+    - ../test/test.c
   run: |
     ls -l /
     make --version
     cmake --version
     wget --help
     curl --version
+    gcc --version
+    clang --version
+    cc --version
+    # looks like rustc errors if this folder is not created
+    # on Rockylinux it is not
+    mkdir -p /tmp
+    # test compiling
+    cp /stacker/test.c .
+    gcc test.c -o test_gcc
+    clang test.c -o test_clang
+    # test output binaries
+    ./test_gcc
+    ./test_clang
   build_only: true

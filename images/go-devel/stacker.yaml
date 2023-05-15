@@ -48,7 +48,7 @@ build-go-devel:
 go-devel-${{ARCH}}:
   from:
     type: oci
-    url: ${{BUILD_OCI_DIR}}:devel-${{ARCH}}${{LAYER_SUFFIX}}
+    url: ${{BUILD_OCI_DIR}}:base-devel-${{ARCH}}${{LAYER_SUFFIX}}
   import:
     - path: stacker://build-go-devel/rootfs_diff/
       dest: /
