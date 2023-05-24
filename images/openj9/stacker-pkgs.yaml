@@ -1,0 +1,27 @@
+config:
+  prerequisites:
+    - ../build-env/stacker.yaml
+
+update-openj9:
+  from:
+    type: built
+    tag: build-env
+  import:
+    - ${{DISTRO}}-pkgs.sh
+    - ../../pkgmgr
+  binds:
+    - ${{IMG_DIR}} -> /pkgs
+  run: |
+    export DISTRO=${{DISTRO}}
+    export DISTRO_REL=${{DISTRO_REL}}
+    export ARCH=${{ARCH}}
+    export OS=${{OS}}
+    # source pkgs to install into rootfs
+    . /stacker/$DISTRO-pkgs.sh
+    # source pkgmgr func defs
+    . /stacker/pkgmgr/defs.sh
+    # update pkgs and local cache
+    update_host_pkgs "$HOST_PKGS"
+    # update PKG list
+    /stacker/pkgmgr/discover_pkgs.py --out-file /pkgs/$PKGS_FILE --in-pkgs "$PKGS" --exclude-pkgs "$PKGS_EXCLUDE" --debug
+  build_only: true

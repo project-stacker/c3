@@ -1,3 +1,5 @@
 #!/bin/sh
 
-PKGS="binutils binutils-common binutils-x86-64-linux-gnu clang clang-14 cmake cpp cpp-11 curl gcc gcc-11 gcc-11-base git lib32gcc-s1 lib32stdc++6 libacl1 libarchive13 libasan6 libatomic1 libbinutils libbrotli1 libbsd0 libbz2-1.0 libc-dev-bin libc6-dev libc6-i386 libcc1-0 libclang-common-14-dev libclang-cpp14 libclang1-14 libcom-err2 libcrypt-dev libctf-nobfd0 libctf0 libcurl4 libedit2 libgc1 libgcc-11-dev libgcc-s1 libgmp10 libgnutls30 libgomp1 libgssapi-krb5-2 libhogweed6 libicu70 libidn2-0 libisl23 libitm1 libjsoncpp25 libk5crypto3 libkeyutils1 libffi8 libkrb5-3 libkrb5support0 libldap-2.5-0 libllvm14 liblsan0 liblz4-1 liblzma5 libmd0 libmpc3 libmpfr6 libnettle8 libnghttp2-14 libnsl-dev libobjc-11-dev libobjc4 libp11-kit0 libpsl5 libquadmath0 librhash0 librtmp1 libsasl2-2 libssh-4 libstdc++-11-dev libstdc++6 libtasn1-6 libtinfo6 libtirpc-dev libtsan0 libubsan1 libunistring2 libuv1 libxml2 libzstd1 linux-libc-dev llvm-14-linker-tools make rpcsvc-proto wget zlib1g"
+PKGS="binutils clang cmake curl gcc git libc6-dev make wget"
+PKGS_EXCLUDE="dpkg debconf"
+PKGS_FILE=ubuntu-pkgs

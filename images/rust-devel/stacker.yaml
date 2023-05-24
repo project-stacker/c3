@@ -7,7 +7,7 @@ build-rust-devel:
     type: built
     tag: build-env
   import:
-    - ../../pkgmgr/defs.sh
+    - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -16,7 +16,7 @@ build-rust-devel:
     # rust
     export RUST=${{RUST}}
     # source pkgmgr func defs
-    . /stacker/defs.sh
+    . /stacker/pkgmgr/defs.sh
     # prepare the rootfs
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install rust
@@ -52,7 +52,7 @@ rust-devel-${{ARCH}}:
   import:
     - path: stacker://build-rust-devel/rootfs_diff/
       dest: /
-    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr # The import purpose is to force a rebuild if file changed
   run: |
     echo 'export HOME=/rust' > /etc/profile
     echo 'export RUSTUP_HOME=/opt/rustup' >> /etc/profile

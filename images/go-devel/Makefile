@@ -60,6 +60,9 @@ publish: $(STACKER)
 		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 
+.PHONY: pkgs
+pkgs:
+
 .PHONY: test
 test:
 

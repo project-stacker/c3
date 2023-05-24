@@ -1,3 +1,5 @@
 #!/bin/sh
 
-PKGS="zlib libstdc++ libgcc"
+PKGS=""
+PKGS_EXCLUDE=""
+PKGS_FILE=rockylinux-pkgs

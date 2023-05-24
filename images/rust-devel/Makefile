@@ -69,6 +69,9 @@ publish: $(STACKER)
 .PHONY: test
 test:
 
+.PHONY: pkgs
+pkgs:
+
 .PHONY: pull
 pull:
 	skopeo copy $(PULL_EXTRA_ARGS) $(PUBLISH_URL)/$(strip $(DISTRO))/$(strip $(PUBLISH_IMAGE_NAME)):$(PUBLISH_TAG)$(LAYER_SUFFIX) oci:$(BUILD_OCI_DIR):$(PUBLISH_IMAGE_NAME)$(LAYER_SUFFIX)

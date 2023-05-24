@@ -8,7 +8,8 @@ build-openj9-devel:
     tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
-    - ../../pkgmgr/defs.sh
+    - ${{DISTRO}}-pkgs
+    - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -20,7 +21,7 @@ build-openj9-devel:
     # busybox
     export BUSYBOX=${{BUSYBOX}}
     # source pkgmgr func defs
-    . /stacker/defs.sh
+    . /stacker/pkgmgr/defs.sh
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
     # install openjdk/j9
     wget -N 'https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-$OPENJDK%2B1_openj9-$OPENJ9/ibm-semeru-open-jdk_x64_linux_$OPENJDK_1_openj9-$OPENJ9.tar.gz' -O $dldir/openj9.tar.gz
@@ -33,22 +34,25 @@ build-openj9-devel:
     # source pkgs to install into the isolated environment
     . /stacker/$DISTRO-pkgs.sh
     # install pkgs
-    install_pkgs /rootfs_diff $PKGS
-    # install busybox
-    install_busybox /rootfs_diff
-    # cleanup unnecessary files
-    cleanup_rootfs /rootfs_diff
+    install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs
+    # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes necessary files
+    rm -rf /rootfs_diff/tmp/*
+    rm -rf /rootfs_diff/var/*
+    # remove all docs
+    rm -rf /rootfs_diff/usr/share/doc/*
+    rm -rf /rootfs_diff/usr/share/man/*
   build_only: true
 
 openj9-devel-${{ARCH}}:
   from:
     type: oci
-    url: ${{BUILD_OCI_DIR}}:base-${{ARCH}}${{LAYER_SUFFIX}}
+    url: ${{BUILD_OCI_DIR}}:base-devel-${{ARCH}}${{LAYER_SUFFIX}}
   import:
     - path: stacker://build-openj9-devel/rootfs_diff/
       dest: /
     - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
-    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
+    - ${{DISTRO}}-pkgs     # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr         # The import purpose is to force a rebuild if file changed
   run: |
     echo 'export HOME=/jdk' > /etc/profile
     echo 'export JAVA_HOME=/opt/jdk' >> /etc/profile

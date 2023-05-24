@@ -1,3 +1,6 @@
 #!/bin/sh
 
-PKGS="zlib1g libstdc++6 libgcc-s1 ca-certificates-java"
+PKGS="ca-certificates-java"
+# java is not installed using a deb
+PKGS_EXCLUDE="dpkg debconf openjdk-17-jre-headless"
+PKGS_FILE=debian-pkgs

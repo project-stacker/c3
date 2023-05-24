@@ -4,7 +4,7 @@
         "base": ["static"],
         "base-devel": ["base"],
         "go-devel": ["base-devel"],
-        "openj9-devel": ["base"],
+        "openj9-devel": ["base-devel"],
         "openj9": ["base", "openj9-devel"],
         "rust-devel": ["base-devel"],
         "multitool": ["static"]

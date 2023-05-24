@@ -11,7 +11,8 @@ build-base-devel:
     tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
-    - ../../pkgmgr/defs.sh
+    - ${{DISTRO}}-pkgs
+    - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
@@ -22,11 +23,11 @@ build-base-devel:
     # source pkgs to install into rootfs
     . /stacker/$DISTRO-pkgs.sh
     # source pkgmgr func defs
-    . /stacker/defs.sh
+    . /stacker/pkgmgr/defs.sh
     # install the extra packages in an isolated environment
     mkdir /rootfs_diff
     # install pkgs
-    install_pkgs /rootfs_diff $PKGS
+    install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs
     # install busybox
     install_busybox /rootfs_diff
     # binaries we intentionally installed under /rootfs_diff/usr/bin/ and /rootfs_diff/usr/sbin/
@@ -50,7 +51,8 @@ base-devel-${{ARCH}}:
     - path: stacker://build-base-devel/rootfs_diff/
       dest: /
     - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
-    - ../../pkgmgr/defs.sh # The import purpose is to force a rebuild if file changed
+    - ${{DISTRO}}-pkgs     # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr         # The import purpose is to force a rebuild if file changed
   annotations:
     org.opencontainers.image.title: base-devel-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}
