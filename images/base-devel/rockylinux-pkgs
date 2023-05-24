@@ -43,9 +43,9 @@ gcc-toolset-12-gcc-c++-12.2.1-7.4.el9.x86_64
 gcc-toolset-12-libstdc++-devel-12.2.1-7.4.el9.i686
 gcc-toolset-12-runtime-12.0-6.el9.x86_64
 gdbm-libs-1:1.19-4.el9.x86_64
-git-2.39.1-1.el9.x86_64
-git-core-2.39.1-1.el9.x86_64
-git-core-doc-2.39.1-1.el9.noarch
+git-2.39.3-1.el9_2.x86_64
+git-core-2.39.3-1.el9_2.x86_64
+git-core-doc-2.39.3-1.el9_2.noarch
 glibc-2.34-60.el9.i686
 glibc-2.34-60.el9.x86_64
 glibc-common-2.34-60.el9.x86_64
@@ -149,7 +149,7 @@ perl-File-Temp-1:0.231.100-4.el9.noarch
 perl-File-stat-1.09-480.el9.noarch
 perl-Getopt-Long-1:2.52-4.el9.noarch
 perl-Getopt-Std-1.12-480.el9.noarch
-perl-Git-2.39.1-1.el9.noarch
+perl-Git-2.39.3-1.el9_2.noarch
 perl-HTTP-Tiny-0.076-460.el9.noarch
 perl-IO-1.43-480.el9.x86_64
 perl-IPC-Open3-1.21-480.el9.noarch
