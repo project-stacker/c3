@@ -56,7 +56,7 @@ publish: $(STACKER)
 		--substitute GOLANG_DLV=$(GOLANG_DLV) \
 		--substitute GOLANG_LINTER=$(GOLANG_LINTER) \
 		--url $(PUBLISH_URL)/$(DISTRO) \
-		--tag $(PUBLISH_TAG) \
+		$(PUBLISH_TAGS_ARGS) \
 		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 

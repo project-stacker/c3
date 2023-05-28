@@ -62,7 +62,7 @@ publish: $(STACKER)
 		--substitute RUST_INIT=$(RUST_INIT) \
 		--substitute RUST_INIT_HASH=$(RUST_INIT_HASH) \
 		--url $(PUBLISH_URL)/$(DISTRO) \
-		--tag $(PUBLISH_TAG) \
+		$(PUBLISH_TAGS_ARGS) \
 		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 

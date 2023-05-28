@@ -61,7 +61,7 @@ publish: $(STACKER)
 		--substitute TRACEROUTE=$(TRACEROUTE) \
 		--substitute BUSYBOX=$(BUSYBOX) \
 		--url $(PUBLISH_URL)/$(DISTRO) \
-		--tag $(PUBLISH_TAG) \
+		$(PUBLISH_TAGS_ARGS) \
 		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 
