@@ -50,7 +50,7 @@ publish: $(STACKER)
 		--substitute DISTRO=$(DISTRO) \
 		--substitute DISTRO_REL=$(DISTRO_REL) \
 		--url $(PUBLISH_URL)/$(DISTRO) \
-		--tag $(PUBLISH_TAG) \
+		$(PUBLISH_TAGS_ARGS) \
 		$(PUBLISH_CREDS) \
 		$(PUBLISH_EXTRA_ARGS)
 

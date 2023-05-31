@@ -123,6 +123,7 @@ jobs:
           echo OS=${{ matrix.os }} >> $GITHUB_ENV
           echo SUBDIRS="${{needs.generate_build_input.outputs.folders_to_build}}" >> $GITHUB_ENV
           echo ZOT_VERSION="v2.0.0-rc3" >> $GITHUB_ENV
+          echo DEFAULT_BRANCH=origin/${{ github.event.repository.default_branch }} >> $GITHUB_ENV
       - name: Run zot container image with podman
         run: |
           wget -N https://raw.githubusercontent.com/project-zot/zot/${ZOT_VERSION}/examples/config-cve.json
@@ -132,6 +133,7 @@ jobs:
       - name: Build and push container images
         run: |
           cd ${GITHUB_WORKSPACE}
+          git fetch --all
           echo "Building ${SUBDIRS}"
           # for building PRs PUBLISH_URL points to the public server, so we can download unchanged images
           make build \
@@ -157,8 +159,10 @@ jobs:
           # there is an assumption that every folder contains a single image defined
           # in the stacker yaml, having the same name as the folder
           for folder in ${SUBDIRS}; do
-            tag=$(make -C images/${folder} --no-print-directory tag)
-            hack/tools/bin/zli cve local -I c3/${DISTRO}/${folder}-${ARCH}:${tag}
+            tags="$(make -C images/${folder} --no-print-directory tags)"
+            for tag in ${tags}; do
+              hack/tools/bin/zli cve local -I c3/${DISTRO}/${folder}-${ARCH}:${tag}
+            done
           done
 
   build_publish:
@@ -197,12 +201,14 @@ jobs:
           echo OS=${{ matrix.os }} >> $GITHUB_ENV
           echo SUBDIRS="${{needs.generate_build_input.outputs.folders_to_build}}" >> $GITHUB_ENV
           echo ZOT_VERSION="v1.4.3" >> $GITHUB_ENV
+          echo DEFAULT_BRANCH=origin/${{ github.event.repository.default_branch }} >> $GITHUB_ENV
       - name: Build and push container images
         env:
           PUBLISH_USERNAME: ${{ secrets.ZOTHUB_USERNAME }}
           PUBLISH_PASSWORD: ${{ secrets.ZOTHUB_PASSWORD }}
         run: |
           cd ${GITHUB_WORKSPACE}
+          git fetch --all
           echo "Building ${SUBDIRS}"
           make build \
             SUBDIRS="${SUBDIRS}" \
@@ -222,8 +228,10 @@ jobs:
           # there is an assumption that every folder contains a single image defined
           # in the stacker yaml, having the same name as the folder
           for folder in ${SUBDIRS}; do
-            tag=$(make -C images/${folder} --no-print-directory tag)
-            hack/tools/bin/zli cve zothub -I c3/${DISTRO}/${folder}-${ARCH}:${tag}
+            tags="$(make -C images/${folder} --no-print-directory tags)"
+            for tag in ${tags}; do
+              hack/tools/bin/zli cve zothub -I c3/${DISTRO}/${folder}-${ARCH}:${tag}
+            done
           done
       - name: Login to zothub.io Registry
         uses: docker/login-action@v2
@@ -247,10 +255,12 @@ jobs:
           # there is an assumption that every folder contains a single image defined
           # in the stacker yaml, having the same name as the folder
           for folder in ${SUBDIRS}; do
-            tag=$(make -C images/${folder} --no-print-directory tag)
-            cosign sign --key env://COSIGN_PRIVATE_KEY zothub.io/c3/${DISTRO}/${folder}-${ARCH}:${tag}
-            # Need to retest squashfs builds, getting some errors locally
-            # cosign sign --key env://COSIGN_PRIVATE_KEY zothub.io/c3/${DISTRO}/${folder}-${ARCH}:${tag}-squashfs
+            tags="$(make -C images/${folder} --no-print-directory tags)"
+            for tag in ${tags}; do
+              cosign sign --key env://COSIGN_PRIVATE_KEY zothub.io/c3/${DISTRO}/${folder}-${ARCH}:${tag}
+              # Need to retest squashfs builds, getting some errors locally
+              # cosign sign --key env://COSIGN_PRIVATE_KEY zothub.io/c3/${DISTRO}/${folder}-${ARCH}:${tag}-squashfs
+            done
           done
         env:
           COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}

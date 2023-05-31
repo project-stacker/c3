@@ -26,6 +26,10 @@ check-skopeo:
 clean: $(STACKER)
 	$(STACKER_WITH_BUILD_DIR) clean
 
-.PHONY: tag
-tag:
-	@echo $(PUBLISH_TAG)
+.PHONY: tags
+tags:
+	@echo $(PUBLISH_TAGS)
+
+.PHONY: vars
+vars:
+	$(foreach v, $(.VARIABLES), $(info $(v) = $($(v))))
