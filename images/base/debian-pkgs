@@ -2,5 +2,5 @@ gcc-10-base:amd64=10.2.1-6
 libc6:amd64=2.31-13+deb11u6
 libcrypt1:amd64=1:4.4.18-4
 libgcc-s1:amd64=10.2.1-6
-libssl1.1:amd64=1.1.1n-0+deb11u4
-openssl:amd64=1.1.1n-0+deb11u4
+libssl1.1:amd64=1.1.1n-0+deb11u5
+openssl:amd64=1.1.1n-0+deb11u5
