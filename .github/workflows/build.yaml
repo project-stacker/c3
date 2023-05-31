@@ -96,7 +96,7 @@ jobs:
       (github.ref != 'refs/heads/main') &&
       (needs.generate_build_input.outputs.folders_to_build != '')
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     strategy:
       max-parallel: 3
       matrix:
@@ -172,7 +172,7 @@ jobs:
       (github.ref == 'refs/heads/main') &&
       (needs.generate_build_input.outputs.folders_to_build != '')
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     env:
       DOCKER_CONFIG: $HOME/.docker
     strategy:
