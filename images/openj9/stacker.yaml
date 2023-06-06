@@ -8,7 +8,7 @@ build-openj9:
     tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
-    - ${{DISTRO}}-pkgs
+    - ${{DISTRO}}-pkgs-${{ARCH}}
     - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
@@ -35,7 +35,7 @@ build-openj9:
     # source pkgs to install into /rootfs_diff
     . /stacker/$DISTRO-pkgs.sh
     # install pkgs
-    install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs
+    install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs-${{ARCH}}
     # install busybox
     install_busybox /rootfs_diff
     # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes necessary files
@@ -53,9 +53,9 @@ openj9-${{ARCH}}:
   import:
     - path: stacker://build-openj9/rootfs_diff/
       dest: /
-    - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
-    - ${{DISTRO}}-pkgs     # The import purpose is to force a rebuild if file changed
-    - ../../pkgmgr         # The import purpose is to force a rebuild if file changed
+    - ${{DISTRO}}-pkgs.sh         # The import purpose is to force a rebuild if file changed
+    - ${{DISTRO}}-pkgs-${{ARCH}}  # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr                # The import purpose is to force a rebuild if file changed
   run: |
     echo 'export HOME=/jre' > /etc/profile
     echo 'export JAVA_HOME=/opt/jre' >> /etc/profile
