@@ -62,30 +62,3 @@ base-devel-${{ARCH}}:
     org.opencontainers.image.revision: ${{REVISION}}
     org.opencontainers.image.licenses: ${{LICENSES}}
     org.opencontainers.image.vendor: Cisco Systems, Inc.
-
-test-base-devel:
-  from:
-    type: built
-    tag: base-devel-${{ARCH}}
-  import:
-    - ../test/test.c
-  run: |
-    ls -l /
-    make --version
-    cmake --version
-    wget --help
-    curl --version
-    gcc --version
-    clang --version
-    cc --version
-    # looks like rustc errors if this folder is not created
-    # on Rockylinux it is not
-    mkdir -p /tmp
-    # test compiling
-    cp /stacker/test.c .
-    gcc test.c -o test_gcc
-    clang test.c -o test_clang
-    # test output binaries
-    ./test_gcc
-    ./test_clang
-  build_only: true

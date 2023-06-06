@@ -130,15 +130,28 @@ jobs:
           sed -i s/127\.0\.0\.1/0.0.0.0/g config-cve.json
           sed -i s/8080/5000/g config-cve.json
           podman run -d -p 5000:5000 -v $PWD/config-cve.json:/etc/zot/config.json ghcr.io/project-zot/zot-linux-amd64:${ZOT_VERSION}
+      - name: Fetch all commits
+        run: |
+          # Needed in order to check commit order later
+          cd ${GITHUB_WORKSPACE}
+          git fetch --all
       - name: Build and push container images
         run: |
           cd ${GITHUB_WORKSPACE}
-          git fetch --all
           echo "Building ${SUBDIRS}"
           # for building PRs PUBLISH_URL points to the public server, so we can download unchanged images
           make build \
             SUBDIRS="${SUBDIRS}" \
             PUBLISH_URL=docker://zothub.io/c3
+      - name: Build and push container images
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          echo "Testing ${SUBDIRS}"
+          make test SUBDIRS="${SUBDIRS}"
+      - name: Push container images
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          echo "Pushing ${SUBDIRS}"
           # for publishing PRs PUBLISH_URL points to the local server so we can later run the CVE scanner
           # without having to push images to the public server
           make publish \
@@ -202,17 +215,30 @@ jobs:
           echo SUBDIRS="${{needs.generate_build_input.outputs.folders_to_build}}" >> $GITHUB_ENV
           echo ZOT_VERSION="v1.4.3" >> $GITHUB_ENV
           echo DEFAULT_BRANCH=origin/${{ github.event.repository.default_branch }} >> $GITHUB_ENV
-      - name: Build and push container images
+      - name: Fetch all commits
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          # Needed in order to check commit order later
+          git fetch --all
+      - name: Build container images
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          echo "Building ${SUBDIRS}"
+          make build \
+            SUBDIRS="${SUBDIRS}" \
+            PUBLISH_URL=docker://zothub.io/c3
+      - name: Test container images
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          echo "Testing ${SUBDIRS}"
+          make test SUBDIRS="${SUBDIRS}"
+      - name: Push container images
         env:
           PUBLISH_USERNAME: ${{ secrets.ZOTHUB_USERNAME }}
           PUBLISH_PASSWORD: ${{ secrets.ZOTHUB_PASSWORD }}
         run: |
           cd ${GITHUB_WORKSPACE}
-          git fetch --all
-          echo "Building ${SUBDIRS}"
-          make build \
-            SUBDIRS="${SUBDIRS}" \
-            PUBLISH_URL=docker://zothub.io/c3
+          echo "Pushing ${SUBDIRS}"
           make publish \
             SUBDIRS="${SUBDIRS}" \
             PUBLISH_URL=docker://zothub.io/c3

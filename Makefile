@@ -50,6 +50,12 @@ pkgs:
 		$(MAKE) -C images/$$dir pkgs || exit $$?; \
 	done
 
+.PHONY: test
+test:
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C images/$$dir test || exit $$?; \
+	done
+
 .PHONY: publish
 publish:
 	for dir in $(SUBDIRS); do \

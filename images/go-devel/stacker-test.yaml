@@ -1,0 +1,49 @@
+config:
+  prerequisites:
+    - ../build-env/stacker.yaml
+
+test-go-devel:
+  from:
+    type: oci
+    url: ${{BUILD_OCI_DIR}}:go-devel-${{ARCH}}${{LAYER_SUFFIX}}
+  import:
+    - ../test/test.go
+  run: |
+    # go toolchain env
+    . /etc/profile
+    # go src env
+    mkdir -p /go
+    export GOPATH=/go
+    export PATH=$GOPATH/bin:$PATH
+    # go environment
+    go version
+    go env
+    mkdir -p $GOPATH/src
+    cd $GOPATH/src
+    cp /stacker/test.go .
+    # test compiler
+    go build -v -o test.static test.go
+    go build -v -buildmode=pie -o test.dynamic test.go
+    # test output binary
+    ./test.static
+    ./test.dynamic
+    # test linter
+    golangci-lint version
+    golangci-lint -v run test.go
+    # test debugger
+    dlv version
+    dlv --allow-non-terminal-interactive exec ./test.static
+    dlv --allow-non-terminal-interactive exec ./test.dynamic
+  build_only: true
+
+run-go-devel:
+  from:
+    type: built
+    tag: build-env
+  import:
+    - stacker://test-go-devel/go/src/test.static
+    - stacker://test-go-devel/go/src/test.dynamic
+  run: |
+    /stacker/test.static
+    /stacker/test.dynamic
+  build_only: true

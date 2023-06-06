@@ -1,0 +1,14 @@
+test-multitool:
+  from:
+    type: oci
+    url: ${{BUILD_OCI_DIR}}:multitool-${{ARCH}}${{LAYER_SUFFIX}}
+  run: |
+    arp
+    ping || true
+    traceroute
+    ip || true
+    arping || true
+    tcpdump -h
+    socat -h
+    iperf3 -h
+  build_only: true

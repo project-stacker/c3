@@ -67,7 +67,16 @@ publish: $(STACKER)
 		$(PUBLISH_EXTRA_ARGS)
 
 .PHONY: test
-test:
+test: $(STACKER)
+	$(STACKER_WITH_BUILD_DIR) \
+		build -f stacker-test.yaml \
+		--layer-type $(LAYER_TYPE) \
+		--substitute LAYER_SUFFIX=$(LAYER_SUFFIX) \
+		--substitute BUILD_OCI_DIR=$(BUILD_OCI_DIR) \
+		--substitute OS=$(OS) \
+		--substitute ARCH=$(ARCH) \
+		--substitute DISTRO=$(DISTRO) \
+		--substitute DISTRO_REL=$(DISTRO_REL)
 
 .PHONY: pkgs
 pkgs:
