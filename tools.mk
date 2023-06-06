@@ -3,10 +3,6 @@ TOOLS_DIR := $(TOP_LEVEL)/hack/tools
 TOOLS_BIN_DIR := $(TOOLS_DIR)/bin
 BUILD_DIR := $(TOP_LEVEL)/build
 BUILD_OCI_DIR := $(BUILD_DIR)/oci
-DEPS_FILE := $(TOP_LEVEL)/image_deps.json
-DEPS_SCRIPT := $(TOP_LEVEL)/get_deps.py
-comma := ,
-space := $(null) #
 
 export STACKER := $(TOOLS_BIN_DIR)/stacker
 export SKOPEO := skopeo

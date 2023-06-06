@@ -87,5 +87,5 @@ test: $(STACKER)
 		--substitute DISTRO_REL=$(DISTRO_REL)
 
 .PHONY: pull
-pull:
+pull: check-skopeo
 	skopeo copy $(PULL_EXTRA_ARGS) $(PUBLISH_URL)/$(strip $(DISTRO))/$(strip $(PUBLISH_IMAGE_NAME)):$(PUBLISH_TAG)$(LAYER_SUFFIX) oci:$(BUILD_OCI_DIR):$(PUBLISH_IMAGE_NAME)$(LAYER_SUFFIX)

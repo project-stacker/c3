@@ -1,21 +1,26 @@
 include config.mk
-include tools.mk
 
+TOP_LEVEL=$(shell git rev-parse --show-toplevel)
+BUILD_DIR := $(TOP_LEVEL)/build
 SUBDIRS := static base base-devel go-devel rust-devel openj9-devel openj9 multitool
 BUILD_ORDER_FILE := $(BUILD_DIR)/build_order.json
 PREREQUISITES_FILE := $(BUILD_DIR)/prerequisites.json
+DEPS_FILE := $(TOP_LEVEL)/image_deps.json
+DEPS_SCRIPT := $(TOP_LEVEL)/get_deps.py
+comma := ,
+space := $(null) #
 
 .DEFAULT_GOAL := all
 
 .PHONY: all
-all: $(STACKER) build
+all: build test
 
 .PHONY: build
 build: build-order download-skippable-images
 	mkdir -p $(BUILD_DIR); \
 	jq -c -r '.[][]' $(BUILD_ORDER_FILE) | while read dir; do \
 		echo "building $$dir"; \
-		$(MAKE) -C images/$$dir || exit $$?; \
+		$(MAKE) -C images/$$dir build || exit $$?; \
 	done
 
 .PHONY: build-order
@@ -35,7 +40,7 @@ identify-skippable-images:
 	$(DEPS_SCRIPT) --deps-file $(DEPS_FILE) --images $(subst $(space),$(comma),$(SUBDIRS)) --prerequisites --out-file  $(PREREQUISITES_FILE)
 
 .PHONY: download-skippable-images
-download-skippable-images: identify-skippable-images check-skopeo
+download-skippable-images: identify-skippable-images
 	if [ -z $(PUBLISH_URL) ]; then \
 		echo "publish URL is empty - skip downloading prerequisites"; exit 0; \
 	fi; \
