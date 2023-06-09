@@ -26,6 +26,7 @@ def init_logger(debug=False):
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument('-d', '--debug', action='store_true', help='enable debug logs')
+    p.add_argument('-a', '--arch', type=str, default="amd64", help='enable debug logs')
     p.add_argument('-p', '--in-pkgs', type=str, help='a space separated list of packages for which to determine dependencies', required=True)
     p.add_argument('-e', '--exclude-pkgs', type=str, help='a space separated list of packages for which are to be ignored if found as dependencies', required=True)
     p.add_argument('-o', '--out-file', type=str, help='provide the path where to write a file containing script output', required=True)
@@ -48,7 +49,7 @@ def main():
     else:
         exit(1)
 
-    dep_set = get_deps(args.in_pkgs.split(), args.exclude_pkgs.split(), logger)
+    dep_set = get_deps(args.in_pkgs.split(), args.exclude_pkgs.split(), args.arch, logger)
 
     logger.debug("Identified dependencies: {}".format(dep_set))
 
