@@ -1,5 +1,5 @@
-ca-certificates-java:amd64=20190909ubuntu1.2
-ca-certificates:amd64=20230311ubuntu0.22.04.1
+ca-certificates-java:all=20190909ubuntu1.2
+ca-certificates:all=20230311ubuntu0.22.04.1
 gcc-12-base:amd64=12.1.0-2ubuntu1~22.04
 libc6:amd64=2.35-0ubuntu3.1
 libcrypt1:amd64=1:4.4.27-1

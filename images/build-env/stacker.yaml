@@ -1,23 +1,27 @@
 # Layer which provides the tooling for building other layers/images.
 # It MUST not include steps to build the RFS for another layer
 # It MUST not published or used as a base in any published images.
+# build environment is always amd64, and we cross-compile
 
 build-env:
   from:
     type: docker
-    url: docker://${{ARCH}}/${{DISTRO}}:${{DISTRO_REL}}
+    url: docker://amd64/${{DISTRO}}:${{DISTRO_REL}}
   import:
     - ${{DISTRO}}-pkgs.sh
+    - ${{DISTRO}}-setup.sh
     - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
     export DISTRO_REL=${{DISTRO_REL}}
-    export ARCH=${{ARCH}}
+    export ARCH=amd64
     export OS=${{OS}}
     # source pkgs to install into rootfs
     . /stacker/$DISTRO-pkgs.sh
     # source pkgmgr func defs
     . /stacker/pkgmgr/defs.sh
+    # run distro-specific scripts to prepase build environment
+    /stacker/$DISTRO-setup.sh
     # install build related tooling
     install_host_pkgs $HOST_PKGS
   build_only: true

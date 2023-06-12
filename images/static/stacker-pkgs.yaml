@@ -21,7 +21,7 @@ update-static:
     # source pkgmgr func defs
     . /stacker/pkgmgr/defs.sh
     # update pkgs and local cache
-    update_host_pkgs "$HOST_PKGS"
+    update_host_pkgs
     # update PKG list
-    /stacker/pkgmgr/discover_pkgs.py --out-file /pkgs/$PKGS_FILE-$ARCH --in-pkgs "$PKGS" --exclude-pkgs "$PKGS_EXCLUDE" --debug
+    /stacker/pkgmgr/discover_pkgs.py --out-file /pkgs/$PKGS_FILE-$ARCH --in-pkgs "$PKGS" --exclude-pkgs "$PKGS_EXCLUDE" --arch="$ARCH" --debug
   build_only: true

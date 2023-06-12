@@ -24,21 +24,36 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
           trust_level: 5
-      - name: Update ubuntu packages
+      - name: Update ubuntu amd64 packages
         run: |
           cd ${GITHUB_WORKSPACE}
           make clean
           make pkgs DISTRO=ubuntu DISTRO_REL=jammy OS=linux ARCH=amd64
-      - name: Update debian packages
+      - name: Update debian amd64 packages
         run: |
           cd ${GITHUB_WORKSPACE}
           make clean
           make pkgs DISTRO=debian DISTRO_REL=bullseye OS=linux ARCH=amd64
-      - name: Update rockylinux packages
+      - name: Update rockylinux amd64 packages
         run: |
           cd ${GITHUB_WORKSPACE}
           make clean
           make pkgs DISTRO=rockylinux DISTRO_REL=9 OS=linux ARCH=amd64
+      - name: Update ubuntu arm64 packages
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          make clean
+          make pkgs DISTRO=ubuntu DISTRO_REL=jammy OS=linux ARCH=arm64
+      - name: Update debian arm64 packages
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          make clean
+          make pkgs DISTRO=debian DISTRO_REL=bullseye OS=linux ARCH=arm64
+      - name: Update rockylinux arm64 packages
+        run: |
+          cd ${GITHUB_WORKSPACE}
+          make clean
+          make pkgs DISTRO=rockylinux DISTRO_REL=9 OS=linux ARCH=arm64
       - name: Commit and push changed files
         run: |
           cd ${GITHUB_WORKSPACE}

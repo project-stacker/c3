@@ -40,17 +40,15 @@ gcc-toolset-12-binutils-2.38-16.el9.x86_64
 gcc-toolset-12-binutils-gold-2.38-16.el9.x86_64
 gcc-toolset-12-gcc-12.2.1-7.4.el9.x86_64
 gcc-toolset-12-gcc-c++-12.2.1-7.4.el9.x86_64
-gcc-toolset-12-libstdc++-devel-12.2.1-7.4.el9.i686
+gcc-toolset-12-libstdc++-devel-12.2.1-7.4.el9.x86_64
 gcc-toolset-12-runtime-12.0-6.el9.x86_64
 gdbm-libs-1:1.19-4.el9.x86_64
 git-2.39.3-1.el9_2.x86_64
 git-core-2.39.3-1.el9_2.x86_64
 git-core-doc-2.39.3-1.el9_2.noarch
-glibc-2.34-60.el9.i686
 glibc-2.34-60.el9.x86_64
 glibc-common-2.34-60.el9.x86_64
 glibc-devel-2.34-60.el9.x86_64
-glibc-gconv-extra-2.34-60.el9.i686
 glibc-gconv-extra-2.34-60.el9.x86_64
 glibc-headers-2.34-60.el9.x86_64
 glibc-minimal-langpack-2.34-60.el9.x86_64
@@ -82,7 +80,6 @@ libedit-3.1-37.20210216cvs.el9.x86_64
 libfdisk-2.37.4-11.el9_2.x86_64
 libffi-3.4.2-7.el9.x86_64
 libfido2-1.6.0-7.el9.x86_64
-libgcc-11.3.1-4.3.el9.i686
 libgcc-11.3.1-4.3.el9.x86_64
 libgcrypt-1.10.0-10.el9_2.x86_64
 libgomp-11.3.1-4.3.el9.x86_64
@@ -102,9 +99,8 @@ libsemanage-3.5-1.el9.x86_64
 libsepol-3.5-1.el9.x86_64
 libsigsegv-2.13-4.el9.x86_64
 libsmartcols-2.37.4-11.el9_2.x86_64
-libstdc++-11.3.1-4.3.el9.i686
 libstdc++-11.3.1-4.3.el9.x86_64
-libstdc++-devel-11.3.1-4.3.el9.i686
+libstdc++-devel-11.3.1-4.3.el9.x86_64
 libtasn1-4.16.0-8.el9_1.x86_64
 libunistring-0.9.10-15.el9.x86_64
 libutempter-1.2.1-6.el9.x86_64
