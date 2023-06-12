@@ -62,18 +62,3 @@ multitool-${{ARCH}}:
     org.opencontainers.image.revision: ${{REVISION}}
     org.opencontainers.image.licenses: ${{LICENSES}}
     org.opencontainers.image.vendor: Cisco Systems, Inc.
-
-test-multitool:
-  from:
-    type: built
-    tag: multitool-${{ARCH}}
-  run: |
-    arp
-    ping || true
-    traceroute
-    ip || true
-    arping || true
-    tcpdump -h
-    socat -h
-    iperf3 -h
-  build_only: true

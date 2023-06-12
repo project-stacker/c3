@@ -73,8 +73,17 @@ pkgs: $(STACKER)
 		--substitute DISTRO_REL=$(DISTRO_REL)
 
 .PHONY: test
-test:
+test: $(STACKER)
+	$(STACKER_WITH_BUILD_DIR) \
+		build -f stacker-test.yaml \
+		--layer-type $(LAYER_TYPE) \
+		--substitute LAYER_SUFFIX=$(LAYER_SUFFIX) \
+		--substitute BUILD_OCI_DIR=$(BUILD_OCI_DIR) \
+		--substitute OS=$(OS) \
+		--substitute ARCH=$(ARCH) \
+		--substitute DISTRO=$(DISTRO) \
+		--substitute DISTRO_REL=$(DISTRO_REL)
 
 .PHONY: pull
-pull:
+pull: check-skopeo
 	skopeo copy $(PULL_EXTRA_ARGS) $(PUBLISH_URL)/$(strip $(DISTRO))/$(strip $(PUBLISH_IMAGE_NAME)):$(PUBLISH_TAG)$(LAYER_SUFFIX) oci:$(BUILD_OCI_DIR):$(PUBLISH_IMAGE_NAME)$(LAYER_SUFFIX)

@@ -11,7 +11,7 @@ build-base-devel:
     tag: build-env
   import:
     - ${{DISTRO}}-pkgs.sh
-    - ${{DISTRO}}-pkgs
+    - ${{DISTRO}}-pkgs-${{ARCH}}
     - ../../pkgmgr
   run: |
     export DISTRO=${{DISTRO}}
@@ -27,7 +27,7 @@ build-base-devel:
     # install the extra packages in an isolated environment
     mkdir /rootfs_diff
     # install pkgs
-    install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs
+    install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs-${{ARCH}}
     # install busybox
     install_busybox /rootfs_diff
     # binaries we intentionally installed under /rootfs_diff/usr/bin/ and /rootfs_diff/usr/sbin/
@@ -50,9 +50,9 @@ base-devel-${{ARCH}}:
   import:
     - path: stacker://build-base-devel/rootfs_diff/
       dest: /
-    - ${{DISTRO}}-pkgs.sh  # The import purpose is to force a rebuild if file changed
-    - ${{DISTRO}}-pkgs     # The import purpose is to force a rebuild if file changed
-    - ../../pkgmgr         # The import purpose is to force a rebuild if file changed
+    - ${{DISTRO}}-pkgs.sh         # The import purpose is to force a rebuild if file changed
+    - ${{DISTRO}}-pkgs-${{ARCH}}  # The import purpose is to force a rebuild if file changed
+    - ../../pkgmgr                # The import purpose is to force a rebuild if file changed
   annotations:
     org.opencontainers.image.title: base-devel-${{ARCH}}
     org.opencontainers.image.description: ${{DESCRIPTION}}
@@ -62,30 +62,3 @@ base-devel-${{ARCH}}:
     org.opencontainers.image.revision: ${{REVISION}}
     org.opencontainers.image.licenses: ${{LICENSES}}
     org.opencontainers.image.vendor: Cisco Systems, Inc.
-
-test-base-devel:
-  from:
-    type: built
-    tag: base-devel-${{ARCH}}
-  import:
-    - ../test/test.c
-  run: |
-    ls -l /
-    make --version
-    cmake --version
-    wget --help
-    curl --version
-    gcc --version
-    clang --version
-    cc --version
-    # looks like rustc errors if this folder is not created
-    # on Rockylinux it is not
-    mkdir -p /tmp
-    # test compiling
-    cp /stacker/test.c .
-    gcc test.c -o test_gcc
-    clang test.c -o test_clang
-    # test output binaries
-    ./test_gcc
-    ./test_clang
-  build_only: true
