@@ -3,6 +3,7 @@ TOOLS_DIR := $(TOP_LEVEL)/hack/tools
 TOOLS_BIN_DIR := $(TOOLS_DIR)/bin
 BUILD_DIR := $(TOP_LEVEL)/build
 BUILD_OCI_DIR := $(BUILD_DIR)/oci
+STACKER_VERSION := v1.0.0-rc4
 
 export STACKER := $(TOOLS_BIN_DIR)/stacker
 export SKOPEO := skopeo
@@ -11,7 +12,7 @@ STACKER_WITH_BUILD_DIR := $(STACKER) --stacker-dir $(BUILD_DIR)/.stacker --oci-d
 
 $(STACKER):
 	mkdir -p $(TOOLS_BIN_DIR)
-	curl -fsSL https://github.com/andaaron/stacker/releases/download/v1.0.0-rc4-copy/stacker -o $@
+	curl -fsSL https://github.com/project-stacker/stacker/releases/download/$(STACKER_VERSION)/stacker -o "$@"
 	chmod +x $@
 
 .PHONY: check-skopeo
