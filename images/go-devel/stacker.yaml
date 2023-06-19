@@ -41,6 +41,13 @@ build-go-devel:
     tar xvzf $dldir/golang.tar.gz -C /rootfs_diff/opt/
     cp $GOPATH/bin/golangci-lint /rootfs_diff/opt/go/bin/
     cp $GOPATH/bin/dlv /rootfs_diff/opt/go/bin/
+    # set the new profile/environment variables
+    mkdir -p /rootfs_diff/etc/
+    echo 'export HOME=/go' > /rootfs_diff/etc/profile
+    echo 'export GOROOT=/opt/go' >> /rootfs_diff/etc/profile
+    echo 'export PATH=$GOROOT/bin:$PATH' >> /rootfs_diff/etc/profile
+    echo 'mkdir -p /tmp/go/cache'  >> /rootfs_diff/etc/profile
+    echo 'export GOCACHE=/tmp/go/cache' >> /rootfs_diff/etc/profile
     # cleanup unnecessary files
     cleanup_rootfs /rootfs_diff
   build_only: true
@@ -53,12 +60,6 @@ go-devel-${{ARCH}}:
     - path: stacker://build-go-devel/rootfs_diff/
       dest: /
     - ../../pkgmgr # The import purpose is to force a rebuild if file changed
-  run: |
-    echo 'export HOME=/go' > /etc/profile
-    echo 'export GOROOT=/opt/go' >> /etc/profile
-    echo 'export PATH=$GOROOT/bin:$PATH' >> /etc/profile
-    echo 'mkdir -p /tmp/go/cache'  >> /etc/profile
-    echo 'export GOCACHE=/tmp/go/cache' >> /etc/profile
   full_command: "/bin/sh -l"
   annotations:
     org.opencontainers.image.title: go-devel-${{ARCH}}
