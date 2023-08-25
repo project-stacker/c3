@@ -208,11 +208,11 @@ sed-4.8-9.el9.aarch64
 setup-2.13.7-9.el9.noarch
 shadow-utils-2:4.9-6.el9.aarch64
 sqlite-libs-3.34.1-6.el9_1.aarch64
-systemd-252-14.el9_2.1.aarch64
-systemd-libs-252-14.el9_2.1.aarch64
-systemd-pam-252-14.el9_2.1.aarch64
-systemd-rpm-macros-252-14.el9_2.1.noarch
-systemd-udev-252-14.el9_2.1.aarch64
+systemd-252-14.el9_2.3.0.1.aarch64
+systemd-libs-252-14.el9_2.3.0.1.aarch64
+systemd-pam-252-14.el9_2.3.0.1.aarch64
+systemd-rpm-macros-252-14.el9_2.3.0.1.noarch
+systemd-udev-252-14.el9_2.3.0.1.aarch64
 tcl-1:8.6.10-7.el9.aarch64
 tpm2-tss-3.0.3-8.el9.aarch64
 tzdata-2023c-1.el9.noarch
