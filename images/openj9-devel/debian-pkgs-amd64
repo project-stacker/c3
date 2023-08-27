@@ -1,4 +1,4 @@
-ca-certificates-java:all=20190909
+ca-certificates-java:all=20190909+deb11u1
 ca-certificates:all=20210119
 gcc-10-base:amd64=10.2.1-6
 libc6:amd64=2.31-13+deb11u6
