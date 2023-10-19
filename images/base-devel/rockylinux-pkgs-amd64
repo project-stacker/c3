@@ -87,7 +87,7 @@ libgpg-error-1.42-5.el9.x86_64
 libidn2-2.3.0-7.el9.x86_64
 libmount-2.37.4-11.el9_2.x86_64
 libmpc-1.2.1-4.el9.x86_64
-libnghttp2-1.43.0-5.el9.x86_64
+libnghttp2-1.43.0-5.el9_2.1.x86_64
 libpipeline-1.5.3-4.el9.x86_64
 libpkgconf-1.7.3-10.el9.x86_64
 libpsl-0.21.1-5.el9.x86_64
