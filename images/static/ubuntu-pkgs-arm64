@@ -1,7 +1,7 @@
 base-files:arm64=12ubuntu4.4
 ca-certificates:all=20230311ubuntu0.22.04.1
 gcc-12-base:arm64=12.3.0-1ubuntu1~22.04
-libc6:arm64=2.35-0ubuntu3.4
+libc6:arm64=2.35-0ubuntu3.5
 libcrypt1:arm64=1:4.4.27-1
 libgcc-s1:arm64=12.3.0-1ubuntu1~22.04
 libssl3:arm64=3.0.2-0ubuntu1.12
