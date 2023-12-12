@@ -8,4 +8,4 @@ libssl1.1:arm64=1.1.1w-0+deb11u1
 netbase:all=6.3
 openssl:arm64=1.1.1w-0+deb11u1
 original-awk:arm64=2018-08-27-1
-tzdata:all=2021a-1+deb11u10
+tzdata:all=2021a-1+deb11u11
