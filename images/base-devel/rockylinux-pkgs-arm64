@@ -230,7 +230,7 @@ systemd-rpm-macros-252-18.el9.noarch
 systemd-udev-252-18.el9.aarch64
 tcl-1:8.6.10-7.el9.aarch64
 tpm2-tss-3.2.2-2.el9.aarch64
-tzdata-2023c-1.el9.noarch
+tzdata-2023d-1.el9.noarch
 util-linux-2.37.4-15.el9.aarch64
 util-linux-core-2.37.4-15.el9.aarch64
 vim-filesystem-2:8.2.2637-20.el9_1.noarch

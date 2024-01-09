@@ -7,5 +7,5 @@ glibc-minimal-langpack-2.34-83.el9.7.x86_64
 libgcc-11.4.1-2.1.el9.x86_64
 libstdc++-11.4.1-2.1.el9.x86_64
 setup-2.13.7-9.el9.noarch
-tzdata-2023c-1.el9.noarch
+tzdata-2023d-1.el9.noarch
 zlib-1.2.11-40.el9.x86_64
