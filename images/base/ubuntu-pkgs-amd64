@@ -1,5 +1,5 @@
 gcc-12-base:amd64=12.3.0-1ubuntu1~22.04
-libc6:amd64=2.35-0ubuntu3.5
+libc6:amd64=2.35-0ubuntu3.6
 libcrypt1:amd64=1:4.4.27-1
 libgcc-s1:amd64=12.3.0-1ubuntu1~22.04
 libssl3:amd64=3.0.2-0ubuntu1.12
