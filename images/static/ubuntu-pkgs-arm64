@@ -8,4 +8,4 @@ libssl3:arm64=3.0.2-0ubuntu1.12
 netbase:all=6.3
 openssl:arm64=3.0.2-0ubuntu1.12
 original-awk:arm64=2018-08-27-1
-tzdata:all=2023c-0ubuntu0.22.04.2
+tzdata:all=2023d-0ubuntu0.22.04
