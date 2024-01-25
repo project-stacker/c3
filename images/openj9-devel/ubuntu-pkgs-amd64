@@ -7,5 +7,5 @@ libgcc-s1:amd64=12.3.0-1ubuntu1~22.04
 libnspr4:amd64=2:4.32-3build1
 libnss3:amd64=2:3.68.2-0ubuntu1.2
 libsqlite3-0:amd64=3.37.2-2ubuntu0.3
-libssl3:amd64=3.0.2-0ubuntu1.12
-openssl:amd64=3.0.2-0ubuntu1.12
+libssl3:amd64=3.0.2-0ubuntu1.13
+openssl:amd64=3.0.2-0ubuntu1.13
