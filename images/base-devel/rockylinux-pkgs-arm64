@@ -52,7 +52,7 @@ glibc-devel-2.34-83.el9.7.aarch64
 glibc-gconv-extra-2.34-83.el9.7.aarch64
 glibc-minimal-langpack-2.34-83.el9.7.aarch64
 gmp-1:6.2.0-13.el9.aarch64
-gnutls-3.7.6-23.el9.aarch64
+gnutls-3.7.6-23.el9_3.3.aarch64
 groff-base-1.22.4-10.el9.aarch64
 gzip-1.12-1.el9.aarch64
 jansson-2.14-1.el9.aarch64
