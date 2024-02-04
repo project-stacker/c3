@@ -19,12 +19,13 @@ build-go-devel:
     export GOLANG_LINTER=${{GOLANG_LINTER}}
     # source pkgmgr func defs
     . /stacker/pkgmgr/defs.sh
-    # prepare the rootfs
+
+    # install go for cross compilation in the build environment
     dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
-    # install go
-    wget -N https://go.dev/dl/go${GOLANG}.${OS}-${ARCH}.tar.gz -O $dldir/golang.tar.gz
-    echo "${{GOLANG_HASH}}  $dldir/golang.tar.gz" > SHA256SUMS
+    wget -N https://go.dev/dl/go${GOLANG}.${OS}-amd64.tar.gz -O $dldir/golang.tar.gz
+    echo "${{GOLANG_HASH_AMD64}} $dldir/golang.tar.gz" > SHA256SUMS
     sha256sum -c SHA256SUMS
+    rm SHA256SUMS
     tar xvzf $dldir/golang.tar.gz -C /opt/
     export GOROOT=/opt/go
     export PATH=$GOROOT/bin:$PATH
@@ -32,15 +33,40 @@ build-go-devel:
     export GOPATH=/go
     export PATH=$GOPATH/bin:$PATH
     export GOCACHE=/go/cache
-    # build golangci-lint
-    curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANG_LINTER}
+
+    # prepare the rootfs
+    mkdir -p /rootfs_diff/opt
+
+    # install go and other tools as needed in the final image
+    dldir=$(mktemp -d ${TMPDIR:-/tmp}/XXXXXX)
+    wget -N https://go.dev/dl/go${GOLANG}.${OS}-${ARCH}.tar.gz -O $dldir/golang.tar.gz
+    echo "${{GOLANG_HASH}}  $dldir/golang.tar.gz" > SHA256SUMS
+    sha256sum -c SHA256SUMS
+    tar xzvf $dldir/golang.tar.gz -C /rootfs_diff/opt/
+
+    # install golangci-lint
+    linter_ver=$(echo ${GOLANG_LINTER} | cut -c2-)
+    wget -N https://github.com/golangci/golangci-lint/releases/download/${GOLANG_LINTER}/golangci-lint-${linter_ver}-linux-${ARCH}.tar.gz -O $dldir/golangci-lint.tar.gz
+    tar -xzvf $dldir/golangci-lint.tar.gz --strip-components=1
+    mv golangci-lint /rootfs_diff/opt/go/bin/
+
     # build dlv debugger
-    go install github.com/go-delve/delve/cmd/dlv@${GOLANG_DLV}
-    # copy binaries under /opt/bin
-    mkdir -p /rootfs_diff/opt/bin
-    tar xvzf $dldir/golang.tar.gz -C /rootfs_diff/opt/
-    cp $GOPATH/bin/golangci-lint /rootfs_diff/opt/go/bin/
-    cp $GOPATH/bin/dlv /rootfs_diff/opt/go/bin/
+    GOOS=linux GOARCH=${ARCH} go install github.com/go-delve/delve/cmd/dlv@${GOLANG_DLV}
+    ls -l $GOPATH/bin/
+    if [ "${ARCH}" = "amd64" ] ; then
+      cp $GOPATH/bin/dlv /rootfs_diff/opt/go/bin/
+    else
+      cp $GOPATH/bin/linux_${ARCH}/dlv /rootfs_diff/opt/go/bin/
+    fi
+
+    # set the new profile/environment variables
+    mkdir -p /rootfs_diff/etc/
+    echo 'export HOME=/go' > /rootfs_diff/etc/profile
+    echo 'export GOROOT=/opt/go' >> /rootfs_diff/etc/profile
+    echo 'export PATH=$GOROOT/bin:$PATH' >> /rootfs_diff/etc/profile
+    echo 'mkdir -p /tmp/go/cache'  >> /rootfs_diff/etc/profile
+    echo 'export GOCACHE=/tmp/go/cache' >> /rootfs_diff/etc/profile
+
     # cleanup unnecessary files
     cleanup_rootfs /rootfs_diff
   build_only: true
@@ -53,12 +79,6 @@ go-devel-${{ARCH}}:
     - path: stacker://build-go-devel/rootfs_diff/
       dest: /
     - ../../pkgmgr # The import purpose is to force a rebuild if file changed
-  run: |
-    echo 'export HOME=/go' > /etc/profile
-    echo 'export GOROOT=/opt/go' >> /etc/profile
-    echo 'export PATH=$GOROOT/bin:$PATH' >> /etc/profile
-    echo 'mkdir -p /tmp/go/cache'  >> /etc/profile
-    echo 'export GOCACHE=/tmp/go/cache' >> /etc/profile
   full_command: "/bin/sh -l"
   annotations:
     org.opencontainers.image.title: go-devel-${{ARCH}}
