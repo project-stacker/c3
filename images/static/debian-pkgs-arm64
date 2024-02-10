@@ -1,11 +1,11 @@
-base-files:arm64=11.1+deb11u8
+base-files:arm64=11.1+deb11u9
 ca-certificates:all=20210119
 gcc-10-base:arm64=10.2.1-6
-libc6:arm64=2.31-13+deb11u7
+libc6:arm64=2.31-13+deb11u8
 libcrypt1:arm64=1:4.4.18-4
 libgcc-s1:arm64=10.2.1-6
 libssl1.1:arm64=1.1.1w-0+deb11u1
 netbase:all=6.3
 openssl:arm64=1.1.1w-0+deb11u1
 original-awk:arm64=2018-08-27-1
-tzdata:all=2021a-1+deb11u11
+tzdata:all=2024a-0+deb11u1
