@@ -31,7 +31,7 @@ elfutils-libelf-0.189-3.el9.x86_64
 elfutils-libs-0.189-3.el9.x86_64
 emacs-filesystem-1:27.2-9.el9.noarch
 environment-modules-5.3.0-1.el9.x86_64
-expat-2.5.0-1.el9.x86_64
+expat-2.5.0-1.el9_3.1.x86_64
 filesystem-3.16-2.el9.x86_64
 gawk-5.1.0-6.el9.x86_64
 gcc-11.4.1-2.1.el9.x86_64
