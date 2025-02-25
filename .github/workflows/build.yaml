@@ -111,6 +111,8 @@ jobs:
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
+      - name: Set up user namespaces
+        run: sudo ./enable_userns.sh
       - name: Setup env vars
         run: |
           distro=${{ matrix.distro }}
