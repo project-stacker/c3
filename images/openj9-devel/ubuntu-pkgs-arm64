@@ -1,11 +1,11 @@
 ca-certificates-java:all=20190909ubuntu1.2
-ca-certificates:all=20230311ubuntu0.22.04.1
+ca-certificates:all=20240203~22.04.1
 gcc-12-base:arm64=12.3.0-1ubuntu1~22.04
-libc6:arm64=2.35-0ubuntu3.7
+libc6:arm64=2.35-0ubuntu3.10
 libcrypt1:arm64=1:4.4.27-1
 libgcc-s1:arm64=12.3.0-1ubuntu1~22.04
 libnspr4:arm64=2:4.35-0ubuntu0.22.04.1
 libnss3:arm64=2:3.98-0ubuntu0.22.04.2
-libsqlite3-0:arm64=3.37.2-2ubuntu0.3
-libssl3:arm64=3.0.2-0ubuntu1.15
-openssl:arm64=3.0.2-0ubuntu1.15
+libsqlite3-0:arm64=3.37.2-2ubuntu0.4
+libssl3:arm64=3.0.2-0ubuntu1.19
+openssl:arm64=3.0.2-0ubuntu1.19
