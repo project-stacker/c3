@@ -43,9 +43,9 @@ gcc-toolset-14-gcc-c++-14.2.1-7.1.el9.aarch64
 gcc-toolset-14-libstdc++-devel-14.2.1-7.1.el9.aarch64
 gcc-toolset-14-runtime-14.0-1.el9.aarch64
 gdbm-libs-1:1.23-1.el9.aarch64
-git-2.47.1-2.el9_6.aarch64
-git-core-2.47.1-2.el9_6.aarch64
-git-core-doc-2.47.1-2.el9_6.noarch
+git-2.47.3-1.el9_6.aarch64
+git-core-2.47.3-1.el9_6.aarch64
+git-core-doc-2.47.3-1.el9_6.noarch
 glibc-2.34-168.el9_6.20.aarch64
 glibc-common-2.34-168.el9_6.20.aarch64
 glibc-devel-2.34-168.el9_6.20.aarch64
@@ -60,7 +60,7 @@ json-c-0.14-11.el9.aarch64
 kbd-2.4.0-11.el9.aarch64
 kbd-legacy-2.4.0-11.el9.noarch
 kbd-misc-2.4.0-11.el9.noarch
-kernel-headers-5.14.0-570.26.1.el9_6.aarch64
+kernel-headers-5.14.0-570.28.1.el9_6.aarch64
 keyutils-libs-1.6.3-1.el9.aarch64
 kmod-28-10.el9.aarch64
 kmod-libs-28-10.el9.aarch64
@@ -155,7 +155,7 @@ perl-File-stat-1.09-481.el9.noarch
 perl-FileHandle-2.03-481.el9.noarch
 perl-Getopt-Long-1:2.52-4.el9.noarch
 perl-Getopt-Std-1.12-481.el9.noarch
-perl-Git-2.47.1-2.el9_6.noarch
+perl-Git-2.47.3-1.el9_6.noarch
 perl-HTTP-Tiny-0.076-462.el9.noarch
 perl-IO-1.43-481.el9.aarch64
 perl-IO-Socket-IP-0.41-5.el9.noarch
