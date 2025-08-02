@@ -113,7 +113,7 @@ libuv-1:1.42.0-2.el9_4.aarch64
 libverto-0.3.2-3.el9.aarch64
 libxcrypt-4.4.18-3.el9.aarch64
 libxcrypt-devel-4.4.18-3.el9.aarch64
-libxml2-2.9.13-10.el9_6.aarch64
+libxml2-2.9.13-11.el9_6.aarch64
 libzstd-1.5.5-1.el9.aarch64
 llvm-libs-19.1.7-1.el9.aarch64
 lua-libs-5.4.4-4.el9.aarch64
@@ -222,7 +222,7 @@ scl-utils-1:2.0.3-4.el9.aarch64
 sed-4.8-9.el9.aarch64
 setup-2.13.7-10.el9.noarch
 shadow-utils-2:4.9-12.el9.aarch64
-sqlite-libs-3.34.1-7.el9_3.aarch64
+sqlite-libs-3.34.1-8.el9_6.aarch64
 systemd-252-51.el9_6.1.aarch64
 systemd-libs-252-51.el9_6.1.aarch64
 systemd-pam-252-51.el9_6.1.aarch64
