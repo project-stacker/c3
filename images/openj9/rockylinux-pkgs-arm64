@@ -1,9 +1,9 @@
 basesystem-11-13.el9.0.1.noarch
 filesystem-3.16-5.el9.aarch64
-glibc-2.34-168.el9_6.20.aarch64
-glibc-common-2.34-168.el9_6.20.aarch64
-glibc-gconv-extra-2.34-168.el9_6.20.aarch64
-glibc-langpack-ts-2.34-168.el9_6.20.aarch64
+glibc-2.34-168.el9_6.23.aarch64
+glibc-common-2.34-168.el9_6.23.aarch64
+glibc-gconv-extra-2.34-168.el9_6.23.aarch64
+glibc-langpack-lg-2.34-168.el9_6.23.aarch64
 libgcc-11.5.0-5.el9_5.aarch64
 libstdc++-11.5.0-5.el9_5.aarch64
 setup-2.13.7-10.el9.noarch

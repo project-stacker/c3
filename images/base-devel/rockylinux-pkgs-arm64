@@ -46,11 +46,11 @@ gdbm-libs-1:1.23-1.el9.aarch64
 git-2.47.3-1.el9_6.aarch64
 git-core-2.47.3-1.el9_6.aarch64
 git-core-doc-2.47.3-1.el9_6.noarch
-glibc-2.34-168.el9_6.20.aarch64
-glibc-common-2.34-168.el9_6.20.aarch64
-glibc-devel-2.34-168.el9_6.20.aarch64
-glibc-gconv-extra-2.34-168.el9_6.20.aarch64
-glibc-langpack-ts-2.34-168.el9_6.20.aarch64
+glibc-2.34-168.el9_6.23.aarch64
+glibc-common-2.34-168.el9_6.23.aarch64
+glibc-devel-2.34-168.el9_6.23.aarch64
+glibc-gconv-extra-2.34-168.el9_6.23.aarch64
+glibc-langpack-lg-2.34-168.el9_6.23.aarch64
 gmp-1:6.2.0-13.el9.aarch64
 gnutls-3.8.3-6.el9.aarch64
 groff-base-1.22.4-10.el9.aarch64
