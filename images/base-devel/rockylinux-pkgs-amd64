@@ -17,8 +17,8 @@ cpp-11.5.0-5.el9_5.x86_64
 cracklib-2.9.6-27.el9.x86_64
 cracklib-dicts-2.9.6-27.el9.x86_64
 crypto-policies-20250128-1.git5269e22.el9.noarch
-cryptsetup-libs-2.7.2-3.el9_5.x86_64
-curl-minimal-7.76.1-31.el9.x86_64
+cryptsetup-libs-2.7.2-3.el9_6.1.x86_64
+curl-minimal-7.76.1-31.el9_6.1.x86_64
 dbus-1:1.12.20-8.el9.x86_64
 dbus-broker-28-7.el9.x86_64
 dbus-common-1:1.12.20-8.el9.noarch
@@ -74,7 +74,7 @@ libcap-2.48-9.el9_2.x86_64
 libcap-ng-0.8.2-7.el9.x86_64
 libcbor-0.7.0-5.el9.x86_64
 libcom_err-1.46.5-7.el9.x86_64
-libcurl-minimal-7.76.1-31.el9.x86_64
+libcurl-minimal-7.76.1-31.el9_6.1.x86_64
 libdb-5.3.28-57.el9_6.x86_64
 libeconf-0.4.1-4.el9.x86_64
 libedit-3.1-38.20210216cvs.el9.x86_64
@@ -118,9 +118,9 @@ lz4-libs-1.9.3-5.el9.x86_64
 make-1:4.3-8.el9.x86_64
 man-db-2.9.3-7.el9.x86_64
 mpfr-4.1.0-7.el9.x86_64
-ncurses-6.2-10.20210508.el9.x86_64
-ncurses-base-6.2-10.20210508.el9.noarch
-ncurses-libs-6.2-10.20210508.el9.x86_64
+ncurses-6.2-10.20210508.el9_6.2.x86_64
+ncurses-base-6.2-10.20210508.el9_6.2.noarch
+ncurses-libs-6.2-10.20210508.el9_6.2.x86_64
 nettle-3.10.1-1.el9.x86_64
 openssh-8.7p1-45.el9.rocky.0.1.x86_64
 openssh-clients-8.7p1-45.el9.rocky.0.1.x86_64
