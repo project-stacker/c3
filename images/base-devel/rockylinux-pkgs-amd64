@@ -60,7 +60,7 @@ json-c-0.14-11.el9.x86_64
 kbd-2.4.0-11.el9.x86_64
 kbd-legacy-2.4.0-11.el9.noarch
 kbd-misc-2.4.0-11.el9.noarch
-kernel-headers-5.14.0-570.39.1.el9_6.x86_64
+kernel-headers-5.14.0-570.42.2.el9_6.x86_64
 keyutils-libs-1.6.3-1.el9.x86_64
 kmod-28-10.el9.x86_64
 kmod-libs-28-10.el9.x86_64
@@ -220,11 +220,11 @@ sed-4.8-9.el9.x86_64
 setup-2.13.7-10.el9.noarch
 shadow-utils-2:4.9-12.el9.x86_64
 sqlite-libs-3.34.1-8.el9_6.x86_64
-systemd-252-51.el9_6.1.x86_64
-systemd-libs-252-51.el9_6.1.x86_64
-systemd-pam-252-51.el9_6.1.x86_64
-systemd-rpm-macros-252-51.el9_6.1.noarch
-systemd-udev-252-51.el9_6.1.x86_64
+systemd-252-51.el9_6.2.x86_64
+systemd-libs-252-51.el9_6.2.x86_64
+systemd-pam-252-51.el9_6.2.x86_64
+systemd-rpm-macros-252-51.el9_6.2.noarch
+systemd-udev-252-51.el9_6.2.x86_64
 tcl-1:8.6.10-7.el9.x86_64
 tpm2-tss-3.2.3-1.el9.x86_64
 tzdata-2025b-1.el9.noarch
