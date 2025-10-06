@@ -52,7 +52,7 @@ glibc-gconv-extra-2.34-168.el9_6.23.x86_64
 glibc-headers-2.34-168.el9_6.23.x86_64
 glibc-minimal-langpack-2.34-168.el9_6.23.x86_64
 gmp-1:6.2.0-13.el9.x86_64
-gnutls-3.8.3-6.el9.x86_64
+gnutls-3.8.3-6.el9_6.2.x86_64
 groff-base-1.22.4-10.el9.x86_64
 gzip-1.12-1.el9.x86_64
 jansson-2.14-1.el9.x86_64
