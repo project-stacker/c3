@@ -30,7 +30,7 @@ device-mapper-9:1.02.206-2.el9.aarch64
 device-mapper-libs-9:1.02.206-2.el9.aarch64
 diffutils-3.7-12.el9.aarch64
 elfutils-debuginfod-client-0.193-1.el9.aarch64
-elfutils-default-yama-scope-0.193-1.el9.noarch
+elfutils-default-yama-scope-0.193-1.el9.rocky.0.1.noarch
 elfutils-libelf-0.193-1.el9.aarch64
 elfutils-libs-0.193-1.el9.aarch64
 emacs-filesystem-1:27.2-18.el9.noarch
@@ -64,7 +64,7 @@ json-c-0.14-11.el9.aarch64
 kbd-2.4.0-11.el9.aarch64
 kbd-legacy-2.4.0-11.el9.noarch
 kbd-misc-2.4.0-11.el9.noarch
-kernel-headers-5.14.0-611.5.1.el9_7.aarch64
+kernel-headers-5.14.0-611.11.1.el9_7.aarch64
 keyutils-libs-1.6.3-1.el9.aarch64
 kmod-28-11.el9.aarch64
 kmod-libs-28-11.el9.aarch64
