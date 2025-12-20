@@ -1,8 +1,8 @@
 acl-2.3.1-4.el9.x86_64
 audit-libs-3.1.5-7.el9.x86_64
 basesystem-11-13.el9.0.1.noarch
-binutils-2.35.2-67.el9.x86_64
-binutils-gold-2.35.2-67.el9.x86_64
+binutils-2.35.2-67.el9_7.1.x86_64
+binutils-gold-2.35.2-67.el9_7.1.x86_64
 bzip2-libs-1.0.8-10.el9_5.x86_64
 ca-certificates-2025.2.80_v9.0.305-91.el9.noarch
 checkpolicy-3.6-1.el9.x86_64
@@ -204,10 +204,10 @@ policycoreutils-python-utils-3.6-3.el9.noarch
 popt-1.18-8.el9.x86_64
 procps-ng-3.3.17-14.el9.x86_64
 publicsuffix-list-dafsa-20210518-3.el9.noarch
-python3-3.9.23-2.el9.x86_64
+python3-3.9.25-2.el9_7.x86_64
 python3-audit-3.1.5-7.el9.x86_64
 python3-distro-1.5.0-7.el9.noarch
-python3-libs-3.9.23-2.el9.x86_64
+python3-libs-3.9.25-2.el9_7.x86_64
 python3-libselinux-3.6-3.el9.x86_64
 python3-libsemanage-3.6-5.el9_6.x86_64
 python3-pip-wheel-21.3.1-1.el9.noarch
