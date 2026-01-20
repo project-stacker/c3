@@ -34,6 +34,7 @@ build: $(STACKER)
 		--substitute DISTRO_REL=$(DISTRO_REL) \
 		--substitute GOLANG=$(GOLANG) \
 		--substitute GOLANG_HASH=$(GOLANG_HASH) \
+		--substitute GOLANG_HASH_AMD64=$(GOLANG_HASH_AMD64) \
 		--substitute GOLANG_DLV=$(GOLANG_DLV) \
 		--substitute GOLANG_LINTER=$(GOLANG_LINTER)
 
@@ -53,6 +54,7 @@ publish: $(STACKER)
 		--substitute DISTRO_REL=$(DISTRO_REL) \
 		--substitute GOLANG=$(GOLANG) \
 		--substitute GOLANG_HASH=$(GOLANG_HASH) \
+		--substitute GOLANG_HASH_AMD64=$(GOLANG_HASH_AMD64) \
 		--substitute GOLANG_DLV=$(GOLANG_DLV) \
 		--substitute GOLANG_LINTER=$(GOLANG_LINTER) \
 		--url $(PUBLISH_URL)/$(DISTRO) \

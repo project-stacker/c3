@@ -35,6 +35,11 @@ build-openj9-devel:
     . /stacker/$DISTRO-pkgs.sh
     # install pkgs
     install_pkgs_from_file /rootfs_diff /stacker/${{DISTRO}}-pkgs-${{ARCH}}
+    # set the new profile/environment variables
+    mkdir -p /rootfs_diff/etc/
+    echo 'export HOME=/jdk' > /rootfs_diff/etc/profile
+    echo 'export JAVA_HOME=/opt/jdk' >> /rootfs_diff/etc/profile
+    echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /rootfs_diff/etc/profile
     # cleanup unnecessary files, do not use the cleanup_rootfs function as it deletes necessary files
     rm -rf /rootfs_diff/tmp/*
     rm -rf /rootfs_diff/var/*
@@ -53,10 +58,6 @@ openj9-devel-${{ARCH}}:
     - ${{DISTRO}}-pkgs.sh         # The import purpose is to force a rebuild if file changed
     - ${{DISTRO}}-pkgs-${{ARCH}}  # The import purpose is to force a rebuild if file changed
     - ../../pkgmgr                # The import purpose is to force a rebuild if file changed
-  run: |
-    echo 'export HOME=/jdk' > /etc/profile
-    echo 'export JAVA_HOME=/opt/jdk' >> /etc/profile
-    echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/profile
   full_command: "/bin/sh -l"
   annotations:
     org.opencontainers.image.title: openj9-devel-${{ARCH}}

@@ -39,12 +39,12 @@ unpack_deb() {
 
   dpkg --add-architecture "$ARCH"
 
+  old_path=$(pwd)
+  cd "$dldir"
   DEBIAN_FRONTEND=noninteractive \
-    apt-get -y --reinstall install \
-    "--option=Dir::Cache::Archives=$dldir" \
-    --no-install-recommends \
-    --download-only \
+    apt-get -y download \
     "$pkg":"$ARCH"
+  cd "$old_path"
 
   echo DLDIR="$dldir"
   ls "$dldir"
@@ -62,11 +62,11 @@ unpack_debs() {
 
   dpkg --add-architecture "$ARCH"
 
+  old_path=$(pwd)
+  cd "$dldir"
   DEBIAN_FRONTEND=noninteractive \
-    xargs apt-get -y --reinstall install \
-    "--option=Dir::Cache::Archives=$dldir" \
-    --no-install-recommends \
-    --download-only <$pkgs_file
+    xargs apt-get -y download <$pkgs_file
+  cd "$old_path"
 
   echo DLDIR="$dldir"
   ls "$dldir"/

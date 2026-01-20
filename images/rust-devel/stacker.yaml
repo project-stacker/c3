@@ -38,6 +38,14 @@ build-rust-devel:
     cp -R ${CARGO_HOME} /rootfs_diff/opt/
     # HOME folder
     mkdir -p /rootfs_diff/rust/
+    # set the new profile/environment variables
+    mkdir -p /rootfs_diff/etc/
+    echo 'export HOME=/rust' > /rootfs_diff/etc/profile
+    echo 'export RUSTUP_HOME=/opt/rustup' >> /rootfs_diff/etc/profile
+    echo 'export CARGO_HOME=/opt/cargo' >> /rootfs_diff/etc/profile
+    echo 'source "/opt/cargo/env"' >> /rootfs_diff/etc/profile
+    echo 'export RUSTUP_TOOLCHAIN=${{RUST}}' >> /rootfs_diff/etc/profile
+    echo 'export SSL_CERT_DIR=/etc/ssl/certs' >> /rootfs_diff/etc/profile
     # cleanup unnecessary files
     # binaries were intentionally installed under /rootfs_diff/usr/bin/
     # remove all docs
@@ -53,13 +61,6 @@ rust-devel-${{ARCH}}:
     - path: stacker://build-rust-devel/rootfs_diff/
       dest: /
     - ../../pkgmgr # The import purpose is to force a rebuild if file changed
-  run: |
-    echo 'export HOME=/rust' > /etc/profile
-    echo 'export RUSTUP_HOME=/opt/rustup' >> /etc/profile
-    echo 'export CARGO_HOME=/opt/cargo' >> /etc/profile
-    echo 'source "/opt/cargo/env"' >> /etc/profile
-    echo 'export RUSTUP_TOOLCHAIN=${{RUST}}' >> /etc/profile
-    echo 'export SSL_CERT_DIR=/etc/ssl/certs' >> /etc/profile
   full_command: "/bin/sh -l"
   annotations:
     org.opencontainers.image.title: rust-devel-${{ARCH}}
