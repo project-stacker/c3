@@ -1,7 +1,7 @@
 base-files:amd64=12ubuntu4.7
 ca-certificates:all=20240203~22.04.1
 gcc-12-base:amd64=12.3.0-1ubuntu1~22.04.2
-libc6:amd64=2.35-0ubuntu3.12
+libc6:amd64=2.35-0ubuntu3.13
 libcrypt1:amd64=1:4.4.27-1
 libgcc-s1:amd64=12.3.0-1ubuntu1~22.04.2
 libssl3:amd64=3.0.2-0ubuntu1.21
