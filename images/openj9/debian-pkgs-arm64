@@ -1,5 +1,5 @@
 ca-certificates-java:all=20230710~deb12u1~deb11u1
-ca-certificates:all=20210119
+ca-certificates:all=20230311+deb12u1~deb11u1
 gcc-10-base:arm64=10.2.1-6
 libc6:arm64=2.31-13+deb11u13
 libcrypt1:arm64=1:4.4.18-4
