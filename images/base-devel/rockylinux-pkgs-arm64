@@ -56,7 +56,7 @@ glibc-common-2.34-231.el9_7.10.aarch64
 glibc-devel-2.34-231.el9_7.10.aarch64
 glibc-gconv-extra-2.34-231.el9_7.10.aarch64
 gmp-1:6.2.0-13.el9.aarch64
-gnutls-3.8.3-9.el9.0.1.aarch64
+gnutls-3.8.3-10.el9_7.aarch64
 groff-base-1.22.4-10.el9.0.1.aarch64
 gzip-1.12-1.el9.aarch64
 jansson-2.14-1.el9.0.1.aarch64
