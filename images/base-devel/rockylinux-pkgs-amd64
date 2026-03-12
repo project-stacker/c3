@@ -53,7 +53,7 @@ glibc-gconv-extra-2.34-231.el9_7.10.x86_64
 glibc-headers-2.34-231.el9_7.10.x86_64
 glibc-minimal-langpack-2.34-231.el9_7.10.x86_64
 gmp-1:6.2.0-13.el9.x86_64
-gnutls-3.8.3-9.el9.0.1.x86_64
+gnutls-3.8.3-10.el9_7.x86_64
 groff-base-1.22.4-10.el9.0.1.x86_64
 gzip-1.12-1.el9.x86_64
 jansson-2.14-1.el9.0.1.x86_64
@@ -204,10 +204,10 @@ policycoreutils-python-utils-3.6-3.el9.noarch
 popt-1.18-8.el9.x86_64
 procps-ng-3.3.17-14.el9.x86_64
 publicsuffix-list-dafsa-20210518-3.el9.noarch
-python3-3.9.25-3.el9_7.x86_64
+python3-3.9.25-3.el9_7.1.x86_64
 python3-audit-3.1.5-7.el9.x86_64
 python3-distro-1.5.0-7.el9.noarch
-python3-libs-3.9.25-3.el9_7.x86_64
+python3-libs-3.9.25-3.el9_7.1.x86_64
 python3-libselinux-3.6-3.el9.x86_64
 python3-libsemanage-3.6-5.el9_6.x86_64
 python3-pip-wheel-21.3.1-1.el9.noarch
