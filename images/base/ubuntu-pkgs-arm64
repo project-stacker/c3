@@ -2,5 +2,5 @@ gcc-12-base:arm64=12.3.0-1ubuntu1~22.04.3
 libc6:arm64=2.35-0ubuntu3.13
 libcrypt1:arm64=1:4.4.27-1
 libgcc-s1:arm64=12.3.0-1ubuntu1~22.04.3
-libssl3:arm64=3.0.2-0ubuntu1.21
-openssl:arm64=3.0.2-0ubuntu1.21
+libssl3:arm64=3.0.2-0ubuntu1.23
+openssl:arm64=3.0.2-0ubuntu1.23
