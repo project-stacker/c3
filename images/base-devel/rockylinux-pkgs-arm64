@@ -245,7 +245,7 @@ tpm2-tss-3.2.3-1.el9.aarch64
 tzdata-2026a-1.el9_7.noarch
 util-linux-2.37.4-21.el9.aarch64
 util-linux-core-2.37.4-21.el9.aarch64
-vim-filesystem-2:8.2.2637-23.el9_7.noarch
+vim-filesystem-2:8.2.2637-23.el9_7.1.noarch
 wget-1.21.1-8.el9_4.aarch64
 xz-libs-5.2.5-8.el9_0.aarch64
 zlib-1.2.11-40.el9.aarch64
